@@ -10,7 +10,7 @@
     "author": "FOCKUSTY",
     "license": "MIT",
     "dependencies": {
-        "fock-logger": "2.2.2-b"
+        "fock-logger": "2.3.1"
     },
     "devDependencies": {
         "dotenv": "^16.4.5",
