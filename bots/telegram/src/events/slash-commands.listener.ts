@@ -1,11 +1,13 @@
 import { Debug } from "@voidy/develop/dist";
 import { Interaction } from "@voidy/types/dist/telegram/interaction.type";
 import { commands } from "../deploy.commands";
+import { lastMessageEquals } from "./message.listener";
 
 const SlashCommandsListener = async (message: Interaction) => {
-	if (!(message.text && message.text.startsWith("/"))) return;
-
+	if (!message.text) return;
 	if (!message.from) return;
+	if (lastMessageEquals(message.chat.id, message)) return;
+	if (!message.text.startsWith("/")) return;
 
 	Debug.Log([
 		"Запуск Telegram команды",

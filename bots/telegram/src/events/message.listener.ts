@@ -9,9 +9,20 @@ import { Debug } from "@voidy/develop/dist";
 
 type DefaultOption = Option<any, any, any>;
 
+const messages = new Map<string, number>();
 const options = new Map<string, DefaultOption[]>();
 const saved = new Map<string, { key: string; value: string }[]>();
 const anonMessages = new Map<string, string>();
+
+const lastMessageEquals = (userId: number|string, msg: Interaction) => {
+	userId = `${userId}`;
+	const id = msg.message.message_id;
+
+	if ((messages.get(userId)||0) === id-1) return true;
+	messages.set(userId, id);
+
+	return false;
+}
 
 const send = async <T, R extends { [key: string]: any } = {}>(
 	data: SendData<T, string | ({ text: string } & R)>
@@ -38,9 +49,11 @@ const send = async <T, R extends { [key: string]: any } = {}>(
 };
 
 const MessageListener = async (message: Interaction) => {
-	if ((message.text && message.text.startsWith("/")) || !message.from?.id) return;
-
-	const userId = message.from.id;
+	if (!message.text || !message.from?.id) return;
+	if (lastMessageEquals(message.chat.id, message)) return;
+	if (message.text.startsWith("/")) return;
+	
+	const userId = `${message.from.id}`;
 	const replyId = message.update?.message?.reply_to_message?.message_id || -1;
 	const anonUser = anonMessages.get(replyId);
 
@@ -67,7 +80,7 @@ const MessageListener = async (message: Interaction) => {
 		);
 	}
 
-	const replyOptions = options.get(`${userId}`);
+	const replyOptions = options.get(userId);
 
 	if (!replyOptions) return;
 
@@ -76,9 +89,9 @@ const MessageListener = async (message: Interaction) => {
 		const option: DefaultOption = replyOptions[index];
 
 		if (message.message.message_id - 2 === option.id) {
-			const savedOptions = saved.get(`${userId}`) || [];
+			const savedOptions = saved.get(userId) || [];
 
-			saved.set(`${userId}`, [
+			saved.set(userId, [
 				...savedOptions,
 				{ key: option.option, value: message.message.text }
 			]);
@@ -87,7 +100,7 @@ const MessageListener = async (message: Interaction) => {
 		if (message.message.message_id === option.id) {
 			return message.reply(option.text);
 		} else if (index === replyOptions.length - 1) {
-			const savedOptions = saved.get(`${userId}`) || [];
+			const savedOptions = saved.get(userId) || [];
 			const args = savedOptions.map((element) => element.value);
 
 			if (!option.function) return;
@@ -98,8 +111,8 @@ const MessageListener = async (message: Interaction) => {
 				...(option.lastArgs || [])
 			);
 
-			options.delete(`${userId}`);
-			saved.delete(`${userId}`);
+			options.delete(userId);
+			saved.delete(userId);
 
 			if (option.execute)
 				return option.execute({
@@ -118,6 +131,6 @@ const MessageListener = async (message: Interaction) => {
 	}
 };
 
-export { options, anonMessages };
+export { options, anonMessages, messages, lastMessageEquals };
 
 export default MessageListener;
