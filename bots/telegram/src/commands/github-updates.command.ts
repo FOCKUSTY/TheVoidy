@@ -7,7 +7,7 @@ import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
 import { Random } from "random-js";
 
 import { DateFormatter } from "f-formatter";
-import { MessageEntity } from "@telegraf/types/message";
+import { MessageEntity } from "telegraf/types";
 import * as Telegraf from "telegraf";
 
 const { FmtString } = Telegraf.Format;

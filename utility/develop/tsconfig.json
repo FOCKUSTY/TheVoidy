@@ -1,10 +1,11 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "ES2024",
-      "declaration": true,
-      "declarationDir": "dist",
-      "outDir": "dist",
-    },
-    "include": ["src"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2024",
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+  },
+  "include": ["."],
+  "exclude": ["dist", "node_modules", "**/*.spec.ts"]
 }

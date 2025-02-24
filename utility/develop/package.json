@@ -2,7 +2,11 @@
     "name": "@voidy/develop",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "types": "./dist/index.d.ts",
+    "main": "./dist/index.js",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "tsc && tsc-alias"
     },
@@ -10,13 +14,12 @@
     "author": "FOCKUSTY",
     "license": "MIT",
     "dependencies": {
-        "fock-logger": "2.3.1"
+        "fock-logger": "catalog:"
     },
     "devDependencies": {
-        "dotenv": "^16.4.5",
-        "tsc": "^2.0.4",
-        "tsc-alias": "^1.8.10",
-        "tsconfig-paths": "^4.2.0",
-        "typescript": "^5.5.4"
+        "dotenv": "catalog:",
+        "tsc-alias": "catalog:",
+        "tsconfig-paths": "catalog:",
+        "typescript": "catalog:"
     }
 }

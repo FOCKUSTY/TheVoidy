@@ -1,4 +1,4 @@
-import "@voidy/develop/dist/config";
+import "@voidy/develop";
 
 import { Env, Debug } from "@voidy/develop/dist";
 

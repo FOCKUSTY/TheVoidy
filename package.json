@@ -7,17 +7,22 @@
   "author": "FOCKUSTY",
   "license": "MIT",
   "scripts": {
-    "build:all": "yarn workspaces foreach -A run build",
-    "build:bot": "yarn workspace voidtype run build",
-    "dev:bot": "set NODE_ENV=dev&& set BOT=all&& yarn workspace voidtype run dev",
-    "start:bot": "set NODE_ENV=prod&& set BOT=all&& yarn workspace voidtype run start:builded",
-    "start": "set NODE_ENV=prod&& set BOT=all&& yarn run build:all && yarn run start:bot",
-    "lint:bot": "yarn workspace voidtype run lint"
+    "build:all": "pnpm --filter {./**} run build",
+    "build:bot": "pnpm --filter voidtype run build",
+    "dev:bot": "set NODE_ENV=dev&& set BOT=all&& pnpm --filter voidtype run dev",
+    "start:bot": "set NODE_ENV=prod&& set BOT=all&& pnpm --filter voidtype run start:builded",
+    "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build:all && pnpm run start:bot",
+    "lint:bot": "pnpm --filter voidtype run lint"
   },
   "workspaces": [
     "bot",
     "bots/*",
     "utility/*",
     "packages/*"
-  ]
+  ],
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "node"
+    ]
+  }
 }

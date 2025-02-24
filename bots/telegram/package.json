@@ -10,30 +10,27 @@
   "author": "FOCKUSTY",
   "license": "MIT",
   "dependencies": {
-    "@thevoidcommunity/the-void-database": "2.0.1-alpha.1",
+    "@thevoidcommunity/the-void-database": "catalog:",
     "@voidy/develop": "workspace:^",
-    "date-fns": "^2.30.0",
-    "discord.js": "^14.18.0",
-    "f-formatter": "^0.3.1",
-    "fock-updater": "^1.4.1-beta",
-    "ollama": "0.5.11",
-    "random-js": "^2.1.0",
-    "telegraf": "^4.16.3"
+    "date-fns": "catalog:",
+    "discord.js": "catalog:",
+    "f-formatter": "catalog:",
+    "random-js": "catalog:",
+    "telegraf": "catalog:"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
-    "@types/node": "^20.16.1",
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
     "@voidy/types": "workspace:^",
-    "dotenv": "^16.4.5",
-    "eslint": "^9.18.0",
-    "globals": "^15.14.0",
-    "nodemon": "^3.1.7",
-    "openai": "4.83.0",
-    "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
-    "tsc-alias": "^1.8.10",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.19.1"
+    "dotenv": "catalog:",
+    "eslint": "catalog:",
+    "globals": "catalog:",
+    "nodemon": "catalog:",
+    "openai": "catalog:",
+    "ts-node": "catalog:",
+    "tsc-alias": "catalog:",
+    "tsconfig-paths": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
   }
 }

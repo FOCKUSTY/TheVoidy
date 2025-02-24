@@ -11,18 +11,17 @@
   "license": "MIT",
   "dependencies": {
     "@voidy/develop": "workspace:^",
-    "discord.js": "^14.18.0",
-    "f-formatter": "^0.3.1",
-    "telegraf": "^4.16.3"
+    "discord.js": "catalog:",
+    "f-formatter": "catalog:",
+    "telegraf": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^20.16.1",
+    "@types/node": "catalog:",
     "@voidy/types": "workspace:^",
-    "dotenv": "^16.4.5",
-    "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
-    "tsc-alias": "^1.8.10",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.5.4"
+    "dotenv": "catalog:",
+    "ts-node": "catalog:",
+    "tsc-alias": "catalog:",
+    "tsconfig-paths": "catalog:",
+    "typescript": "catalog:"
   }
 }

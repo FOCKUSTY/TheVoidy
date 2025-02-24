@@ -1,7 +1,0 @@
-{
-    "package_path": "./package.json",
-    "node_dir": "../node_modules",
-    "libs": [
-        "@thevoidcommunity/the-void-database"
-    ]
-}
