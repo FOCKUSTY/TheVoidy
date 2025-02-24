@@ -1,10 +1,10 @@
-import { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import { Option } from "@voidy/types/dist/telegram/options.type";
+import { Interaction } from "v@types/telegram/interaction.type";
+import { Option } from "v@types/telegram/options.type";
 
 import { options } from "../events/message.listener";
 
-import { Services } from "@voidy/types/dist/all/services.type";
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
+import { Services } from "v@types/all/services.type";
+import TelegramCommand from "v@types/commands/telegram-command.type";
 
 type DefaultOption = Option<
 	string | { type: number; text: string },

@@ -22,7 +22,6 @@
     "@voidy/services": "workspace:^",
     "@voidy/telegram": "workspace:^",
     "@voidy/develop": "workspace:^",
-    "@voidy/types": "workspace:^",
     "date-fns": "catalog:",
     "discord.js": "catalog:",
     "openai": "catalog:",
@@ -31,6 +30,7 @@
     "telegraf": "catalog:"
   },
   "devDependencies": {
+    "@voidy/types": "workspace:^",
     "dotenv": "catalog:",
     "@eslint/js": "catalog:",
     "@types/node": "catalog:",

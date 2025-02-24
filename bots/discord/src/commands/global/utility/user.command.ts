@@ -1,4 +1,4 @@
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import Command from "v@types/commands/discord-command.type";
 
 import {
 	CommandInteraction,

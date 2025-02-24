@@ -1,4 +1,4 @@
-import { Interaction } from "@voidy/types/dist/telegram/interaction.type";
+import { Interaction } from "v@types/telegram/interaction.type";
 
 const GetChatId = async (msg: Interaction): Promise<number | string> => {
 	const chatId = await msg.chat.id;

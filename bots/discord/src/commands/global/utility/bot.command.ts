@@ -1,5 +1,5 @@
-import { Env } from "@voidy/develop/dist";
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import { Env } from "v@develop";
+import Command from "v@types/commands/discord-command.type";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from "discord.js";
 

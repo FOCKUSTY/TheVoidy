@@ -1,5 +1,5 @@
-import { Env, Logger, Debug, Colors } from "@voidy/develop/dist";
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import { Env, Logger, Debug, Colors } from "v@develop";
+import Command from "v@types/commands/discord-command.type";
 
 import { REST, Routes } from "discord.js";
 

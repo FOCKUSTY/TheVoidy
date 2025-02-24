@@ -1,10 +1,10 @@
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
-import { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import { ExecuteData, Option } from "@voidy/types/dist/telegram/options.type";
+import TelegramCommand from "v@types/commands/telegram-command.type";
+import { Interaction } from "v@types/telegram/interaction.type";
+import { ExecuteData, Option } from "v@types/telegram/options.type";
 
 import { Message } from "telegraf/typings/core/types/typegram";
 import { anonMessages, options } from "../events/message.listener";
-import { Services } from "@voidy/types/dist/all/services.type";
+import { Services } from "v@types/all/services.type";
 
 type DefaultOption = Option<
 	| string

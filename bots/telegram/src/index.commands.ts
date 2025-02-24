@@ -1,4 +1,4 @@
-import { Props as Command } from "@voidy/types/dist/commands/telegram-command.type";
+import { Props as Command } from "v@types/commands/telegram-command.type";
 
 class Commands<T = unknown, K = unknown> {
 	private readonly _commands: string[] = [];

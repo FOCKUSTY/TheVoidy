@@ -1,8 +1,8 @@
-import { Env } from "@voidy/develop/dist";
+import { Env } from "v@develop";
 
 import { Telegraf } from "telegraf";
-import type { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import type { Services } from "@voidy/types/dist/all/services.type";
+import type { Interaction } from "v@types/telegram/interaction.type";
+import type { Services } from "v@types/all/services.type";
 
 import Deployer from "./deploy.commands";
 

@@ -1,7 +1,7 @@
-import { Debug } from "@voidy/develop/dist";
+import { Debug } from "v@develop";
 import { Interaction, InteractionType } from "discord.js";
-import CustomIds from "@voidy/services/dist/modal/custom-ids.modal";
-import { Services } from "@voidy/types/dist/all/services.type";
+import CustomIds from "v@services/modal/custom-ids.modal";
+import { Services } from "v@types/all/services.type";
 
 class Listener {
 	private readonly ids: CustomIds;

@@ -1,7 +1,7 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import commands from "../../../index.commads";
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import Command from "v@types/commands/discord-command.type";
 
 export default new Command({
 	data: new SlashCommandBuilder()

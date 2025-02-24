@@ -1,4 +1,4 @@
-import { Env } from "@voidy/develop/dist";
+import { Env } from "v@develop";
 
 import {
 	ActionRowBuilder,
@@ -12,8 +12,8 @@ import {
 
 import { Random } from "random-js";
 import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
-import CustomIds from "@voidy/services/dist/modal/custom-ids.modal";
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import CustomIds from "v@services/modal/custom-ids.modal";
+import Command from "v@types/commands/discord-command.type";
 
 const customIds = CustomIds.getIds();
 const objects = new ObjectsLoader().execute();

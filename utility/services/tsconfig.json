@@ -5,6 +5,16 @@
       "declaration": true,
       "declarationDir": "dist",
       "outDir": "dist",
+      "paths": {            
+        "v@develop": [ "./node_modules/@voidy/develop/dist" ],
+
+        "v@telegram/*": [ "./node_modules/@voidy/telegram/dist/*" ],
+        "v@discord/*": [ "./node_modules/@voidy/discord/dist/*" ],
+        "v@services/*": [ "./node_modules/@voidy/services/dist/*" ],
+        "v@develop/*": [ "./node_modules/@voidy/develop/dist/*" ],
+        "v@types/*": [ "./node_modules/@voidy/types/dist/*" ]
+    }
     },
-    "include": ["src"]
+    "include": ["src"],
+    "exclude": ["dist", "node_modules"]
 }

@@ -1,4 +1,4 @@
-import { Env, Debug } from "@voidy/develop/dist";
+import { Env, Debug } from "v@develop";
 
 import ICL from "./events/interaction-create.listener";
 import ML from "./events/modal.listener";
@@ -6,7 +6,7 @@ import ML from "./events/modal.listener";
 import Deployer from "./deploy.commands";
 import DeployEvents from "./deploy.events";
 
-import { Services } from "@voidy/types/dist/all/services.type";
+import { Services } from "v@types/all/services.type";
 
 import path from "path";
 import fs from "fs";

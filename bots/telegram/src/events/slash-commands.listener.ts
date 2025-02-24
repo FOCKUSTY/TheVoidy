@@ -1,5 +1,5 @@
-import { Debug } from "@voidy/develop/dist";
-import { Interaction } from "@voidy/types/dist/telegram/interaction.type";
+import { Debug } from "v@develop";
+import { Interaction } from "v@types/telegram/interaction.type";
 import { commands } from "../deploy.commands";
 import { lastMessageEquals } from "./message.listener";
 

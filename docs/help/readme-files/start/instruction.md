@@ -16,7 +16,7 @@
 ```ts
 // Импорт Env из самописнового модуля для работы с .env файлами
 // Debug - Объект-помощник для отладки
-import { Env, Debug } from "@voidy/develop/dist";
+import { Env, Debug } from "v@develop";
 
 // Импорт методов и объектов
 // ICL - Объект-прослушиватель для использования пользователями slash команд
@@ -32,7 +32,7 @@ import DeployEvents from "./deploy.events";
 
 // Импорт дополнительного материала
 // Services - Все типы сервисов, которые у нас есть (discord, telegram)
-import { Services } from "@voidy/types/dist/all/services.type";
+import { Services } from "v@types/all/services.type";
 
 // Импорт модулей из node.js для просмотра файлов и папок
 // path - помогает найти путь до файлов/папок
@@ -108,13 +108,13 @@ export default Client;
 ### telegram.bot.ts
 
 ```ts
-import { Env } from "@voidy/develop/dist";
+import { Env } from "v@develop";
 
 // Импортируем главный модуль
 import { Telegraf } from "telegraf";
 
 // Импортируем самописный тип взаимодействия
-import type { Interaction } from "@voidy/types/dist/telegram/interaction.type";
+import type { Interaction } from "v@types/telegram/interaction.type";
 
 // Deployer - Наш объявитель команд, props - тип команд
 import Deployer, { Props } from "./deploy.commands";
@@ -189,7 +189,7 @@ export { THEVOIDs_CONSTANTS };
 ```
 ### start.bot.ts
 ```ts
-import { Env, Debug } from "@voidy/develop/dist";
+import { Env, Debug } from "v@develop";
 
 // Инициализация констант
 import "src/index.constants";
@@ -198,7 +198,7 @@ import Logger from "fock-logger";
 import Formatter, { Colors } from "f-formatter";
 
 import loggers from "./loggers.names";
-import { Debug } from "@voidy/develop/dist/debug.develop";
+import { Debug } from "v@develop/debug.develop";
 
 import { LoginDiscord } from "@voidy/discord/dist/src/discord.bot";
 import { LoginTelegram } from "@voidy/telegram/dist/telegram.bot";

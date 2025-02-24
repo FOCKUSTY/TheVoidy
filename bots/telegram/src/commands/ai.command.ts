@@ -1,14 +1,14 @@
-import type { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import type { Response } from "@voidy/types/dist/all/response.type";
-import type { ExecuteData, Option } from "@voidy/types/dist/telegram/options.type";
+import type { Interaction } from "v@types/telegram/interaction.type";
+import type { Response } from "v@types/all/response.type";
+import type { ExecuteData, Option } from "v@types/telegram/options.type";
 import { options } from "../events/message.listener";
 
-import { Services } from "@voidy/types/dist/all/services.type";
+import { Services } from "v@types/all/services.type";
 import { Models, OPENAI_MODELS } from "@thevoidcommunity/the-void-database/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
+import TelegramCommand from "v@types/commands/telegram-command.type";
 
 type FunctionDataType = APIPromise<ChatCompletion> | null;
 type DefaultOption = Option<FunctionDataType, [], [], [string], { text: string }>;

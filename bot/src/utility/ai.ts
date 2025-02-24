@@ -3,10 +3,10 @@ import { Models } from "@thevoidcommunity/the-void-database/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 
-import { Ai as AiService } from "@voidy/types/dist/all/ai-service.type";
-import type { Response } from "@voidy/types/dist/all/response.type";
+import { Ai as AiService } from "v@types/all/ai-service.type";
+import type { Response } from "v@types/all/response.type";
 
-import { Debug, Env } from "@voidy/develop/dist";
+import { Debug, Env } from "v@develop";
 import { Colors } from "f-formatter";
 
 const promts = new Map<string, string>();

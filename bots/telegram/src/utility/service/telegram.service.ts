@@ -1,8 +1,8 @@
-import type { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import { Response } from "@voidy/types/dist/all/response.type";
-import { Debug } from "@voidy/develop/dist";
+import type { Interaction } from "v@types/telegram/interaction.type";
+import { Response } from "v@types/all/response.type";
+import { Debug } from "v@develop";
 
-import { Service } from "@voidy/types/dist/telegram/service.type";
+import { Service } from "v@types/telegram/service.type";
 import { Telegraf, Format } from "telegraf";
 
 import { Message } from "telegraf/typings/core/types/typegram";

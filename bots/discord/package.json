@@ -15,7 +15,6 @@
     "@thevoidcommunity/the-void-database": "2.0.1-alpha.1",
     "@voidy/develop": "workspace:^",
     "@voidy/services": "workspace:^",
-    "@voidy/types": "workspace:^",
     "date-fns": "catalog:",
     "discord.js": "catalog:",
     "f-formatter": "catalog:",
@@ -23,6 +22,7 @@
     "telegraf": "catalog:"
   },
   "devDependencies": {
+    "@voidy/types": "workspace:^",
     "@eslint/js": "catalog:",
     "@types/node": "catalog:",
     "dotenv": "catalog:",

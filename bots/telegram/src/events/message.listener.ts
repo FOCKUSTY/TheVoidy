@@ -1,11 +1,11 @@
 import { Format } from "telegraf";
 
-import type { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import type { Option, SendData } from "@voidy/types/dist/telegram/options.type";
+import type { Interaction } from "v@types/telegram/interaction.type";
+import type { Option, SendData } from "v@types/telegram/options.type";
 
 import Telegram from "../utility/service/telegram.service";
 
-import { Debug } from "@voidy/develop/dist";
+import { Debug } from "v@develop";
 
 type DefaultOption = Option<any, any, any>;
 

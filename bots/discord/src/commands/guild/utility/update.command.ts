@@ -1,4 +1,4 @@
-import { Env } from "@voidy/develop/dist";
+import { Env } from "v@develop";
 
 import {
 	SlashCommandBuilder,
@@ -10,8 +10,8 @@ import {
 	ActionRowBuilder
 } from "discord.js";
 
-import CustomIds from "@voidy/services/dist/modal/custom-ids.modal";
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import CustomIds from "v@services/modal/custom-ids.modal";
+import Command from "v@types/commands/discord-command.type";
 
 const customIds = CustomIds.getIds();
 

@@ -1,4 +1,4 @@
-import { Env } from "@voidy/develop/dist";
+import { Env } from "v@develop";
 
 import { EmbedBuilder, ModalSubmitInteraction, TextChannel } from "discord.js";
 import DiscordModal from "./abstract.modal";

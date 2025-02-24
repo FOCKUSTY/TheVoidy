@@ -1,9 +1,9 @@
-import { Debug, Logger } from "@voidy/develop/dist";
+import { Debug, Logger } from "v@develop";
 
 import { ActivityType, Client as DiscordClient } from "discord.js";
 import { Random } from "random-js";
 
-import { ActivityTypes } from "@voidy/types/dist/activities/activities.enum";
+import { ActivityTypes } from "v@types/activities/activities.enum";
 
 import Formatter from "f-formatter";
 
@@ -14,8 +14,8 @@ import {
 import ObjectLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
 import { Activity } from "@thevoidcommunity/the-void-database/types/activity.types";
 
-import ClientLoader from "@voidy/services/dist/loaders/client.loader";
-import Array from "@voidy/services/dist/service/array.service";
+import ClientLoader from "v@services/loaders/client.loader";
+import Array from "v@services/service/array.service";
 
 const random = new Random();
 const historyObject = new Map();

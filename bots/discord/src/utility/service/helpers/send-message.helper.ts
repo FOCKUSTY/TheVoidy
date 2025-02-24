@@ -1,4 +1,4 @@
-import { Debug } from "@voidy/develop/dist";
+import { Debug } from "v@develop";
 import { ChannelType, Client as DiscordClient, EmbedBuilder } from "discord.js";
 
 const SendMessage = async (

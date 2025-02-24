@@ -1,8 +1,8 @@
-import { Debug, Logger } from "@voidy/develop/dist";
+import { Debug, Logger } from "v@develop";
 
-import type { Interaction } from "@voidy/types/dist/telegram/interaction.type";
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
-import { Services } from "@voidy/types/dist/all/services.type";
+import type { Interaction } from "v@types/telegram/interaction.type";
+import TelegramCommand from "v@types/commands/telegram-command.type";
+import { Services } from "v@types/all/services.type";
 
 import { Telegraf } from "telegraf";
 import Commands from "./index.commands";

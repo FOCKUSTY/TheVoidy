@@ -5,7 +5,7 @@ import SayMessage from "./say-message.modal";
 import Update from "./update.modal";
 import IdeaModal from "./idea.modal";
 
-import { Services } from "@voidy/types/dist/all/services.type";
+import { Services } from "v@types/all/services.type";
 
 class CustomIds {
 	private readonly _services: Services;

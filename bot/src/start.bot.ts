@@ -1,6 +1,6 @@
-import "@voidy/develop";
+import "v@develop";
 
-import { Env, Debug } from "@voidy/develop/dist";
+import { Env, Debug } from "v@develop";
 
 import "src/index.constants";
 
@@ -8,15 +8,15 @@ import Formatter, { Colors } from "f-formatter";
 
 import Loggers from "./loggers.names";
 
-import { LoginDiscord } from "@voidy/discord/dist/discord.bot";
-import { LoginTelegram } from "@voidy/telegram/dist/telegram.bot";
+import { LoginDiscord } from "v@discord/discord.bot";
+import { LoginTelegram } from "v@telegram/telegram.bot";
 
 import Ai from "./utility/ai";
 import GitHubApi from "./utility/laf/github.utility";
-import DiscordService from "@voidy/discord/dist/utility/service/discord.service";
-import TelegramService from "@voidy/telegram/dist/utility/service/telegram.service";
+import DiscordService from "v@discord/utility/service/discord.service";
+import TelegramService from "v@telegram/utility/service/telegram.service";
 
-// Debug.Console.clear();
+Debug.Console.clear();
 Debug.Log([new Formatter().Color("Начало программы", Colors.magenta)]);
 
 const bot = Env.get<false>("BOT") || "all";

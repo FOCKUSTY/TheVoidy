@@ -1,9 +1,9 @@
-import { Env } from "@voidy/develop/dist";
+import { Env } from "v@develop";
 
-import { Services } from "@voidy/types/dist/all/services.type";
-import { GitHubApi } from "@voidy/types/dist/utils/github.type";
+import { Services } from "v@types/all/services.type";
+import { GitHubApi } from "v@types/utils/github.type";
 
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
+import TelegramCommand from "v@types/commands/telegram-command.type";
 import { Random } from "random-js";
 
 import { DateFormatter } from "f-formatter";

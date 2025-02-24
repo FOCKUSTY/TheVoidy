@@ -1,4 +1,4 @@
-import { Repo, GitHubApi as Service } from "@voidy/types/dist/utils/github.type";
+import { Repo, GitHubApi as Service } from "v@types/utils/github.type";
 
 class GitHubApi extends Service {
 	public async getRepositories(

@@ -1,4 +1,4 @@
-import { Colors, Logger } from "@voidy/develop/dist";
+import { Colors, Logger } from "v@develop";
 
 type Names =
 	| "TheVoid"

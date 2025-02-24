@@ -1,4 +1,4 @@
-import { Debug, Env } from "@voidy/develop/dist";
+import { Debug, Env } from "v@develop";
 
 import type { Interaction } from "discord.js";
 import { Collection } from "discord.js";

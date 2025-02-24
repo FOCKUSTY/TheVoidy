@@ -9,10 +9,10 @@ import {
 } from "discord.js";
 
 import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
-import CustomIds from "@voidy/services/dist/modal/custom-ids.modal";
+import CustomIds from "v@services/modal/custom-ids.modal";
 
 import { Random } from "random-js";
-import Command from "@voidy/types/dist/commands/discord-command.type";
+import Command from "v@types/commands/discord-command.type";
 
 const customIds = CustomIds.getIds();
 const objects = new ObjectsLoader().execute();
