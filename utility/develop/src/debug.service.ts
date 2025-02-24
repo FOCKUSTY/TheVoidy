@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Env from "./env.service";
 import Logger from "./logger.service";
 

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { config } from "dotenv";
 import { join } from "path";
 

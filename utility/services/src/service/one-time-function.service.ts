@@ -13,9 +13,9 @@ class OneTimeFunction<T, K> {
 		this._function_arguments = funcParameters;
 	}
 
-	public execute(): T | void {
+	public execute(): T | false {
 		if (functions.get(this._name)) {
-			return;
+			return false;
 		} else {
 			functions.set(this._name, true);
 

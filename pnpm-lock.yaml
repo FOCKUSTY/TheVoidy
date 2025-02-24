@@ -66,7 +66,26 @@ catalogs:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@eslint/js':
+        specifier: 'catalog:'
+        version: 9.21.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.25.0
+        version: 8.25.0(@typescript-eslint/parser@8.25.0(eslint@9.21.0)(typescript@5.7.3))(eslint@9.21.0)(typescript@5.7.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.25.0
+        version: 8.25.0(eslint@9.21.0)(typescript@5.7.3)
+      eslint:
+        specifier: 'catalog:'
+        version: 9.21.0
+      globals:
+        specifier: 'catalog:'
+        version: 15.15.0
+      typescript-eslint:
+        specifier: 'catalog:'
+        version: 8.25.0(eslint@9.21.0)(typescript@5.7.3)
 
   bot:
     dependencies:
@@ -85,9 +104,6 @@ importers:
       '@voidy/telegram':
         specifier: workspace:^
         version: link:../bots/telegram
-      '@voidy/types':
-        specifier: workspace:^
-        version: link:../packages/types
       date-fns:
         specifier: 'catalog:'
         version: 2.30.0
@@ -113,6 +129,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.19
+      '@voidy/types':
+        specifier: workspace:^
+        version: link:../packages/types
       dotenv:
         specifier: 'catalog:'
         version: 16.4.7
@@ -152,9 +171,6 @@ importers:
       '@voidy/services':
         specifier: workspace:^
         version: link:../../utility/services
-      '@voidy/types':
-        specifier: workspace:^
-        version: link:../../packages/types
       date-fns:
         specifier: 'catalog:'
         version: 2.30.0
@@ -177,6 +193,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.19
+      '@voidy/types':
+        specifier: workspace:^
+        version: link:../../packages/types
       dotenv:
         specifier: 'catalog:'
         version: 16.4.7

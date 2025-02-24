@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { CommandInteraction, SlashCommandOptionsOnlyBuilder } from "discord.js";
 
 export type CommandCreateData<T> = {

@@ -11,7 +11,7 @@
     "start:builded": "set NODE_ENV=prod&& set BOT=all&& node -r tsconfig-paths/register dist/src/start.bot.js",
     "start": "set NODE_ENV=prod&& set BOT=all&& yarn run update && yarn run build && yarn run start:slash && yarn run start:builded",
     "update": "fockupdater update",
-    "lint": "eslint eslint.config.mjs --no-warn-ignored src/**/*.{js,mjs,cjs,ts} --fix",
+    "lint": "eslint ../eslint.config.mjs --no-warn-ignored src/**/*.{js,mjs,cjs,ts} --fix",
     "build": "tsc && tsc-alias"
   },
   "author": "FOCKUSTY",

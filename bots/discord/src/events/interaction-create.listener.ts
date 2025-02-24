@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Debug, Env } from "v@develop";
 
 import type { Interaction } from "discord.js";

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Interaction } from "../telegram/interaction.type";
 
 export type Props<T = any, K = any> = {

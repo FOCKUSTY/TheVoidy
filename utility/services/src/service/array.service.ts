@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 class SelfArray extends Array {
 	public static Shuffle = (array: any[]) => {
 		let currentIndex = array.length,

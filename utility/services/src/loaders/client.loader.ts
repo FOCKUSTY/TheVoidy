@@ -12,16 +12,22 @@ const names: string[] = [];
 
 const formatter = new Formatter();
 
+type Objects = {
+	idea: { idea: string, ideaDetail: string }[],
+	download: string[],
+	names: string[]
+};
+
 class ClientLoaderClass {
 	private readonly Logger = new Logger("Loader").execute;
 	private readonly _filter: Filter;
 
-	private readonly _objects: { [key: string]: any };
+	private readonly _objects: Objects;
 	private readonly _guilds: string[] = [];
 	private readonly _users: string[] = [];
 	private readonly _names: string[] = [];
 
-	public constructor(objects: { [key: string]: any }, banwords: string[]) {
+	public constructor(objects: Objects, banwords: string[]) {
 		this._objects = objects;
 		this._filter = new Filter(banwords);
 

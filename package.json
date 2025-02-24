@@ -12,7 +12,15 @@
     "dev:bot": "set NODE_ENV=dev&& set BOT=all&& pnpm --filter voidtype run dev",
     "start:bot": "set NODE_ENV=prod&& set BOT=all&& pnpm --filter voidtype run start:builded",
     "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build:all && pnpm run start:bot",
-    "lint:bot": "pnpm --filter voidtype run lint"
+    "lint": "npx eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "eslint": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:"
   },
   "workspaces": [
     "bot",

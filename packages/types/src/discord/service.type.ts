@@ -1,5 +1,4 @@
 import { Client as DiscordClient, EmbedBuilder } from "discord.js";
-import { Message as TelegramMessage } from "telegraf/typings/core/types/typegram";
 
 import { Response } from "../all/response.type";
 

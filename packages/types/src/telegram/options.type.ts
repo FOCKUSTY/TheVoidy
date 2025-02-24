@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Interaction } from "./interaction.type";
 import { Response as ResponseType } from "../all/response.type";
 

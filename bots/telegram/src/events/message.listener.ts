@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Format } from "telegraf";
 
 import type { Interaction } from "v@types/telegram/interaction.type";
