@@ -20,13 +20,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        run: npm install pnpm
+
       - name: Install ESLint & Prettier
         run: pnpm install
 
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        run: npm run lint
+        run: pnpm run lint
         continue-on-error: false
 
       - name: Run Prettier
