@@ -24,14 +24,9 @@ jobs:
         with:
             version: 10.4.1
 
-      - name: Install ESLint & Prettier
+      - name: Install ESLint
         run: pnpm install
 
       - name: Run ESLint
         run: pnpm run lint
         continue-on-error: false
-
-      - name: Run Prettier
-        run: npx prettier .
-          --config .prettierrc
-          --write "./**/*.ts"
