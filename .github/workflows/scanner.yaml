@@ -19,9 +19,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install pnpm
-        run: npm install pnpm
+      - name: pnpm-setup
+        uses: pnpm/action-setup@v4
 
       - name: Install ESLint & Prettier
         run: pnpm install

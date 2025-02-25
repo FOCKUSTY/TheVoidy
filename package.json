@@ -15,12 +15,12 @@
     "lint": "npx eslint ."
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "catalog:",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
-    "eslint": "^9.18.0",
-    "globals": "^15.14.0",
-    "typescript-eslint": "^8.19.1"
+    "eslint": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:"
   },
   "workspaces": [
     "bot",
