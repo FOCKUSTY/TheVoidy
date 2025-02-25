@@ -1,0 +1,35 @@
+name: Code Scanner
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+
+jobs:
+  eslint:
+    name: Scanner
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install ESLint & Prettier
+        run: npm install
+
+      - name: Run ESLint
+        env:
+          SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
+        run: npm run lint
+        continue-on-error: false
+
+      - name: Run Prettier
+        run: npx prettier .
+          --config .prettierrc
+          --write
