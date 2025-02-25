@@ -34,4 +34,4 @@ jobs:
       - name: Run Prettier
         run: npx prettier .
           --config .prettierrc
-          --write
+          --write "./**/*.ts"
