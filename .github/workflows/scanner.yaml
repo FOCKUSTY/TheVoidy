@@ -38,8 +38,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config --global user.name "your username"
-          git config --global user.email "your email"
+          git config --global user.name "fockusty"
+          git config --global user.email "wwddwwwd@mail.ru"
           git add -A
           git commit -m "-format"
           git push
