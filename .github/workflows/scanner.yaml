@@ -35,11 +35,3 @@ jobs:
         run: npx prettier .
           --config .prettierrc
           --write "./**/*.ts"
-
-      - name: Commit changes
-        run: |
-          git config --global user.name "fockusty"
-          git config --global user.email "wwddwwwd@mail.ru"
-          git add -A
-          git commit -m "-format"
-          git push
