@@ -6,6 +6,7 @@
   "keywords": [],
   "author": "FOCKUSTY",
   "license": "MIT",
+  "packageManager": "pnpm@10.4.1",
   "scripts": {
     "build:all": "pnpm --filter {./**} run build",
     "build:bot": "pnpm --filter voidtype run build",
