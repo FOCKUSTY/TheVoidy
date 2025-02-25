@@ -5,29 +5,27 @@ import { Response } from "../all/response.type";
 import { Interaction } from "./interaction.type";
 
 export abstract class Service {
-	public abstract Send(
-		chatId: number | string,
-		message: string | Format.FmtString
-	): Promise<Response<string | Message.TextMessage>>;
+  public abstract Send(
+    chatId: number | string,
+    message: string | Format.FmtString
+  ): Promise<Response<string | Message.TextMessage>>;
 
-	public abstract SendAnonMessage(
-		chatId: string,
-		message: string | string[],
-		userId: string
-	): Promise<
-		Response<
-			| string
-			| undefined
-			| { text: string; data: Message.TextMessage; userId: string | number }
-		>
-	>;
+  public abstract SendAnonMessage(
+    chatId: string,
+    message: string | string[],
+    userId: string
+  ): Promise<
+    Response<
+      string | undefined | { text: string; data: Message.TextMessage; userId: string | number }
+    >
+  >;
 
-	public abstract SendMessage(
-		chatId: number | string,
-		message: string | string[]
-	): Promise<Response<string | Message.TextMessage>>;
+  public abstract SendMessage(
+    chatId: number | string,
+    message: string | string[]
+  ): Promise<Response<string | Message.TextMessage>>;
 
-	public abstract GetChatId(message: Interaction): Promise<Response<string | number>>;
+  public abstract GetChatId(message: Interaction): Promise<Response<string | number>>;
 
-	abstract get client(): Telegraf;
+  abstract get client(): Telegraf;
 }

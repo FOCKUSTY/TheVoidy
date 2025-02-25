@@ -19,6 +19,6 @@ deployer.update(globalCommands, "global");
 deployer.update(guildCommands, "guild");
 
 export = {
-	global: globalCommands,
-	guild: guildCommands
+  global: globalCommands,
+  guild: guildCommands
 };

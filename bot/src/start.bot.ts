@@ -24,25 +24,25 @@ const bot = Env.get<false>("BOT") || "all";
 new Loggers().execute();
 
 (async () => {
-	const services = {
-		discord: new DiscordService(),
-		telegram: new TelegramService(),
-		ai: new Ai(),
-		github: new GitHubApi()
-	};
+  const services = {
+    discord: new DiscordService(),
+    telegram: new TelegramService(),
+    ai: new Ai(),
+    github: new GitHubApi()
+  };
 
-	switch (bot) {
-		case "discord":
-			LoginDiscord(Env.get("CLIENT_TOKEN"), services);
-			break;
+  switch (bot) {
+    case "discord":
+      LoginDiscord(Env.get("CLIENT_TOKEN"), services);
+      break;
 
-		case "telegram":
-			LoginTelegram(services);
-			break;
+    case "telegram":
+      LoginTelegram(services);
+      break;
 
-		default:
-			LoginDiscord(Env.get("CLIENT_TOKEN"), services);
-			LoginTelegram(services);
-			break;
-	}
+    default:
+      LoginDiscord(Env.get("CLIENT_TOKEN"), services);
+      LoginTelegram(services);
+      break;
+  }
 })();

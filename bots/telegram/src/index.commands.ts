@@ -1,24 +1,24 @@
 import { Props as Command } from "v@types/commands/telegram-command.type";
 
 class Commands<T = unknown, K = unknown> {
-	private readonly _commands: string[] = [];
-	private readonly _full_commands: Command<T, K>[] = [];
+  private readonly _commands: string[] = [];
+  private readonly _full_commands: Command<T, K>[] = [];
 
-	public setCommand(command: Command<T, K>) {
-		this._full_commands.push(command);
-	}
+  public setCommand(command: Command<T, K>) {
+    this._full_commands.push(command);
+  }
 
-	public set commands(name: string) {
-		this._commands.push(name);
-	}
+  public set commands(name: string) {
+    this._commands.push(name);
+  }
 
-	public get fullCommands(): Command<T, K>[] {
-		return this._full_commands;
-	}
+  public get fullCommands(): Command<T, K>[] {
+    return this._full_commands;
+  }
 
-	public get commands(): string[] {
-		return this._commands;
-	}
+  public get commands(): string[] {
+    return this._commands;
+  }
 }
 
 export default new Commands();

@@ -1,11 +1,11 @@
 import {
-	SlashCommandBuilder,
-	ModalActionRowComponentBuilder,
-	CommandInteraction,
-	TextInputBuilder,
-	TextInputStyle,
-	ModalBuilder,
-	ActionRowBuilder
+  SlashCommandBuilder,
+  ModalActionRowComponentBuilder,
+  CommandInteraction,
+  TextInputBuilder,
+  TextInputStyle,
+  ModalBuilder,
+  ActionRowBuilder
 } from "discord.js";
 
 import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
@@ -18,47 +18,47 @@ const customIds = CustomIds.getIds();
 const objects = new ObjectsLoader().execute();
 
 export default new Command({
-	data: new SlashCommandBuilder()
-		.setName("idea")
-		.setDescription("Отправить свою идею!")
-		.setNameLocalizations({ ru: "идея", "en-US": "idea" })
-		.setDescriptionLocalizations({
-			ru: "Отправить свою идею",
-			"en-US": "Send a your idea"
-		}),
+  data: new SlashCommandBuilder()
+    .setName("idea")
+    .setDescription("Отправить свою идею!")
+    .setNameLocalizations({ ru: "идея", "en-US": "idea" })
+    .setDescriptionLocalizations({
+      ru: "Отправить свою идею",
+      "en-US": "Send a your idea"
+    }),
 
-	async execute(interaction: CommandInteraction) {
-		const components = customIds.ideaModal.components;
-		const idea: { idea: string; ideaDetail: string }[] = objects.idea;
+  async execute(interaction: CommandInteraction) {
+    const components = customIds.ideaModal.components;
+    const idea: { idea: string; ideaDetail: string }[] = objects.idea;
 
-		const modal = new ModalBuilder()
-			.setCustomId(customIds.ideaModal.id)
-			.setTitle("Ваше сообщение !");
-		const randomNumber = new Random().integer(0, idea.length - 1);
-		const placeholderTitle = idea[randomNumber].idea;
-		const placeholderDescriptioin = idea[randomNumber].ideaDetail;
+    const modal = new ModalBuilder()
+      .setCustomId(customIds.ideaModal.id)
+      .setTitle("Ваше сообщение !");
+    const randomNumber = new Random().integer(0, idea.length - 1);
+    const placeholderTitle = idea[randomNumber].idea;
+    const placeholderDescriptioin = idea[randomNumber].ideaDetail;
 
-		modal.addComponents(
-			new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
-				new TextInputBuilder()
-					.setCustomId(components.title)
-					.setLabel("Заголовок Вашей идеи")
-					.setStyle(TextInputStyle.Short)
-					.setRequired(true)
-					.setMaxLength(256)
-					.setPlaceholder(placeholderTitle)
-			),
-			new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
-				new TextInputBuilder()
-					.setCustomId(components.description)
-					.setLabel("Ваша идея (Описание)")
-					.setStyle(TextInputStyle.Paragraph)
-					.setRequired(true)
-					.setMaxLength(4000)
-					.setPlaceholder(placeholderDescriptioin)
-			)
-		);
+    modal.addComponents(
+      new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
+        new TextInputBuilder()
+          .setCustomId(components.title)
+          .setLabel("Заголовок Вашей идеи")
+          .setStyle(TextInputStyle.Short)
+          .setRequired(true)
+          .setMaxLength(256)
+          .setPlaceholder(placeholderTitle)
+      ),
+      new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
+        new TextInputBuilder()
+          .setCustomId(components.description)
+          .setLabel("Ваша идея (Описание)")
+          .setStyle(TextInputStyle.Paragraph)
+          .setRequired(true)
+          .setMaxLength(4000)
+          .setPlaceholder(placeholderDescriptioin)
+      )
+    );
 
-		await interaction.showModal(modal);
-	}
+    await interaction.showModal(modal);
+  }
 });
