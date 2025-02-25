@@ -28,8 +28,6 @@ jobs:
         run: pnpm install
 
       - name: Run ESLint
-        env:
-          SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
         run: pnpm run lint
         continue-on-error: false
 
