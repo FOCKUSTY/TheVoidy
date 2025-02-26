@@ -10,8 +10,8 @@ catalogs:
       specifier: ^9.18.0
       version: 9.21.0
     '@thevoidcommunity/the-void-database':
-      specifier: latest
-      version: 2.0.1-alpha.1
+      specifier: 2.1.0-alpha.1
+      version: 2.1.0-alpha.1
     '@types/node':
       specifier: ^20.16.1
       version: 20.17.19
@@ -28,10 +28,10 @@ catalogs:
       specifier: ^9.18.0
       version: 9.21.0
     f-formatter:
-      specifier: latest
+      specifier: 0.3.1
       version: 0.3.1
     fock-logger:
-      specifier: latest
+      specifier: 2.3.1
       version: 2.3.1
     globals:
       specifier: ^15.14.0
@@ -91,7 +91,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.0.1-alpha.1(ws@8.18.1)
+        version: 2.1.0-alpha.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../utility/develop
@@ -163,8 +163,8 @@ importers:
   bots/discord:
     dependencies:
       '@thevoidcommunity/the-void-database':
-        specifier: 2.0.1-alpha.1
-        version: 2.0.1-alpha.1(ws@8.18.1)
+        specifier: 'catalog:'
+        version: 2.1.0-alpha.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -228,7 +228,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.0.1-alpha.1(ws@8.18.1)
+        version: 2.1.0-alpha.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -292,7 +292,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.0.1-alpha.1(ws@8.18.1)
+        version: 2.1.0-alpha.1(ws@8.18.1)
       discord.js:
         specifier: 'catalog:'
         version: 14.18.0
@@ -495,8 +495,8 @@ packages:
   '@telegraf/types@7.1.0':
     resolution: {integrity: sha512-kGevOIbpMcIlCDeorKGpwZmdH7kHbqlk/Yj6dEpJMKEQw5lk0KVQY0OLXaCswy8GqlIVLd5625OB+rAntP9xVw==}
 
-  '@thevoidcommunity/the-void-database@2.0.1-alpha.1':
-    resolution: {integrity: sha512-rLtdufBsD3WRhFFbOQbxJyXBvfpAvX7rH+nxHVdkTL+uS4SNsfDMIGBaf5M7yvg77uwxjI5nxDApp5Es6TF1dA==}
+  '@thevoidcommunity/the-void-database@2.1.0-alpha.1':
+    resolution: {integrity: sha512-Ro5tU4DUIES4g+zn8wKFMWj7zBJHvZGGfrdMrTM8ja6Q9FSTztpeteWJDZgf3v54O0oyjMS1iXS963V71Bqx8Q==}
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -1621,7 +1621,7 @@ snapshots:
 
   '@telegraf/types@7.1.0': {}
 
-  '@thevoidcommunity/the-void-database@2.0.1-alpha.1(ws@8.18.1)':
+  '@thevoidcommunity/the-void-database@2.1.0-alpha.1(ws@8.18.1)':
     dependencies:
       f-formatter: 0.3.1
       fock-builder: 1.0.2-beta
