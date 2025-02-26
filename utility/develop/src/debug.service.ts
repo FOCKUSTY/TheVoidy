@@ -26,7 +26,7 @@ class Debug {
 
   public static readonly Console = console;
 
-  private static readonly WarnComponent = <T extends string | Error = string>(
+  private static readonly WarnComponent = <T extends string | Error | unknown = string>(
     msg: T | T[],
     type: "error" | "warn"
   ) => {
@@ -38,7 +38,7 @@ class Debug {
         ? (err.stack || err.message)
         : err) + warn,
       undefined, 4
-    ));
+    )).join("\n");
 
     this[logger].execute(text);
 
@@ -66,7 +66,7 @@ class Debug {
     console.trace();
   };
 
-  public static readonly Error = <T extends string | Error = string>(error?: T|T[]) => {
+  public static readonly Error = <T extends string | Error | unknown = string>(error?: T|T[]) => {
     if (!error) return "no error there";
 
     if (!(error instanceof Error) && typeof error !== "string")
@@ -75,7 +75,7 @@ class Debug {
     return this.WarnComponent<T>(error, "error");
   };
 
-  public static readonly Warn = <T extends string | Error = string>(msg?: T|T[]) => {
+  public static readonly Warn = <T extends string | Error | unknown = string>(msg?: T|T[]) => {
     if (!msg) return "no msg there";
 
     if (!(msg instanceof Error) && typeof msg !== "string")
