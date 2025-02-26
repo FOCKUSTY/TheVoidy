@@ -3,7 +3,7 @@
 import Env from "./env.service";
 import Logger from "./logger.service";
 
-const warn = "------------- !Внимание! --------------";
+const warn = "\n------------- !Внимание! --------------\n";
 
 class Debug {
   private static readonly _log: Logger<"Debugger"> = new Logger("Debugger", {
@@ -30,31 +30,35 @@ class Debug {
     msg: T | T[],
     type: "error" | "warn"
   ) => {
-    const error: Error | string = Array.isArray(msg) ? msg.join(" ") : msg;
+    const logger = `_${type}` as `_${typeof type}`;
+    const error: T[] = Array.isArray(msg) ? msg : [msg];
 
-    const text =
-      typeof error === "string"
-        ? "\n" + warn + "\n" + error + "\n" + warn
-        : "\n" + warn + "\n" + (error?.stack || error?.message || error) + "\n" + warn;
+    const text = error.map(err => JSON.stringify(
+      warn + ((err instanceof Error)
+        ? (err.stack || err.message)
+        : err) + warn,
+      undefined, 4
+    ));
 
-    if (type === "error") {
-      this._error.execute(text);
-    } else {
-      this._warn.execute(text);
-    }
+    this[logger].execute(text);
 
     return text;
   };
 
-  public static readonly Log = (message: unknown[], enabled?: boolean, trace?: boolean): void => {
+  public static readonly Log = <T extends string | Error | unknown = unknown>(message: T[], enabled?: boolean, trace?: boolean): void => {
     if ((enabled || Env.data.DEVELOP_MODE === "true") && !trace) this._log.execute(message);
 
     if (trace) {
-      const text = message.map((msg) => JSON.stringify(msg, undefined, 4)).join("\n");
-      const error = new Error(text);
+      const text = message.map((msg) => JSON.stringify(
+        (msg instanceof Error)
+          ? (msg.stack || msg.message)
+          : (typeof msg === "string")
+            ? (new Error(msg).stack || msg)
+            : msg
+      )).join("\n");
 
-      this._log.execute(error.stack || error.message);
-      this._log.write(error.stack || error.message);
+      this._log.execute(text);
+      this._log.write(text);
     }
   };
 
@@ -62,22 +66,22 @@ class Debug {
     console.trace();
   };
 
-  public static readonly Error = <T = string>(error?: T) => {
+  public static readonly Error = <T extends string | Error = string>(error?: T|T[]) => {
     if (!error) return "no error there";
 
     if (!(error instanceof Error) && typeof error !== "string")
       return "your error is not error or string";
 
-    return this.WarnComponent(JSON.stringify(error, undefined, 4), "error");
+    return this.WarnComponent<T>(error, "error");
   };
 
-  public static readonly Warn = <T = string>(msg?: T) => {
-    if (!msg) return "no msg therr";
+  public static readonly Warn = <T extends string | Error = string>(msg?: T|T[]) => {
+    if (!msg) return "no msg there";
 
     if (!(msg instanceof Error) && typeof msg !== "string")
       return "your msg is not error or string";
 
-    return this.WarnComponent(msg, "warn");
+    return this.WarnComponent<T>(msg, "warn");
   };
 }
 
