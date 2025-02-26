@@ -14,8 +14,8 @@ class Command<T = any, K = any> {
     "По какой-то причине у данной команды не было записано функции для её исполенения.\n" +
     "Если Вы видите это сообщение, срочно обратитесь к нам: https://discord.gg/5MJrRjzPec";
 
-  private readonly _name: string = "ERROR_NO_NAME";
-  private readonly _options: string[] = [];
+  public readonly name: string = "ERROR_NO_NAME";
+  public readonly options: string[] = [];
   public readonly executeFunc: (...data: T[]) => K;
   public readonly execute: (interaction: Interaction) => Promise<any> = async (
     interaction: Interaction
@@ -24,18 +24,10 @@ class Command<T = any, K = any> {
   };
 
   public constructor(data: Props<T, K>) {
-    this._name = data.name;
-    this._options = data.options || [];
+    this.name = data.name;
+    this.options = data.options || [];
     this.execute = data.execute;
     this.executeFunc = data.executeFunc;
-  }
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public get options(): string[] {
-    return this._options;
   }
 }
 

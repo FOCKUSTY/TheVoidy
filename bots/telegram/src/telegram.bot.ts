@@ -12,7 +12,7 @@ import SlashCommandsListener from "./events/slash-commands.listener";
 import path from "path";
 import fs from "fs";
 
-const Client = new Telegraf(process.env.TELEGRAM_TOKEN || "");
+const Client = new Telegraf(Env.get("TELEGRAM_TOKEN"));
 
 Client.on("message", async (message: Interaction) => {
   SlashCommandsListener(message);
