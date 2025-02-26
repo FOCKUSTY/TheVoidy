@@ -4,6 +4,7 @@ import Env from "./env.service";
 import Logger from "./logger.service";
 
 const warn = "\n------------- !Внимание! --------------\n";
+const toString = <T = unknown>(data: T) => JSON.stringify(data, undefined, 2);
 
 class Debug {
   private static readonly _log: Logger<"Debugger"> = new Logger("Debugger", {
@@ -35,11 +36,9 @@ class Debug {
 
     const text = error
       .map((err) =>
-        JSON.stringify(
-          warn + (err instanceof Error ? err.stack || err.message : err) + warn,
-          undefined,
-          4
-        )
+        warn
+        + (err instanceof Error ? err.stack || err.message : err)
+        + warn
       )
       .join("\n");
 
@@ -58,13 +57,11 @@ class Debug {
     if (trace) {
       const text = message
         .map((msg) =>
-          JSON.stringify(
-            msg instanceof Error
-              ? msg.stack || msg.message
-              : typeof msg === "string"
-                ? new Error(msg).stack || msg
-                : msg
-          )
+          msg instanceof Error
+            ? msg.stack || msg.message
+            : typeof msg === "string"
+              ? new Error(msg).stack || msg
+              : toString(msg)
         )
         .join("\n");
 
