@@ -46,7 +46,9 @@ export default class Deployer {
         });
         Client.command(command.name, async (message: Interaction) => command.execute(message));
       } else
-        Debug.Error(new Error(`Потерян execute или name в ${command?.name || fileName}\nПуть: ${filePath}`));
+        Debug.Error(
+          new Error(`Потерян execute или name в ${command?.name || fileName}\nПуть: ${filePath}`)
+        );
     }
   }
 }
