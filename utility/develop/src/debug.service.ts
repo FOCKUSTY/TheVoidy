@@ -48,10 +48,12 @@ class Debug {
   };
 
   public static readonly Log = <T extends string | Error | unknown = unknown>(
-    message: T[],
+    message: T|T[],
     enabled?: boolean,
     trace?: boolean
   ): void => {
+    message = (Array.isArray(message) ? message : [message]);
+    
     if ((enabled || Env.data.DEVELOP_MODE === "true") && !trace) this._log.execute(message);
 
     if (trace) {
