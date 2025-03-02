@@ -35,11 +35,7 @@ class Debug {
     const error: T[] = Array.isArray(msg) ? msg : [msg];
 
     const text = error
-      .map((err) =>
-        warn
-        + (err instanceof Error ? err.stack || err.message : err)
-        + warn
-      )
+      .map((err) => warn + (err instanceof Error ? err.stack || err.message : err) + warn)
       .join("\n");
 
     this[logger].execute(text);
@@ -48,12 +44,12 @@ class Debug {
   };
 
   public static readonly Log = <T extends string | Error | unknown = unknown>(
-    message: T|T[],
+    message: T | T[],
     enabled?: boolean,
     trace?: boolean
   ): void => {
-    message = (Array.isArray(message) ? message : [message]);
-    
+    message = Array.isArray(message) ? message : [message];
+
     if ((enabled || Env.data.DEVELOP_MODE === "true") && !trace) this._log.execute(message);
 
     if (trace) {

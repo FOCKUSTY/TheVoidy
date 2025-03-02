@@ -43,9 +43,16 @@ export default class Command extends TelegramCommand {
         if (!repoOwners.includes(type || "users"))
           return await interaction.reply("Тип владельца может быть только orgs или users");
 
-        const { status, text: statusText, repos: repositories } = await services.github.getRepositories(owner, type, [".github"]);
-        
-        if (status !== 200) return await interaction.reply("Мы не смогли найти репозитории. Статус: " + status + "\nТекст: " + statusText)
+        const {
+          status,
+          text: statusText,
+          repos: repositories
+        } = await services.github.getRepositories(owner, type, [".github"]);
+
+        if (status !== 200)
+          return await interaction.reply(
+            "Мы не смогли найти репозитории. Статус: " + status + "\nТекст: " + statusText
+          );
 
         const repos: [string, string, string][] = repositories
           .filter((r) => services.github.repositoryCommited(r, week))
@@ -66,7 +73,8 @@ export default class Command extends TelegramCommand {
           }
         ];
 
-        if (repos.length === 0) return await interaction.reply("Не было обновлений за последнию неделю");
+        if (repos.length === 0)
+          return await interaction.reply("Не было обновлений за последнию неделю");
 
         for (const repo of repos) {
           const date = `${new DateFormatter().Date(Date.parse(repo[2]), "dd.MM.yyyy HH:mm:ss")}`;

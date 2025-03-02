@@ -1,11 +1,7 @@
 import { Repo, GitHubApi as Service } from "v@types/utils/github.type";
 
 class GitHubApi extends Service {
-  public async getRepositories(
-    owner: string,
-    type: string,
-    ignoredRepo: string[] = [".github"]
-  ) {
+  public async getRepositories(owner: string, type: string, ignoredRepo: string[] = [".github"]) {
     try {
       const data = await fetch(`https://api.github.com/${type}/${owner}/repos`, {
         method: "GET",
@@ -19,7 +15,9 @@ class GitHubApi extends Service {
       return {
         status: data.status,
         text: data.statusText,
-        repos: (Array.isArray(repos) ? repos : []).filter((r: Repo) => !ignoredRepo.includes(r.name))
+        repos: (Array.isArray(repos) ? repos : []).filter(
+          (r: Repo) => !ignoredRepo.includes(r.name)
+        )
       };
     } catch (err: any) {
       return {

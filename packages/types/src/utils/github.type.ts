@@ -44,12 +44,12 @@ export interface Repo {
   "watchers": number;
 }
 
-export const repoOwners = [ "orgs", "users" ] as const;
+export const repoOwners = ["orgs", "users"] as const;
 export type RepoOwners = (typeof repoOwners)[number];
 export type RepoReturn = {
-  status: number,
-  text: string,
-  repos: Repo[]
+  status: number;
+  text: string;
+  repos: Repo[];
 };
 
 export abstract class GitHubApi {
