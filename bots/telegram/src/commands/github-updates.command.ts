@@ -1,7 +1,7 @@
 import { Env } from "v@develop";
 
 import { Services } from "v@types/all/services.type";
-import { GitHubApi } from "v@types/utils/github.type";
+import { GitHubApi, repoOwners } from "v@types/utils/github.type";
 
 import TelegramCommand from "v@types/commands/telegram-command.type";
 import { Random } from "random-js";
@@ -16,8 +16,8 @@ const cats = ["Рыжий", "Персидский", "Голубой", "Серы�
 
 const week = 7 * 24 * 60 * 60 * 1000;
 const dash = "—";
-
-const ownerTypes = ["users", "orgs"];
+const conclusion = "Итоги за неделю\n";
+const updates = "За последнее время были обновлены:\n";
 
 const getCat = () => cats[new Random().integer(0, cats.length - 1)];
 
@@ -33,23 +33,23 @@ export default class Command extends TelegramCommand {
         if (!ids.includes(`${interaction.from.id}`))
           return await interaction.reply("Произошла ошибка, кот ошибки: " + getCat() + " 2");
 
-        if (interaction.message.text.split(" ").length !== 3)
+        if (interaction.message.text.split(" ").length < 3 && interaction.message.text.length === 1)
           return await interaction.reply(
-            "Вы должны ввести команду и название владельца репозиториев, к примеру: /github-updated Lazy-And-Focused orgs\nПервый аргумент - название владельца репозитория, второй - тип владельца, может быть: orgs или users"
+            "Вы должны ввести команду и название владельца репозиториев, к примеру: /github-updates Lazy-And-Focused orgs\nПервый аргумент - название владельца репозитория, второй - тип владельца, может быть: orgs или users\nПо умолчанию: users"
           );
 
         const [_, owner, type] = interaction.message.text.split(" ");
 
-        if (!ownerTypes.includes(type))
+        if (!repoOwners.includes(type || "users"))
           return await interaction.reply("Тип владельца может быть только orgs или users");
 
-        const repositories = await services.github.getRepositories(owner, type, [".github"]);
-        const repos = repositories
+        const { status, text: statusText, repos: repositories } = await services.github.getRepositories(owner, type, [".github"]);
+        
+        if (status !== 200) return await interaction.reply("Мы не смогли найти репозитории. Статус: " + status + "\nТекст: " + statusText)
+
+        const repos: [string, string, string][] = repositories
           .filter((r) => services.github.repositoryCommited(r, week))
           .map((r) => [r.name, r.html_url, `${r.pushed_at}`]);
-
-        const conclusion = "Итоги за неделю\n";
-        const updates = "За последнее время были обновлены:\n";
 
         let text = conclusion + updates;
 
@@ -65,6 +65,8 @@ export default class Command extends TelegramCommand {
             type: "bold"
           }
         ];
+
+        if (repos.length === 0) return await interaction.reply("Не было обновлений за последнию неделю");
 
         for (const repo of repos) {
           const date = `${new DateFormatter().Date(Date.parse(repo[2]), "dd.MM.yyyy HH:mm:ss")}`;
