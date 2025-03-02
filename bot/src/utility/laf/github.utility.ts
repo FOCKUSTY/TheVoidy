@@ -5,20 +5,28 @@ class GitHubApi extends Service {
     owner: string,
     type: string,
     ignoredRepo: string[] = [".github"]
-  ): Promise<Repo[]> {
+  ) {
     try {
-      const data: Repo[] = await (
-        await fetch(`https://api.github.com/${type}/${owner}/repos`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-      ).json();
+      const data = await fetch(`https://api.github.com/${type}/${owner}/repos`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
 
-      return data.filter((r: Repo) => !ignoredRepo.includes(r.name));
-    } catch {
-      return [];
+      const repos: Repo[] | { status: number } = await data.json();
+
+      return {
+        status: data.status,
+        text: data.statusText,
+        repos: (Array.isArray(repos) ? repos : []).filter((r: Repo) => !ignoredRepo.includes(r.name))
+      };
+    } catch (err: any) {
+      return {
+        status: 404,
+        text: err,
+        repos: []
+      };
     }
   }
 
