@@ -44,12 +44,20 @@ export interface Repo {
   "watchers": number;
 }
 
+export const repoOwners = [ "orgs", "users" ] as const;
+export type RepoOwners = (typeof repoOwners)[number];
+export type RepoReturn = {
+  status: number,
+  text: string,
+  repos: Repo[]
+};
+
 export abstract class GitHubApi {
   public abstract getRepositories(
     owner: string,
-    type: string,
+    type: RepoOwners,
     ignoredRepo: string[]
-  ): Promise<Repo[]>;
+  ): Promise<RepoReturn>;
 
   /**
    * @param getRepository - A some repository
