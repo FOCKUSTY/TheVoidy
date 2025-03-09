@@ -1,9 +1,9 @@
-import Command from "v@types/commands/discord-command.type";
+import { Voidy } from "v@types";
 
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { Random } from "random-js";
 
-export default new Command({
+export default new Voidy.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("8ball")
     .setDescription("Предсказание будущего !")

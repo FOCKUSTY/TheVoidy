@@ -1,8 +1,7 @@
 import { Debug, Logger } from "v@develop";
 
-import type { Interaction } from "v@types/telegram/interaction.type";
+import { Voidy } from "v@types";
 import TelegramCommand from "v@types/commands/telegram-command.type";
-import { Services } from "v@types/all/services.type";
 
 import { Telegraf } from "telegraf";
 import Commands from "./index.commands";
@@ -11,16 +10,16 @@ import path from "node:path";
 
 export const commands = new Map<
   string,
-  { execute: (interaction: Interaction) => Promise<void>; options: string[] }
+  { execute: (interaction: Voidy.Telegram.Interaction) => Promise<void>; options: string[] }
 >();
 
-type Command = new (services: Services) => TelegramCommand;
+type Command = new (services: Voidy.Services) => TelegramCommand;
 
 export default class Deployer {
   private readonly _logger = new Logger("Commands");
-  private readonly _services: Services;
+  private readonly _services: Voidy.Services;
 
-  public constructor(services: Services) {
+  public constructor(services: Voidy.Services) {
     this._services = services;
   }
 
@@ -44,7 +43,7 @@ export default class Deployer {
           executeFunc: command.executeFunc,
           execute: command.execute
         });
-        Client.command(command.name, async (message: Interaction) => command.execute(message));
+        Client.command(command.name, async (message: Voidy.Telegram.Interaction) => command.execute(message));
       } else
         Debug.Error(
           new Error(`Потерян execute или name в ${command?.name || fileName}\nПуть: ${filePath}`)

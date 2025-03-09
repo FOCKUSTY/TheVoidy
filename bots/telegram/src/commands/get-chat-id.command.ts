@@ -1,12 +1,10 @@
-import { Interaction } from "v@types/telegram/interaction.type";
-import TelegramCommand from "v@types/commands/telegram-command.type";
-import { Services } from "v@types/all/services.type";
+import { Voidy } from "v@types";
 
-export default class Command extends TelegramCommand {
-  public constructor(services: Services) {
+export default class Command extends Voidy.Telegram.Command {
+  public constructor(services: Voidy.Services) {
     super({
       name: "get_chat_id",
-      async execute(interaction: Interaction) {
+      async execute(interaction: Voidy.Telegram.Interaction) {
         return await interaction.reply(`${(await services.telegram.GetChatId(interaction)).data}`);
       }
     });

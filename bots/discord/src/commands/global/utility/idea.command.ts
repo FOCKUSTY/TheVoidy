@@ -12,12 +12,12 @@ import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/obje
 import CustomIds from "v@services/modal/custom-ids.modal";
 
 import { Random } from "random-js";
-import Command from "v@types/commands/discord-command.type";
+import { Voidy } from "v@types";
 
 const customIds = CustomIds.getIds();
 const objects = new ObjectsLoader().execute();
 
-export default new Command({
+export default new Voidy.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("idea")
     .setDescription("Отправить свою идею!")

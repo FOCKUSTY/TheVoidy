@@ -1,5 +1,5 @@
 import { Env, Logger, Debug, Colors } from "v@develop";
-import Command from "v@types/commands/discord-command.type";
+import { Voidy } from "v@types";
 
 import { REST, Routes } from "discord.js";
 

@@ -1,12 +1,10 @@
 import TelegramCommand from "v@types/commands/telegram-command.type";
-import { Interaction } from "v@types/telegram/interaction.type";
-import { ExecuteData, Option } from "v@types/telegram/options.type";
+import { Voidy } from "v@types";
 
 import { Message } from "telegraf/typings/core/types/typegram";
 import { anonMessages, options } from "../events/message.listener";
-import { Services } from "v@types/all/services.type";
 
-type DefaultOption = Option<
+type DefaultOption = Voidy.Telegram.Option<
   | string
   | undefined
   | {
@@ -18,7 +16,7 @@ type DefaultOption = Option<
   [string],
   [string]
 >;
-type DefaultExecuteData = ExecuteData<
+type DefaultExecuteData = Voidy.Telegram.ExecuteData<
   DefaultOption,
   | string
   | undefined
@@ -30,11 +28,11 @@ type DefaultExecuteData = ExecuteData<
 >;
 
 export default class Command extends TelegramCommand {
-  public constructor(services: Services) {
+  public constructor(services: Voidy.Services) {
     super({
       name: "send_anonimus_message",
       options: ["userId", "message"],
-      async execute(interaction: Interaction) {
+      async execute(interaction: Voidy.Telegram.Interaction) {
         if (!interaction.from) return;
 
         const replyOptions: DefaultOption[] = [
@@ -82,7 +80,7 @@ export default class Command extends TelegramCommand {
 
         await interaction.reply(replyOptions[0].text);
       },
-      async executeFunc(interaction: Interaction, userId: number | string) {
+      async executeFunc(interaction: Voidy.Telegram.Interaction, userId: number | string) {
         if (!interaction.from) return;
 
         const replyOptions: DefaultOption[] = [

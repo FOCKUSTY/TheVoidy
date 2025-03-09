@@ -1,9 +1,9 @@
-import Command from "v@types/commands/discord-command.type";
+import { Voidy } from "v@types";
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import type { CommandInteraction, Role, Collection, EmbedField } from "discord.js";
 import Formatter from "f-formatter";
 
-export default new Command({
+export default new Voidy.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("roles")
     .setDescription("Все роли на сервере !")

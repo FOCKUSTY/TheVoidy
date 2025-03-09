@@ -1,15 +1,16 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Format } from "telegraf";
 
-import type { Interaction } from "v@types/telegram/interaction.type";
-import type { Option, SendData } from "v@types/telegram/options.type";
+import { Voidy } from "v@types";
 
 import Telegram from "../utility/service/telegram.service";
 
 import { Debug } from "v@develop";
 
-type DefaultOption = Option<any, any, any>;
+type Interaction = Voidy.Telegram.Interaction;
+type DefaultOption = Voidy.Telegram.Option<any, any, any>;
 
 const messages = new Map<string, number>();
 const options = new Map<string, DefaultOption[]>();
@@ -27,7 +28,7 @@ const lastMessageEquals = (userId: number | string, msg: Interaction) => {
 };
 
 const send = async <T, R extends { [key: string]: any } = {}>(
-  data: SendData<T, string | ({ text: string } & R)>
+  data: Voidy.Telegram.SendData<T, string | ({ text: string } & R)>
 ) => {
   if (data.response.type === 1) {
     const res =

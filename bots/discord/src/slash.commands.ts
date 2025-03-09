@@ -1,5 +1,7 @@
 import Deployer from "./deploy.commands";
-import { Command } from "./command.commands";
+import { Voidy } from "v@types";
+
+type Command = Voidy.Discord.Command;
 
 import path from "path";
 import fs from "fs";

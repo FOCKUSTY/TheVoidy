@@ -1,25 +1,20 @@
-import type { Interaction } from "v@types/telegram/interaction.type";
-import type { Response } from "v@types/all/response.type";
-import type { ExecuteData, Option } from "v@types/telegram/options.type";
+import { Voidy } from "v@types";
 import { options } from "../events/message.listener";
 
-import { Services } from "v@types/all/services.type";
 import { Models, OPENAI_MODELS } from "@thevoidcommunity/the-void-database/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 
-import TelegramCommand from "v@types/commands/telegram-command.type";
-
 type FunctionDataType = APIPromise<ChatCompletion> | null;
-type DefaultOption = Option<FunctionDataType, [], [], [string], { text: string }>;
-type DefaultExectuteData = ExecuteData<DefaultOption, FunctionDataType, { text: string }>;
+type DefaultOption = Voidy.Telegram.Option<FunctionDataType, [], [], [string], { text: string }>;
+type DefaultExectuteData = Voidy.Telegram.ExecuteData<DefaultOption, FunctionDataType, { text: string }>;
 
-export default class Command extends TelegramCommand {
-  public constructor(services: Services) {
+export default class Command extends Voidy.Telegram.Command {
+  public constructor(services: Voidy.Services) {
     super({
       name: "ai",
       options: ["promt"],
-      async execute(interaction: Interaction) {
+      async execute(interaction: Voidy.Telegram.Interaction) {
         const command = interaction.message.text.split(" ");
         const model: Models = OPENAI_MODELS.includes(command[1])
           ? (command[1] as Models)
@@ -41,7 +36,7 @@ export default class Command extends TelegramCommand {
             option: "end",
             error: "Произошли проблемы...\nОшибка:\n%ERROR%",
             text: "%SUCCESS%\nОтвет:\n%MESSAGE%",
-            function: async (promt: string): Promise<Response<FunctionDataType>> => {
+            function: async (promt: string): Promise<Voidy.Response<FunctionDataType>> => {
               const data = services.ai.chat(promt, "Спасибо, что пользуетесь The Void", model);
 
               if (data.type === 0) return { data: null, text: "Error", type: 0 };

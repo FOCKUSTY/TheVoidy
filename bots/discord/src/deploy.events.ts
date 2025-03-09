@@ -3,7 +3,7 @@ import { Logger } from "v@develop";
 import type { Client as DiscordClient } from "discord.js";
 import Discord from "./utility/service/discord.service";
 
-import { Services } from "v@types/all/services.type";
+import { Voidy } from "v@types";
 
 import path from "node:path";
 
@@ -13,9 +13,9 @@ class EventsLoader {
 
   private readonly _path: string;
   private readonly _files: string[];
-  private readonly _services: Services;
+  private readonly _services: Voidy.Services;
 
-  public constructor(eventsPath: string, eventFiles: string[], services: Services) {
+  public constructor(eventsPath: string, eventFiles: string[], services: Voidy.Services) {
     this._path = eventsPath;
     this._files = eventFiles;
     this._services = services;

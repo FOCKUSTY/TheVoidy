@@ -6,7 +6,7 @@ import ML from "./events/modal.listener";
 import Deployer from "./deploy.commands";
 import DeployEvents from "./deploy.events";
 
-import { Services } from "v@types/all/services.type";
+import { Voidy } from "v@types";
 
 import path from "path";
 import fs from "fs";
@@ -39,7 +39,7 @@ const Cooldowns = new Collection();
 
 const fileType: ".ts" | ".js" = Env.get<false>("NODE_ENV") === "prod" ? ".js" : ".ts";
 
-const Login = async (clientToken: string, services: Services) => {
+const Login = async (clientToken: string, services: Voidy.Services) => {
   const foldersPath = path.join(__dirname, "commands");
   const commandsFolder = fs.readdirSync(foldersPath);
 

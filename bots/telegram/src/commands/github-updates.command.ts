@@ -1,7 +1,6 @@
 import { Env } from "v@develop";
 
-import { Services } from "v@types/all/services.type";
-import { GitHubApi, repoOwners } from "v@types/utils/github.type";
+import { Voidy } from "v@types";
 
 import TelegramCommand from "v@types/commands/telegram-command.type";
 import { Random } from "random-js";
@@ -22,7 +21,7 @@ const updates = "За последнее время были обновлены:
 const getCat = () => cats[new Random().integer(0, cats.length - 1)];
 
 export default class Command extends TelegramCommand {
-  public constructor(services: Services<{ github: GitHubApi }>) {
+  public constructor(services: Voidy.Services<{ github: Voidy.Github.Api }>) {
     super({
       name: "github_updates",
       options: ["owner", "type"],
@@ -38,9 +37,9 @@ export default class Command extends TelegramCommand {
             "Вы должны ввести команду и название владельца репозиториев, к примеру: /github-updates Lazy-And-Focused orgs\nПервый аргумент - название владельца репозитория, второй - тип владельца, может быть: orgs или users\nПо умолчанию: users"
           );
 
-        const [_, owner, type] = interaction.message.text.split(" ");
+        const [ , owner, type] = interaction.message.text.split(" ");
 
-        if (!repoOwners.includes(type || "users"))
+        if (!Voidy.Github.REPO_OWNERS.includes(type || "users"))
           return await interaction.reply("Тип владельца может быть только orgs или users");
 
         const {

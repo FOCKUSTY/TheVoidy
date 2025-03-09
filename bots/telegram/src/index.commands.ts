@@ -1,4 +1,6 @@
-import { Props as Command } from "v@types/commands/telegram-command.type";
+import { Voidy } from "v@types";
+
+type Command<T, K> = Voidy.Telegram.CommandData<T, K>;
 
 class Commands<T = unknown, K = unknown> {
   private readonly _commands: string[] = [];
