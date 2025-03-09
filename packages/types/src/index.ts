@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* 
   D{name} - Defaul import {name}
   IM{name} - Import {name}
@@ -57,19 +59,22 @@ import DCLDiscordCommand, {
 } from "./commands/discord-command.type";
 import DCLTelegramCommand from "./commands/telegram-command.type";
 
+import { Context } from "telegraf";
+import { Update } from "telegraf/typings/core/types/typegram";
+
 export namespace Classes {
   export abstract class Ai extends IMACLAi {};
   export abstract class DiscordService extends IMACLDiscordService {};
   export abstract class TelegramService extends IMACLTelegramService {};
   export abstract class GitHubApi extends IMACLGitHubApi {};
   
-  export class DiscordCommand extends DCLDiscordCommand {};
-  export class TelegramCommand extends DCLTelegramCommand {};
+  export class DiscordCommand<T = any> extends DCLDiscordCommand<T> {};
+  export class TelegramCommand<T = any, K = any> extends DCLTelegramCommand<T, K> {};
 }
 
 export namespace Voidy {
   export type Response<T = undefined> = IMTResponse<T>;
-  export type Services = IMTServices;
+  export type Services<T extends { [key: string]: unknown } = { [key: string]: unknown }> = IMTServices<T>;
   export type Time = IMTTime;
 }
 
@@ -88,7 +93,7 @@ export namespace Voidy.Discord {
   export type CommandData<T> = IMTDiscordCommandData<T>;
 
   export abstract class Service extends IMACLDiscordService {};
-  export class Command extends DCLDiscordCommand {};
+  export class Command<T = any> extends DCLDiscordCommand<T> {};
 }
 
 export namespace Voidy.Telegram {
@@ -107,10 +112,10 @@ export namespace Voidy.Telegram {
   > = IMTOption<Response, FirstArgs, LastArgs, AddArgs, ArgumentResponse>;
 
   export type SendData<Option, Response> = IMTSendData<Option, Response>;
-  export type Interaction = IMTTelegramInteraction;
+  export type Interaction<T extends Context = any, K extends Update = any> = IMTTelegramInteraction<T, K>;
 
   export abstract class Service extends IMACLTelegramService {};
-  export class Command extends DCLTelegramCommand {};
+  export class Command<T = any, K = any> extends DCLTelegramCommand<T, K> {};
 }
 
 export namespace Voidy.Github {
