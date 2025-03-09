@@ -6,19 +6,19 @@
   "keywords": [],
   "author": "FOCKUSTY",
   "license": "MIT",
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@10.5.0",
   "scripts": {
-    "build:all": "pnpm --filter {./**} run build",
+    "build:all": "pnpm run lint && pnpm --filter {./**} run build",
     "build:bot": "pnpm --filter voidtype run build",
     "dev:bot": "set NODE_ENV=dev&& set BOT=all&& pnpm --filter voidtype run dev",
     "start:bot": "set NODE_ENV=prod&& set BOT=all&& pnpm --filter voidtype run start:builded",
     "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build:all && pnpm run start:bot",
-    "lint": "npx eslint ."
+    "lint": "pnpx eslint ."
   },
   "devDependencies": {
     "@eslint/js": "catalog:",
-    "@typescript-eslint/eslint-plugin": "^8.25.0",
-    "@typescript-eslint/parser": "^8.25.0",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
     "eslint": "catalog:",
     "globals": "catalog:",
     "typescript-eslint": "catalog:"

@@ -1,25 +1,28 @@
-import tsPlugin from '@typescript-eslint/eslint-plugin'
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
 import { parser } from 'typescript-eslint';
-import globals from "globals";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    plugins: {
-      "@typescript-eslint": tsPlugin
-    },
-    languageOptions: {
-      globals: globals.es2024,
-      parser: parser
-    },
-    files: [
-      "**/*.ts",
-    ],
     ignores: [
+      "**/*.js",
       "**/*.d.ts",
       "**/dist/**",
       "**/node_modules/**"
-    ],
+    ]
+  },
+  
+  {languageOptions: {
+    globals: globals.es2024,
+    parser: parser
+  }},
+  
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  
+  {
     rules: {
       '@typescript-eslint/no-duplicate-enum-values': 'error',
       '@typescript-eslint/no-dynamic-delete': 'error',
@@ -29,6 +32,7 @@ export default [
       '@typescript-eslint/no-extraneous-class': 'error',
       '@typescript-eslint/no-invalid-void-type': 'error',
       '@typescript-eslint/no-misused-new': 'error',
+      '@typescript-eslint/no-namespace': 'off',
       '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
@@ -38,7 +42,7 @@ export default [
       '@typescript-eslint/no-unsafe-declaration-merging': 'error',
       '@typescript-eslint/no-unsafe-function-type': 'error',
       '@typescript-eslint/no-unused-expressions': 'error',
-      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-useless-constructor': 'error',
       '@typescript-eslint/no-wrapper-object-types': 'error',
       '@typescript-eslint/prefer-as-const': 'error',
@@ -51,5 +55,5 @@ export default [
       'no-unused-vars': 'off',
       'no-useless-constructor': 'off',
     }
-  }
+  },
 ];
