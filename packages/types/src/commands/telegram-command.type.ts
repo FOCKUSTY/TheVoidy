@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { Interaction } from "../telegram/interaction.type";
+import { TelegramInteraction as Interaction } from "../commands/interactions.type";
 
 export type Props<T = any, K = any> = {
   name: string;
