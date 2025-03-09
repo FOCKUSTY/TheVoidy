@@ -1,8 +1,8 @@
 import { Format, Telegraf } from "telegraf";
 import { Message } from "telegraf/typings/core/types/typegram";
 
-import { Response } from "../all/response.type";
-import { Interaction } from "./interaction.type";
+import { Response } from "../base/response.type";
+import { TelegramInteraction as Interaction } from "../commands/interactions.type";
 
 export abstract class Service {
   public abstract Send(

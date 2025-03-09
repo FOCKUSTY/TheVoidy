@@ -1,6 +1,6 @@
 import { Client as DiscordClient, EmbedBuilder } from "discord.js";
 
-import { Response } from "../all/response.type";
+import { Response } from "../base/response.type";
 
 export abstract class Service {
   public abstract SendMessage(

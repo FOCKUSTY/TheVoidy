@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-import { Interaction } from "./interaction.type";
-import { Response as ResponseType } from "../all/response.type";
+import { TelegramInteraction as Interaction } from "../commands/interactions.type";
+import { Response as ResponseType } from "./response.type";
 
 export type SendData<Option, Response> = {
   message: Interaction;
