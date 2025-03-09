@@ -116,7 +116,7 @@ export namespace Voidy.Telegram {
   export type SendData<Option, Response> = IMTSendData<Option, Response>;
   export type Interaction<T extends Context = any, K extends Update = any> = IMTTelegramInteraction<T, K>;
 
-  export type CommandData = IMTTelegramCommandData;
+  export type CommandData<T = any, K = any> = IMTTelegramCommandData<T, K>;
 
   export abstract class Service extends IMACLTelegramService {};
   export class Command<T = any, K = any> extends DCLTelegramCommand<T, K> {};
