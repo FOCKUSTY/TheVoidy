@@ -1,5 +1,3 @@
-import "v@develop";
-
 import { Env, Debug } from "v@develop";
 
 import "src/index.constants";

@@ -1,6 +1,6 @@
 import { Colors, Logger } from "v@develop";
 
-type Names =
+export type Names =
   | "TheVoid"
   | "Commands"
   | "Updater"
@@ -12,7 +12,7 @@ type Names =
   | "Errorer"
   | "Warner";
 
-const loggers: Record<string, { name: Names; colors: [Colors, Colors] }> = {
+export const loggers: Record<string, { name: Names; colors: [Colors, Colors] }> = {
   TheVoid: { name: "TheVoid", colors: [Colors.red, Colors.magenta] },
   Commands: { name: "Commands", colors: [Colors.brightYellow, Colors.green] },
   Updater: { name: "Updater", colors: [Colors.brightYellow, Colors.yellow] },

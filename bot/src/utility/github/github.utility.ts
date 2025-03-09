@@ -1,6 +1,6 @@
-import { Repo, GitHubApi as Service } from "v@types/utils/github.type";
+import { Voidy } from "v@types";
 
-class GitHubApi extends Service {
+class GitHubApi extends Voidy.Github.Api {
   public async getRepositories(owner: string, type: string, ignoredRepo: string[] = [".github"]) {
     try {
       const data = await fetch(`https://api.github.com/${type}/${owner}/repos`, {
@@ -10,19 +10,19 @@ class GitHubApi extends Service {
         }
       });
 
-      const repos: Repo[] | { status: number } = await data.json();
+      const repos: Voidy.Github.Repo[] | { status: number } = await data.json();
 
       return {
         status: data.status,
         text: data.statusText,
         repos: (Array.isArray(repos) ? repos : []).filter(
-          (r: Repo) => !ignoredRepo.includes(r.name)
+          (r: Voidy.Github.Repo) => !ignoredRepo.includes(r.name)
         )
       };
-    } catch (err: any) {
+    } catch (err: unknown) {
       return {
         status: 404,
-        text: err,
+        text: `${err}`,
         repos: []
       };
     }
@@ -32,7 +32,7 @@ class GitHubApi extends Service {
    * @param getRepository - A some repository
    * @param dateOffset - A date offset in seconds
    */
-  public repositoryCommited(repository: Repo, dateOffset: number): boolean {
+  public repositoryCommited(repository: Voidy.Github.Repo, dateOffset: number): boolean {
     const now = Date.parse(new Date().toISOString());
     const last_commit = Date.parse(`${repository.pushed_at}`);
 
