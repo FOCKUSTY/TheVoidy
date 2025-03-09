@@ -12,7 +12,7 @@ import { LoginDiscord } from "v@discord/discord.bot";
 import { LoginTelegram } from "v@telegram/telegram.bot";
 
 import Ai from "./utility/ai";
-import GitHubApi from "./utility/laf/github.utility";
+import GitHubApi from "./utility/github/github.utility";
 import DiscordService from "v@discord/utility/service/discord.service";
 import TelegramService from "v@telegram/utility/service/telegram.service";
 
