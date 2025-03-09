@@ -15,9 +15,6 @@
 */
 
 import {
-  ActivityTypes as IMEActivityTypes
-} from "./base/activities.type";
-import {
   ExecuteData as IMTExecuteData,
   Option as IMTOption,
   SendData as IMTSendData
@@ -77,7 +74,14 @@ export namespace Voidy {
 }
 
 export namespace Voidy.Discord {
-  export type ActivityTypes = IMEActivityTypes;
+  export enum ActivityTypes {
+    playing = 0,
+    streaming = 1,
+    listening = 2,
+    watching = 3,
+    custom = 4,
+    competing = 5
+  }
 
   export type ICommand = IMIDiscordCommand;
   export type TCommandCreateData<T> = IMTDiscordCommandCreateData<T>;
