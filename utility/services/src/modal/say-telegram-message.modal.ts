@@ -1,11 +1,11 @@
 import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
-import { Services } from "v@types/all/services.type";
+import { Voidy } from "v@types";
 import DiscordModal from "./abstract.modal";
 
 class Modal extends DiscordModal {
-  private readonly _services: Services;
+  private readonly _services: Voidy.Services;
 
-  public constructor(services: Services) {
+  public constructor(services: Voidy.Services) {
     super();
 
     this._services = services;

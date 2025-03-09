@@ -5,12 +5,12 @@ import SayMessage from "./say-message.modal";
 import Update from "./update.modal";
 import IdeaModal from "./idea.modal";
 
-import { Services } from "v@types/all/services.type";
+import { Voidy } from "v@types";
 
 class CustomIds {
-  private readonly _services: Services;
+  private readonly _services: Voidy.Services;
 
-  public constructor(services: Services) {
+  public constructor(services: Voidy.Services) {
     this._services = services;
   }
 
