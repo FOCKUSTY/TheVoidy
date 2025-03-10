@@ -1,15 +1,15 @@
 import { Debug } from "v@develop";
 import { Interaction, InteractionType } from "discord.js";
-import CustomIds from "v@services/modal/custom-ids.modal";
+import { Services } from "v@services";
 import { Types } from "v@types";
 
 class Listener {
-  private readonly ids: CustomIds;
+  private readonly ids: Services.Modals.CustomIDs;
 
   public readonly name = "modal-listener";
 
   public constructor(services: Types.Services) {
-    this.ids = new CustomIds(services);
+    this.ids = new Services.Modals.CustomIDs(services);
   }
 
   public async execute(interaction: Interaction) {

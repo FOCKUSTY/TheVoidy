@@ -19,6 +19,7 @@
 
             "v@telegram/*": [ "./node_modules/@voidy/telegram/dist/*" ],
             "v@discord/*": [ "./node_modules/@voidy/discord/dist/*" ],
+            "v@services": [ "./node_modules/@voidy/services/dist" ],
             "v@services/*": [ "./node_modules/@voidy/services/dist/*" ],
             "v@develop/*": [ "./node_modules/@voidy/develop/dist/*" ],
             "v@types": [ "./node_modules/@voidy/types/dist" ],

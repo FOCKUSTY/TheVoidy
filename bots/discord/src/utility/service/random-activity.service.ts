@@ -14,8 +14,7 @@ import {
 import ObjectLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
 import { Activity } from "@thevoidcommunity/the-void-database/types/activity.types";
 
-import ClientLoader from "v@services/loaders/client.loader";
-import Array from "v@services/service/array.service";
+import { Services } from "v@services";
 
 const random = new Random();
 const historyObject = new Map();
@@ -28,7 +27,7 @@ class RandomActiviy {
   private readonly Logger = new Logger("Activity").execute;
 
   private readonly _client: DiscordClient;
-  private readonly _clientLoader = new ClientLoader(objects, utility.banwords);
+  private readonly _clientLoader = new Services.Loaders.ClientLoader(objects, utility.banwords);
 
   private readonly _preffix: string = "";
   private readonly _setActivity: boolean = true;
@@ -64,7 +63,7 @@ class RandomActiviy {
       const history = historyObject.get(type) ? historyObject.get(type) : [];
       historyObject.set(type, history);
 
-      const activities = Array.Shuffle(loadedActivities[type === "guild" ? "guild" : "name"]);
+      const activities = Services.ArrayService.Shuffle(loadedActivities[type === "guild" ? "guild" : "name"]);
 
       const randomActivityNumber = random.integer(0, activities.length - 1);
       const randomActivity = activities[randomActivityNumber];
@@ -102,7 +101,7 @@ class RandomActiviy {
       const history = historyObject.get("activities") ? historyObject.get("activities") : [];
       historyObject.set("activities", history);
 
-      const activities = Array.Shuffle(loadedActivities["other"]);
+      const activities = Services.ArrayService.Shuffle(loadedActivities["other"]);
 
       const randomActivityNumber = random.integer(0, activities.length - 1);
       const randomActivity: Activity = this.RegExpFormatter(activities[randomActivityNumber]);
