@@ -1,7 +1,7 @@
 import DiscordModal from "./abstract.modal";
 
 import SayTelegramMessage from "./say-telegram-message.modal";
-import SayMessage from "./say-message.modal";
+import SayMessage from "./say-discord-message.modal";
 import Update from "./update.modal";
 import IdeaModal from "./idea.modal";
 

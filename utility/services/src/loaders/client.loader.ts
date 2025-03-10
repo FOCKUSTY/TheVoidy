@@ -12,13 +12,13 @@ const names: string[] = [];
 
 const formatter = new Formatter();
 
-type Objects = {
+export type Objects = {
   idea: { idea: string; ideaDetail: string }[];
   download: string[];
   names: string[];
 };
 
-class ClientLoaderClass {
+class ClientLoader {
   private readonly Logger = new Logger("Loader").execute;
   private readonly _filter: Filter;
 
@@ -112,4 +112,4 @@ class ClientLoaderClass {
   };
 }
 
-export default ClientLoaderClass;
+export default ClientLoader;
