@@ -1,10 +1,10 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { loaders } from "@thevoidcommunity/the-void-database";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 const { ActivitiesLoader } = loaders;
 
-export default new Voidy.Discord.Command({
+export default new Types.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("update-activity")
     .setDescription("Принудительное обновление активностей !")

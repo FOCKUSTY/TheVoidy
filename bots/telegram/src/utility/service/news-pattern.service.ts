@@ -10,7 +10,7 @@ export interface Presets {
    * 
    * @example
    * repos: {
-   *  "TheVoidy": {
+   *  "TheTypes": {
    *    "bots": true,
    *    "utility": false
    *  }

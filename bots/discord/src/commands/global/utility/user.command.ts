@@ -1,4 +1,4 @@
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import {
   CommandInteraction,
@@ -9,7 +9,7 @@ import {
   GuildMember
 } from "discord.js";
 
-export default new Voidy.Discord.Command({
+export default new Types.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("user")
     .setDescription("Пользователь !")

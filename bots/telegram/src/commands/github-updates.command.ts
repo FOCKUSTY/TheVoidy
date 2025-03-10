@@ -1,6 +1,6 @@
 import { Env } from "v@develop";
 
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import TelegramCommand from "v@types/commands/telegram-command.type";
 import { Random } from "random-js";
@@ -21,7 +21,7 @@ const updates = "За последнее время были обновлены:
 const getCat = () => cats[new Random().integer(0, cats.length - 1)];
 
 export default class Command extends TelegramCommand {
-  public constructor(services: Voidy.Services<{ github: Voidy.Github.Api }>) {
+  public constructor(services: Types.Services<{ github: Types.Github.Api }>) {
     super({
       name: "github_updates",
       options: ["owner", "type"],
@@ -39,7 +39,7 @@ export default class Command extends TelegramCommand {
 
         const [ , owner, type] = interaction.message.text.split(" ");
 
-        if (!Voidy.Github.REPO_OWNERS.includes(type || "users"))
+        if (!Types.Github.REPO_OWNERS.includes(type || "users"))
           return await interaction.reply("Тип владельца может быть только orgs или users");
 
         const {

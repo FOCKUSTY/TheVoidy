@@ -3,14 +3,14 @@
 
 import { Format } from "telegraf";
 
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import Telegram from "../utility/service/telegram.service";
 
 import { Debug } from "v@develop";
 
-type Interaction = Voidy.Telegram.Interaction;
-type DefaultOption = Voidy.Telegram.Option<any, any, any>;
+type Interaction = Types.Telegram.Interaction;
+type DefaultOption = Types.Telegram.Option<any, any, any>;
 
 const messages = new Map<string, number>();
 const options = new Map<string, DefaultOption[]>();
@@ -28,7 +28,7 @@ const lastMessageEquals = (userId: number | string, msg: Interaction) => {
 };
 
 const send = async <T, R extends { [key: string]: any } = {}>(
-  data: Voidy.Telegram.SendData<T, string | ({ text: string } & R)>
+  data: Types.Telegram.SendData<T, string | ({ text: string } & R)>
 ) => {
   if (data.response.type === 1) {
     const res =

@@ -1,11 +1,11 @@
 import { Env } from "v@develop";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from "discord.js";
 
 import commands from "src/index.commads";
 
-export default new Voidy.Discord.Command({
+export default new Types.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("bot")
     .setDescription("Информация о боте !")

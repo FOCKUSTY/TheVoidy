@@ -1,9 +1,9 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import commands from "src/index.commads";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
-export default new Voidy.Discord.Command({
+export default new Types.Discord.Command({
   data: new SlashCommandBuilder().setName("help").setDescription("Все доступные команды !"),
 
   async execute(interaction: CommandInteraction) {

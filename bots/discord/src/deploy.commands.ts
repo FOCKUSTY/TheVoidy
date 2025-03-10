@@ -1,5 +1,5 @@
 import { Env, Logger, Debug, Colors } from "v@develop";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import { REST, Routes } from "discord.js";
 
@@ -54,7 +54,7 @@ class Deployer {
   ) => {
     this.ForeachFolders((file, modifierPath) => {
       const filePath = path.join(modifierPath, file);
-      const command: Voidy.Discord.Command = require(filePath).default;
+      const command: Types.Discord.Command = require(filePath).default;
 
       if (!!command && !!command.data && !!command.execute) {
         const options = command.data.options;
@@ -125,7 +125,7 @@ class Deployer {
   public readonly execute = (Commands: unknown[], type: "guild" | "global") => {
     this.ForeachFolders((file, modifierPath) => {
       const filePath = path.join(modifierPath, file);
-      const command: Voidy.Discord.Command = require(filePath).default;
+      const command: Types.Discord.Command = require(filePath).default;
 
       if (!!command && !!command.data && !!command.execute) Commands.push(command.data.toJSON());
       else

@@ -1,7 +1,7 @@
 import type { Client as DiscordClient } from "discord.js";
 import { Events } from "discord.js";
 
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 import { Logger } from "v@develop";
 
 import ClientLoader from "v@services/loaders/client.loader";
@@ -33,7 +33,7 @@ class Listener {
             process.env.NODE_ENV === "dev"
               ? "Запущено в режиме разработки!"
               : "Запущено в режиме итогов!",
-          type: Number(Voidy.Discord.ActivityTypes.custom)
+          type: Number(Types.Discord.ActivityTypes.custom)
         }
       ],
       status: "idle"

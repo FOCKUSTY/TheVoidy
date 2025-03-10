@@ -1,6 +1,6 @@
 import { Env } from "v@develop";
 
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 import path from "path";
 import fs from "fs";
 
@@ -23,7 +23,7 @@ for (const placeFolder of commandsFolder) {
 
     for (const file of files) {
       const filePath = path.join(modifierPath, file);
-      const command: Voidy.Discord.Command = require(
+      const command: Types.Discord.Command = require(
         path.toNamespacedPath(filePath).replace("\\\\?\\", "")
       ).default;
 

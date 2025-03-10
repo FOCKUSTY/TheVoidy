@@ -1,4 +1,4 @@
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 import { Debug } from "v@develop";
 
 import { Telegraf, Format } from "telegraf";
@@ -10,13 +10,13 @@ import GetChatId from "./helpers/get-chat-id.helper";
 
 import Client from "../../telegram.bot";
 
-class Telegram extends Voidy.Telegram.Service {
+class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
 
   public Send = async (
     chatId: number | string,
     message: string | Format.FmtString
-  ): Promise<Voidy.Response<string | Message.TextMessage>> => {
+  ): Promise<Types.Response<string | Message.TextMessage>> => {
     if (!this._client) {
       return {
         data: Debug.Error("Client is not defined"),
@@ -47,7 +47,7 @@ class Telegram extends Voidy.Telegram.Service {
     message: string | string[],
     userId: string
   ): Promise<
-  Voidy.Response<
+  Types.Response<
       string | undefined | { text: string; data: Message.TextMessage; userId: string | number }
     >
   > => {
@@ -105,7 +105,7 @@ class Telegram extends Voidy.Telegram.Service {
   public SendMessage = async (
     chatId: number | string,
     message: string | string[]
-  ): Promise<Voidy.Response<string | Message.TextMessage>> => {
+  ): Promise<Types.Response<string | Message.TextMessage>> => {
     if (!this._client) {
       return {
         data: Debug.Error("Client is not defined"),
@@ -121,7 +121,7 @@ class Telegram extends Voidy.Telegram.Service {
     };
   };
 
-  public GetChatId = async (message: Voidy.Telegram.Interaction): Promise<Voidy.Response<string | number>> => {
+  public GetChatId = async (message: Types.Telegram.Interaction): Promise<Types.Response<string | number>> => {
     return {
       data: await GetChatId(message),
       text: "Сообщение успешно отправлено",

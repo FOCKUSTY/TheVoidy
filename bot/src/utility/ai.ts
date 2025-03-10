@@ -3,7 +3,7 @@ import { Models } from "@thevoidcommunity/the-void-database/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 
-import { Voidy, Classes } from "v@types";
+import { Types, Classes } from "v@types";
 
 import { Debug, Env } from "v@develop";
 import { Colors } from "f-formatter";
@@ -15,7 +15,7 @@ class Ai extends Classes.Ai {
     promt: string,
     text: string = "",
     model: Models = "gpt-4o-mini"
-  ): Voidy.Response<APIPromise<ChatCompletion> | null> {
+  ): Types.Response<APIPromise<ChatCompletion> | null> {
     try {
       const id = new Date().getTime().toString(16);
       promts.set(promt, id);

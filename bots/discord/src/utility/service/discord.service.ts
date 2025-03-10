@@ -1,12 +1,12 @@
 import { Client as DiscordClient, EmbedBuilder } from "discord.js";
 import { Debug } from "v@develop";
 
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import SendMessage from "./helpers/send-message.helper";
 import Client from "../../discord.bot";
 
-class Discord extends Voidy.Discord.Service {
+class Discord extends Types.Discord.Service {
   private readonly _client: DiscordClient = Client;
 
   public readonly SendMessage = async (
@@ -22,7 +22,7 @@ class Discord extends Voidy.Discord.Service {
     channelId: string,
     message: string,
     telegramName: string
-  ): Promise<Voidy.Response<string | { type: number; text: string }>> => {
+  ): Promise<Types.Response<string | { type: number; text: string }>> => {
     if (!this._client)
       return {
         data: Debug.Error("Client is not defined"),

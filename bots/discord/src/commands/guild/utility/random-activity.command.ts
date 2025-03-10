@@ -1,8 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import RandomActiviy from "utility/service/random-activity.service";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
-export default new Voidy.Discord.Command({
+export default new Types.Discord.Command({
   data: new SlashCommandBuilder()
     .setName("random-activity")
     .setDescription("Рандомная активность !"),

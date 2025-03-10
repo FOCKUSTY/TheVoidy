@@ -1,6 +1,6 @@
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
-const GetChatId = async (msg: Voidy.Telegram.Interaction): Promise<number | string> => {
+const GetChatId = async (msg: Types.Telegram.Interaction): Promise<number | string> => {
   const chatId = await msg.chat.id;
   const fromId = msg.from?.id;
 

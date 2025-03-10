@@ -1,6 +1,6 @@
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
-type Command<T, K> = Voidy.Telegram.CommandData<T, K>;
+type Command<T, K> = Types.Telegram.CommandData<T, K>;
 
 class Commands<T = unknown, K = unknown> {
   private readonly _commands: string[] = [];

@@ -13,12 +13,12 @@ import {
 import { Random } from "random-js";
 import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
 import CustomIds from "v@services/modal/custom-ids.modal";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 const customIds = CustomIds.getIds();
 const objects = new ObjectsLoader().execute();
 
-export default new Voidy.Discord.Command({
+export default new Types.Discord.Command({
   data: new SlashCommandBuilder().setName("server-say").setDescription("Сообщение с помощью бота!"),
 
   async execute(interaction: CommandInteraction) {

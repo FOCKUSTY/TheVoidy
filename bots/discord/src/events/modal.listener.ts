@@ -1,14 +1,14 @@
 import { Debug } from "v@develop";
 import { Interaction, InteractionType } from "discord.js";
 import CustomIds from "v@services/modal/custom-ids.modal";
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 class Listener {
   private readonly ids: CustomIds;
 
   public readonly name = "modal-listener";
 
-  public constructor(services: Voidy.Services) {
+  public constructor(services: Types.Services) {
     this.ids = new CustomIds(services);
   }
 

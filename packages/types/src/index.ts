@@ -74,13 +74,13 @@ export namespace Classes {
   export class TelegramCommand<T = any, K = any> extends DCLTelegramCommand<T, K> {};
 }
 
-export namespace Voidy {
+export namespace Types {
   export type Response<T = undefined> = IMTResponse<T>;
   export type Services<T extends { [key: string]: unknown } = { [key: string]: unknown }> = IMTServices<T>;
   export type Time = IMTTime;
 }
 
-export namespace Voidy.Discord {
+export namespace Types.Discord {
   export enum ActivityTypes {
     playing = 0,
     streaming = 1,
@@ -98,7 +98,7 @@ export namespace Voidy.Discord {
   export class Command<T = any> extends DCLDiscordCommand<T> {};
 }
 
-export namespace Voidy.Telegram {
+export namespace Types.Telegram {
   export type ExecuteData<
     Option,
     Response,
@@ -122,7 +122,7 @@ export namespace Voidy.Telegram {
   export class Command<T = any, K = any> extends DCLTelegramCommand<T, K> {};
 }
 
-export namespace Voidy.Github {
+export namespace Types.Github {
   export const REPO_OWNERS = IMCGithubRepoOwners;
 
   export type Repo = IMIGithubRepo;

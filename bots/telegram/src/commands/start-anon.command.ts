@@ -1,10 +1,10 @@
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
-export default class Command extends Voidy.Telegram.Command {
+export default class Command extends Types.Telegram.Command {
   public constructor() {
     super({
       name: "start_anonimus",
-      async execute(interaction: Voidy.Telegram.Interaction) {
+      async execute(interaction: Types.Telegram.Interaction) {
         const link = "https://t.me/TheVoid_VBOT?start=send_anonimus_message-";
 
         if (!interaction.from?.id) return await interaction.reply("Произошла какая-то ошибка");

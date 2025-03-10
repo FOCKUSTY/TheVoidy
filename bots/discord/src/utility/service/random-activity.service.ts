@@ -3,7 +3,7 @@ import { Debug, Logger } from "v@develop";
 import { ActivityType, Client as DiscordClient } from "discord.js";
 import { Random } from "random-js";
 
-import { Voidy } from "v@types";
+import { Types } from "v@types";
 
 import Formatter from "f-formatter";
 
@@ -158,7 +158,7 @@ class RandomActiviy {
       if (this._setActivity)
         this._client.user.setActivity({
           name: activity.text,
-          type: Number(Voidy.Discord.ActivityTypes[activity.type])
+          type: Number(Types.Discord.ActivityTypes[activity.type])
         });
 
       return Log(activity);
@@ -170,7 +170,7 @@ class RandomActiviy {
       if (this._setActivity)
         this._client.user.setActivity({
           name: activity.text,
-          type: Number(Voidy.Discord.ActivityTypes[activity.type])
+          type: Number(Types.Discord.ActivityTypes[activity.type])
         });
 
       return Log(activity);
