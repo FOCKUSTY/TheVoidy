@@ -39,6 +39,24 @@ import {
 } from "./services/services.type";
 
 import {
+  CreateService as IMTCreateService,
+  Service as IMIService
+} from "./services/pattern-formatting-service.type";
+import DCLNewsPatternValidator, {
+  DEFAULT_PRESETS as IMCDEFAULT_PRESETS,
+  FORMATTING as IMCFORMATTING,
+  VISUALISATION_ITEMS as IMCVISUALISATION_ITEMS,
+  VISUALISATION_KEYS as IMCVISUALISATION_KEYS,
+  Formatting as IMTFormatting,
+  LazyPresets as IMILazyPresets,
+  Presets as IMIPresets,
+  FullPresets as IMTFullPresets,
+  Repo as IMTRepo,
+  RegExpsService as IMCLRegExpsService,
+  VisualisationFormattingRegExpsType as IMTVisualisationFormattingRegExpsType,
+} from "./services/news-pattern.type";
+
+import {
   GitHubApi as IMACLGitHubApi,
   Repo as IMIGithubRepo,
   RepoOwners as IMTGithubRepoOwners,
@@ -65,6 +83,9 @@ import { Context } from "telegraf";
 import { Update } from "telegraf/typings/core/types/typegram";
 
 export namespace Classes {
+  export class NewsPatternValidator extends DCLNewsPatternValidator {};
+  export type PatternService<T = string> = IMTCreateService<T>;
+  
   export abstract class Ai extends IMACLAi {};
   export abstract class DiscordService extends IMACLDiscordService {};
   export abstract class TelegramService extends IMACLTelegramService {};
@@ -78,6 +99,27 @@ export namespace Types {
   export type Response<T = undefined> = IMTResponse<T>;
   export type Services<T extends { [key: string]: unknown } = { [key: string]: unknown }> = IMTServices<T>;
   export type Time = IMTTime;
+}
+
+export namespace Types.Patterns.Formatting {
+  export const DEFAULT_PRESETS = IMCDEFAULT_PRESETS;
+  export const FORMATTING = IMCFORMATTING;
+  export const VISUALISATION_ITEMS = IMCVISUALISATION_ITEMS;
+  export const VISUALISATION_KEYS = IMCVISUALISATION_KEYS;
+  
+  export class RegExpsService extends IMCLRegExpsService {};
+
+  export class NewsPatternValidator extends DCLNewsPatternValidator {};
+
+  export type FullPresets = IMTFullPresets;
+  export type LazyPresets = IMILazyPresets;
+  export type Presets = IMIPresets;
+  export type Formatting = IMTFormatting;
+  export type Repo = IMTRepo;
+
+  export type VisualisationFormattingRegExpsType = IMTVisualisationFormattingRegExpsType;
+  export type IPatternService<T = string> = IMIService<T>;
+  export type PatternService = IMTCreateService;
 }
 
 export namespace Types.Discord {
