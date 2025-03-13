@@ -3,6 +3,20 @@ export const VISUALISATION_ITEMS = ["repo", "area", "item"] as const;
 export type VisualisationItems = `${Uppercase<(typeof VISUALISATION_ITEMS)[number]>}_NAME`;
 export type VisualisationKeys = `${(typeof VISUALISATION_ITEMS)[number]}s`;
 
+export type RequiredObject<T> = Required<
+  T extends object
+    ? {
+        [P in keyof T]: Required<T[P]>;
+      }
+    : T
+>;
+export type PresetsDefault = Required<
+  RequiredObject<{
+    [P in keyof Omit<Presets, "repos">]: RequiredObject<Omit<Presets, "repos">[P]>;
+  }>
+>;
+export type FullPresets = RequiredObject<Presets> & Pick<Presets, "repos">;
+
 export const VISUALISATION_KEYS: readonly [
   "repos",
   "areas",
@@ -85,20 +99,6 @@ export interface Presets {
   };
 }
 
-export type RequiredObject<T> = Required<
-  T extends object
-    ? {
-        [P in keyof T]: Required<T[P]>;
-      }
-    : T
->;
-export type PresetsDefault = Required<
-  RequiredObject<{
-    [P in keyof Omit<Presets, "repos">]: RequiredObject<Omit<Presets, "repos">[P]>;
-  }>
->;
-export type FullPresets = RequiredObject<Presets> & Pick<Presets, "repos">;
-
 export const FORMATTING = ["discord", "telegram"] as const;
 export type Formatting = (typeof FORMATTING)[number];
 export type Repo = { name: string; link: string };
@@ -160,6 +160,30 @@ export class RegExpsService {
         return data[0].slice(type.length + 2, data[0].length - 1);
     }
   };
+
+  public FindLast = (
+    text: string, firstFormat: VisualisationFormattingRegExpsType
+  ) => {
+    const output = [text];
+
+    const getLast = (txt: string, format: VisualisationFormattingRegExpsType) => {
+      const data = txt.match(VisualisationFormattingRegExps[format]);
+      const name = this.FindData(format, data[0], "name") as string;
+
+      const nextFormatMatched = name.match(VisualisationFindFormatStyleRegExp);
+
+      if (!nextFormatMatched) return;
+
+      const nextFormat = nextFormatMatched[0] as VisualisationFormattingRegExpsType;
+
+      output.push(this.FindData(nextFormat, name, "name") as string);
+      getLast(name, nextFormat);
+    };
+
+    getLast(output.toReversed()[0], firstFormat);
+
+    return output.toReversed()[0];
+  }
 }
 
 class Validator {

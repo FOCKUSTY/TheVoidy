@@ -2,7 +2,6 @@ import {
   FullPresets,
   Repo,
   VisualisationFindFormatStyleRegExp,
-  VisualisationFormattingRegExps,
   VisualisationFormattingRegExpsType,
   VisualisationKeys,
   RegExpsService
@@ -10,8 +9,15 @@ import {
 
 import { Types } from "v@types";
 import { Format } from "telegraf";
+import { FmtString } from "telegraf/typings/format";
 
 const regexpsService = new RegExpsService();
+
+enum VisualisationFormattingNames {
+  repos = "REPO_NAME",
+  areas = "AREA_NAME",
+  items = "ITEM_NAME"
+}
 
 enum VisualisationFormattingRegExpsToTelegramFormatString {
   Quote = "blockquote",
@@ -35,37 +41,40 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
       entities: []
     };
 
-    const pushToFmt = (txt: string, type?: VisualisationFormattingRegExpsType) => {
+    const pushToFmt = (txt: string, type?: VisualisationFormattingRegExpsType, existedFmt: FmtString = {text: "", __to_nest: ""}) => {
       if (type)
         fmt.entities.push({
           type: VisualisationFormattingRegExpsToTelegramFormatString[type],
           length: txt.length,
-          offset: fmt.text.length
+          offset: existedFmt.text.length + fmt.text.length + 1
         });
 
-      fmt.text += txt;
+      fmt.text += `${txt}\n`;
     };
 
-    const pushFmtToFmt = (fmt: Format.FmtString<string>) => {
-      fmt.text += fmt.text;
-      fmt.entities.push(...fmt.entities);
+    const pushFmtToFmt = (data: Format.FmtString<string>) => {
+      fmt.text += `${data.text}`;
+      fmt.entities.push(...data.entities);
     };
 
     return [fmt, pushToFmt, pushFmtToFmt] as const;
   }
 
-  private toFmtString(type: VisualisationKeys, data: string[]) {
-    const [fmt, pushToFmt] = this.FmtState();
+  private toFmtString(type: VisualisationKeys, names: string[], existedFmt: FmtString = {text: "", __to_nest: ""}) {
+    const [fmt, pushToFmt, pushFmtToFmt] = this.FmtState();
 
-    for (const area of data) {
-      if (!data[area]) continue;
+    for (const name of names) {
+      if (!names.includes(name)) continue;
 
       const matchedFormatStyle = this.presets.visualisation[type].match(
         VisualisationFindFormatStyleRegExp
       );
 
       if (!matchedFormatStyle) {
-        pushToFmt(area);
+        pushToFmt(
+          this.presets.visualisation[type].replaceAll(VisualisationFormattingNames[type], name),
+          undefined, existedFmt
+        );
         continue;
       }
 
@@ -76,15 +85,25 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
 
       if (formatStyles.length === 0) continue;
 
-      for (const style of formatStyles) {
-        const data = regexpsService.FindData(
-          style,
-          this.presets.visualisation[type],
-          "matched_data"
-        ) as RegExpMatchArray;
+      const fullFormated: FmtString = {
+        __to_nest: "",
+        text: "",
+        entities: []
+      };
 
-        pushToFmt(data[0], style);
+      fullFormated.text = regexpsService.FindLast(
+        this.presets.visualisation[type], formatStyle
+      ).replaceAll(VisualisationFormattingNames[type], name) + "\n";
+
+      for (const style of formatStyles.toReversed()) {
+        fullFormated.entities.push({
+          type: VisualisationFormattingRegExpsToTelegramFormatString[style],
+          length: fullFormated.text.length,
+          offset: existedFmt.text.length
+        });
       }
+
+      pushFmtToFmt(fullFormated);
     }
 
     return fmt;
@@ -93,24 +112,22 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
   public generate() {
     const [output, , pushFmtToFmt] = this.FmtState();
 
-    const repoFmt = this.toFmtString(
-      "repos",
-      this.repos.map((r) => r.name)
-    );
-    pushFmtToFmt(repoFmt);
-
     for (const repo of this.repos) {
+      pushFmtToFmt(this.toFmtString( "repos", [repo.name], output));
+
       const areas = this.presets.repos[repo.name];
+      
+      if (!areas) continue;
+
       const enabledAreas = Object.entries(areas)
         .filter((a) => a[1] === true)
         .map((a) => a[0]);
 
       if (enabledAreas.length === 0) continue;
 
-      const areaFmt = this.toFmtString("areas", Object.keys(areas));
+      const areaFmt = this.toFmtString("areas", Object.keys(areas), output);
       pushFmtToFmt(areaFmt);
-
-      pushFmtToFmt(this.toFmtString("items", ["example"]));
+      pushFmtToFmt(this.toFmtString("items", ["example"], output));
     }
 
     return output;

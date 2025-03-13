@@ -1,3 +1,4 @@
+import { Presets, Repo, DEFAULT_PRESETS } from "v@types/services/news-pattern.type";
 import { Services } from "v@services";
 import { Types } from "v@types";
 import { Debug } from "v@develop";
@@ -11,10 +12,19 @@ import GetChatId from "./helpers/get-chat-id.helper";
 
 import Client from "../../telegram.bot";
 
+import { CreateService } from "v@types/services/pattern-formatting-service.type";
+import { FmtString } from "telegraf/typings/format";
+
 class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
-  
-  public readonly pattent = Services.Format.NewsPatternService;
+  public readonly pattern: CreateService<FmtString<string>> = (repos: Repo[], presets?: Presets) =>
+    new Services.Format.TelegramFormattingService(repos, {
+      repos: presets?.repos || {},
+      visualisation: {
+        ...DEFAULT_PRESETS.visualisation,
+        ...(presets?.visualisation || DEFAULT_PRESETS.visualisation)
+      },
+    });
 
   public Send = async (
     chatId: number | string,
