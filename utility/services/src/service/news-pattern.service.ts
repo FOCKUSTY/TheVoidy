@@ -4,7 +4,7 @@ import NewsPatternValidator, {
   Formatting,
   FullPresets
 } from "v@types/services/news-pattern.type";
-import { Classes, Types } from "v@types";
+import { Types } from "v@types";
 
 import DiscordFormattingService from "./discord-formatting.service";
 import TelegramFormattingService from "./telegram-formatting.service";
