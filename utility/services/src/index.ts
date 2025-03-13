@@ -28,6 +28,16 @@ import DCLArrayService from "./service/array.service";
 import DCLFilterService from "./service/filter.service";
 import DCLOneTimeFunctionService from "./service/one-time-function.service";
 
+import DCLDiscordFormattingService from "./service/discord-formatting.service";
+import DCLTelegramFormattingService from "./service/telegram-formatting.service";
+import DCLNewsPatternService from "./service/news-pattern.service";
+
+export namespace Services.Format {
+  export class DiscordFormattingService extends DCLDiscordFormattingService {};
+  export class TelegramFormattingService extends DCLTelegramFormattingService {};
+  export class NewsPatternService extends DCLNewsPatternService {};
+}
+
 export namespace Services.Loaders {
   export class ClientLoader extends DCLClientLoader {}
   export type Objects = IMTObjects;
