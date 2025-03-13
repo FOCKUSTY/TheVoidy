@@ -6,10 +6,10 @@ import TelegramFormattingService from "./telegram-formatting.service";
 
 import { FmtString } from "telegraf/typings/format";
 
-const formattingServices: Record<Formatting, Classes.PatternService<string|FmtString>> = {
+const formattingServices = {
   discord: DiscordFormattingService,
   telegram: TelegramFormattingService
-}
+} as const;
 
 class Pattern {
   private readonly _repos: Repo[];
@@ -24,7 +24,7 @@ class Pattern {
     this._format = this.ChooseFormatType(type);
   }
 
-  private ChooseFormatType(type: Formatting): Types.Patterns.Formatting.IPatternService<string|FmtString> {
+  private ChooseFormatType(type: Formatting) {
     return new formattingServices[type](this._repos, this._presets);
   }
 
