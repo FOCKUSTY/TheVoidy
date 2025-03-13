@@ -1,3 +1,4 @@
+import { Services } from "v@services";
 import { Types } from "v@types";
 import { Debug } from "v@develop";
 
@@ -12,6 +13,8 @@ import Client from "../../telegram.bot";
 
 class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
+  
+  public readonly pattent = Services.Format.NewsPatternService;
 
   public Send = async (
     chatId: number | string,

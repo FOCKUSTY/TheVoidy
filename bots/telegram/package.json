@@ -12,6 +12,7 @@
   "dependencies": {
     "@thevoidcommunity/the-void-database": "catalog:",
     "@voidy/develop": "workspace:^",
+    "@voidy/services": "workspace:^",
     "date-fns": "catalog:",
     "discord.js": "catalog:",
     "f-formatter": "catalog:",
