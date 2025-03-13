@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /*
 	D{name} - Defaul import {name}
 	IM{name} - Import {name}
