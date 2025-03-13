@@ -41,7 +41,11 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
       entities: []
     };
 
-    const pushToFmt = (txt: string, type?: VisualisationFormattingRegExpsType, existedFmt: FmtString = {text: "", __to_nest: ""}) => {
+    const pushToFmt = (
+      txt: string,
+      type?: VisualisationFormattingRegExpsType,
+      existedFmt: FmtString = { text: "", __to_nest: "" }
+    ) => {
       if (type)
         fmt.entities.push({
           type: VisualisationFormattingRegExpsToTelegramFormatString[type],
@@ -60,7 +64,11 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
     return [fmt, pushToFmt, pushFmtToFmt] as const;
   }
 
-  private toFmtString(type: VisualisationKeys, names: string[], existedFmt: FmtString = {text: "", __to_nest: ""}) {
+  private toFmtString(
+    type: VisualisationKeys,
+    names: string[],
+    existedFmt: FmtString = { text: "", __to_nest: "" }
+  ) {
     const [fmt, pushToFmt, pushFmtToFmt] = this.FmtState();
 
     for (const name of names) {
@@ -73,7 +81,8 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
       if (!matchedFormatStyle) {
         pushToFmt(
           this.presets.visualisation[type].replaceAll(VisualisationFormattingNames[type], name),
-          undefined, existedFmt
+          undefined,
+          existedFmt
         );
         continue;
       }
@@ -91,9 +100,10 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
         entities: []
       };
 
-      fullFormated.text = regexpsService.FindLast(
-        this.presets.visualisation[type], formatStyle
-      ).replaceAll(VisualisationFormattingNames[type], name) + "\n";
+      fullFormated.text =
+        regexpsService
+          .FindLast(this.presets.visualisation[type], formatStyle)
+          .replaceAll(VisualisationFormattingNames[type], name) + "\n";
 
       for (const style of formatStyles.toReversed()) {
         fullFormated.entities.push({
@@ -113,10 +123,10 @@ class Service implements Types.Patterns.Formatting.IPatternService<Format.FmtStr
     const [output, , pushFmtToFmt] = this.FmtState();
 
     for (const repo of this.repos) {
-      pushFmtToFmt(this.toFmtString( "repos", [repo.name], output));
+      pushFmtToFmt(this.toFmtString("repos", [repo.name], output));
 
       const areas = this.presets.repos[repo.name];
-      
+
       if (!areas) continue;
 
       const enabledAreas = Object.entries(areas)

@@ -33,9 +33,9 @@ import DCLTelegramFormattingService from "./service/telegram-formatting.service"
 import DCLNewsPatternService from "./service/news-pattern.service";
 
 export namespace Services.Format {
-  export class DiscordFormattingService extends DCLDiscordFormattingService {};
-  export class TelegramFormattingService extends DCLTelegramFormattingService {};
-  export class NewsPatternService extends DCLNewsPatternService {};
+  export class DiscordFormattingService extends DCLDiscordFormattingService {}
+  export class TelegramFormattingService extends DCLTelegramFormattingService {}
+  export class NewsPatternService extends DCLNewsPatternService {}
 }
 
 export namespace Services.Loaders {

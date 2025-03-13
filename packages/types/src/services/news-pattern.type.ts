@@ -161,9 +161,7 @@ export class RegExpsService {
     }
   };
 
-  public FindLast = (
-    text: string, firstFormat: VisualisationFormattingRegExpsType
-  ) => {
+  public FindLast = (text: string, firstFormat: VisualisationFormattingRegExpsType) => {
     const output = [text];
 
     const getLast = (txt: string, format: VisualisationFormattingRegExpsType) => {
@@ -183,7 +181,7 @@ export class RegExpsService {
     getLast(output.toReversed()[0], firstFormat);
 
     return output.toReversed()[0];
-  }
+  };
 }
 
 class Validator {

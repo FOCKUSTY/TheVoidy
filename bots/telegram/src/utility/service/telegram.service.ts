@@ -23,7 +23,7 @@ class Telegram extends Types.Telegram.Service {
       visualisation: {
         ...DEFAULT_PRESETS.visualisation,
         ...(presets?.visualisation || DEFAULT_PRESETS.visualisation)
-      },
+      }
     });
 
   public Send = async (
