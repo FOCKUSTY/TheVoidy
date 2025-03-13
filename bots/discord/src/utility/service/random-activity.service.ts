@@ -63,7 +63,9 @@ class RandomActiviy {
       const history = historyObject.get(type) ? historyObject.get(type) : [];
       historyObject.set(type, history);
 
-      const activities = Services.ArrayService.Shuffle(loadedActivities[type === "guild" ? "guild" : "name"]);
+      const activities = Services.ArrayService.Shuffle(
+        loadedActivities[type === "guild" ? "guild" : "name"]
+      );
 
       const randomActivityNumber = random.integer(0, activities.length - 1);
       const randomActivity = activities[randomActivityNumber];

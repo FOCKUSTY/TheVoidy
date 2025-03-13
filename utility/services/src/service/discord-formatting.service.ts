@@ -5,7 +5,7 @@ class Service implements Types.Patterns.Formatting.IPatternService {
   public constructor(
     public repos: Repo[],
     public presets: FullPresets
-  ) {};
+  ) {}
 
   public generate(): string {
     return "the method is not implemented";

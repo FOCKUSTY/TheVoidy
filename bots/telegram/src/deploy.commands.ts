@@ -43,7 +43,9 @@ export default class Deployer {
           executeFunc: command.executeFunc,
           execute: command.execute
         });
-        Client.command(command.name, async (message: Types.Telegram.Interaction) => command.execute(message));
+        Client.command(command.name, async (message: Types.Telegram.Interaction) =>
+          command.execute(message)
+        );
       } else
         Debug.Error(
           new Error(`Потерян execute или name в ${command?.name || fileName}\nПуть: ${filePath}`)

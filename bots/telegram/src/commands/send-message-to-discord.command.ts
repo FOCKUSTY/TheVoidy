@@ -2,7 +2,12 @@ import { Types } from "v@types";
 
 import { options } from "../events/message.listener";
 
-type DefaultOption = Types.Telegram.Option<string | { type: number; text: string }, [string], [string], [string]>;
+type DefaultOption = Types.Telegram.Option<
+  string | { type: number; text: string },
+  [string],
+  [string],
+  [string]
+>;
 
 export default class Command extends Types.Telegram.Command {
   public constructor(services: Types.Services) {

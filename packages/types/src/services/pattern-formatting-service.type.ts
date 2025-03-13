@@ -1,4 +1,4 @@
-import { Repo, Presets } from "./news-pattern.type"
+import { Repo, Presets } from "./news-pattern.type";
 
 export interface Service<T = string> {
   readonly repos: Repo[];

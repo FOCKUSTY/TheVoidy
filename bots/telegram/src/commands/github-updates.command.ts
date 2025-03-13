@@ -37,7 +37,7 @@ export default class Command extends TelegramCommand {
             "Вы должны ввести команду и название владельца репозиториев, к примеру: /github-updates Lazy-And-Focused orgs\nПервый аргумент - название владельца репозитория, второй - тип владельца, может быть: orgs или users\nПо умолчанию: users"
           );
 
-        const [ , owner, type] = interaction.message.text.split(" ");
+        const [, owner, type] = interaction.message.text.split(" ");
 
         if (!Types.Github.REPO_OWNERS.includes(type || "users"))
           return await interaction.reply("Тип владельца может быть только orgs или users");

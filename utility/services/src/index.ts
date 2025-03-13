@@ -14,9 +14,7 @@
 	C{name} - Constant {name}
 */
 
-import DCLClientLoader, {
-		Objects as IMTObjects
-} from "./loaders/client.loader";
+import DCLClientLoader, { Objects as IMTObjects } from "./loaders/client.loader";
 
 import DACLModal from "./modal/abstract.modal";
 import DCLCustomIDs from "./modal/custom-ids.modal";
@@ -31,22 +29,22 @@ import DCLFilterService from "./service/filter.service";
 import DCLOneTimeFunctionService from "./service/one-time-function.service";
 
 export namespace Services.Loaders {
-	export class ClientLoader extends DCLClientLoader {};
-	export type Objects = IMTObjects;
+  export class ClientLoader extends DCLClientLoader {}
+  export type Objects = IMTObjects;
 }
 
 export namespace Services.Modals {
-	export abstract class Modal extends DACLModal {};
-	export class CustomIDs extends DCLCustomIDs {};
+  export abstract class Modal extends DACLModal {}
+  export class CustomIDs extends DCLCustomIDs {}
 
-	export class IdeaModal extends DCLIdeaModal {};
-	export class SayDiscordMessageModal extends DCLSayDiscordMessageModal {};
-	export class SayTelegramMessageModal extends DCLSayTelegramMessageModal {};
-	export class UpdateModal extends DCLUpdateModal {};
+  export class IdeaModal extends DCLIdeaModal {}
+  export class SayDiscordMessageModal extends DCLSayDiscordMessageModal {}
+  export class SayTelegramMessageModal extends DCLSayTelegramMessageModal {}
+  export class UpdateModal extends DCLUpdateModal {}
 }
 
 export namespace Services {
-	export class ArrayService extends DCLArrayService {};
-	export class FilterService extends DCLFilterService {};
-	export class OneTimeFunctionService<T, K> extends DCLOneTimeFunctionService<T, K> {};
+  export class ArrayService extends DCLArrayService {}
+  export class FilterService extends DCLFilterService {}
+  export class OneTimeFunctionService<T, K> extends DCLOneTimeFunctionService<T, K> {}
 }

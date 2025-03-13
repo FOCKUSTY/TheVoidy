@@ -7,7 +7,11 @@ import { APIPromise } from "openai/core";
 
 type FunctionDataType = APIPromise<ChatCompletion> | null;
 type DefaultOption = Types.Telegram.Option<FunctionDataType, [], [], [string], { text: string }>;
-type DefaultExectuteData = Types.Telegram.ExecuteData<DefaultOption, FunctionDataType, { text: string }>;
+type DefaultExectuteData = Types.Telegram.ExecuteData<
+  DefaultOption,
+  FunctionDataType,
+  { text: string }
+>;
 
 export default class Command extends Types.Telegram.Command {
   public constructor(services: Types.Services) {

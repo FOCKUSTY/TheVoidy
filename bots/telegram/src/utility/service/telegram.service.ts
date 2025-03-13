@@ -47,7 +47,7 @@ class Telegram extends Types.Telegram.Service {
     message: string | string[],
     userId: string
   ): Promise<
-  Types.Response<
+    Types.Response<
       string | undefined | { text: string; data: Message.TextMessage; userId: string | number }
     >
   > => {
@@ -121,7 +121,9 @@ class Telegram extends Types.Telegram.Service {
     };
   };
 
-  public GetChatId = async (message: Types.Telegram.Interaction): Promise<Types.Response<string | number>> => {
+  public GetChatId = async (
+    message: Types.Telegram.Interaction
+  ): Promise<Types.Response<string | number>> => {
     return {
       data: await GetChatId(message),
       text: "Сообщение успешно отправлено",
