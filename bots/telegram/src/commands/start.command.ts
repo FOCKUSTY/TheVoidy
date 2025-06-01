@@ -1,7 +1,7 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 import Commands from "../index.commands";
 
-import TelegramCommand from "v@types/commands/telegram-command.type";
+import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
 
 export default class Command extends TelegramCommand {
   public constructor() {

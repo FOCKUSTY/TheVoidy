@@ -1,4 +1,4 @@
-import { Env } from "v@develop";
+import { Env } from "@voidy/develop";
 
 import {
   SlashCommandBuilder,
@@ -10,8 +10,8 @@ import {
   ActionRowBuilder
 } from "discord.js";
 
-import { Services } from "v@services";
-import { Types } from "v@types";
+import { Services } from "@voidy/services";
+import { Types } from "@voidy/types";
 
 const customIds = Services.Modals.CustomIDs.getIds();
 

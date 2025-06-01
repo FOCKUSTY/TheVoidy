@@ -1,5 +1,5 @@
-import TelegramCommand from "v@types/commands/telegram-command.type";
-import { Types } from "v@types";
+import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
+import { Types } from "@voidy/types";
 
 import { Message } from "telegraf/typings/core/types/typegram";
 import { anonMessages, options } from "../events/message.listener";

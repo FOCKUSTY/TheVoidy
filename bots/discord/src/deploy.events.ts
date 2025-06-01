@@ -1,9 +1,9 @@
-import { Logger } from "v@develop";
+import { Logger } from "@voidy/develop";
 
 import type { Client as DiscordClient } from "discord.js";
 import Discord from "./utility/service/discord.service";
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 import path from "node:path";
 

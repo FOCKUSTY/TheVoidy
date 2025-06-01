@@ -1,7 +1,7 @@
 import * as Telegraf from "telegraf";
 const { FmtString } = Telegraf.Format;
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 const helpJSON = JSON.stringify(
   {

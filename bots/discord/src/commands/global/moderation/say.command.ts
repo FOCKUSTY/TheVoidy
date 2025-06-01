@@ -12,8 +12,8 @@ import {
 
 import { Random } from "random-js";
 import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
-import { Services } from "v@services";
-import { Types } from "v@types";
+import { Services } from "@voidy/services";
+import { Types } from "@voidy/types";
 
 const customIds = Services.Modals.CustomIDs.getIds();
 const objects = new ObjectsLoader().execute();

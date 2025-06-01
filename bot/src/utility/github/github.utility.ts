@@ -1,4 +1,4 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 class GitHubApi extends Types.Github.Api {
   public async getRepositories(owner: string, type: string, ignoredRepo: string[] = [".github"]) {

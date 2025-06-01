@@ -1,5 +1,5 @@
-import { Debug } from "v@develop";
-import { Types } from "v@types";
+import { Debug } from "@voidy/develop";
+import { Types } from "@voidy/types";
 import { commands } from "../deploy.commands";
 import { lastMessageEquals } from "./message.listener";
 

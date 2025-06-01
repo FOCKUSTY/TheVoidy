@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import RandomActiviy from "utility/service/random-activity.service";
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 export default new Types.Discord.Command({
   data: new SlashCommandBuilder()

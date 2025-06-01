@@ -3,11 +3,11 @@
 
 import { Format } from "telegraf";
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 import Telegram from "../utility/service/telegram.service";
 
-import { Debug } from "v@develop";
+import { Debug } from "@voidy/develop";
 
 type Interaction = Types.Telegram.Interaction;
 type DefaultOption = Types.Telegram.Option<any, any, any>;

@@ -1,5 +1,5 @@
-import { Types } from "v@types";
-import { FullPresets, Repo } from "v@types/services/news-pattern.type";
+import { Types } from "@voidy/types";
+import { FullPresets, Repo } from "@voidy/types/dist/services/news-pattern.type";
 
 class Service implements Types.Patterns.Formatting.IPatternService {
   public constructor(

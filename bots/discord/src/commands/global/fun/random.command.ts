@@ -1,4 +1,4 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { Random } from "random-js";

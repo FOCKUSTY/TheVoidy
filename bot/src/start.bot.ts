@@ -1,4 +1,4 @@
-import { Env, Debug } from "v@develop";
+import { Env, Debug } from "@voidy/develop";
 
 import "src/index.constants";
 
@@ -6,13 +6,13 @@ import Formatter, { Colors } from "f-formatter";
 
 import Loggers from "./loggers.names";
 
-import { LoginDiscord } from "v@discord/discord.bot";
-import { LoginTelegram } from "v@telegram/telegram.bot";
+import { LoginDiscord } from "@voidy/discord";
+import { LoginTelegram } from "@voidy/telegram";
 
 import Ai from "./utility/ai";
 import GitHubApi from "./utility/github/github.utility";
-import DiscordService from "v@discord/utility/service/discord.service";
-import TelegramService from "v@telegram/utility/service/telegram.service";
+import DiscordService from "@voidy/discord/dist/utility/service/discord.service";
+import TelegramService from "@voidy/telegram/dist/utility/service/telegram.service";
 
 Debug.Console.clear();
 Debug.Log([new Formatter().Color("Начало программы", Colors.magenta)]);

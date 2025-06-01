@@ -3,9 +3,9 @@ import { Models } from "@thevoidcommunity/the-void-database/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 
-import { Types, Classes } from "v@types";
+import { Types, Classes } from "@voidy/types";
 
-import { Debug, Env } from "v@develop";
+import { Debug, Env } from "@voidy/develop";
 import { Colors } from "f-formatter";
 
 const promts = new Map<string, string>();

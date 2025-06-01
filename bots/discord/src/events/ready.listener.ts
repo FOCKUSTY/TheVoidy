@@ -1,10 +1,10 @@
 import type { Client as DiscordClient } from "discord.js";
 import { Events } from "discord.js";
 
-import { Types } from "v@types";
-import { Logger } from "v@develop";
+import { Types } from "@voidy/types";
+import { Logger } from "@voidy/develop";
 
-import ClientLoader from "v@services/loaders/client.loader";
+import ClientLoader from "@voidy/services/dist/loaders/client.loader";
 import { loaders } from "@thevoidcommunity/the-void-database";
 
 import RandomActiviy from "../utility/service/random-activity.service";

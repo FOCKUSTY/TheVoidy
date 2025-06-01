@@ -1,5 +1,5 @@
 import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 import DiscordModal from "./abstract.modal";
 

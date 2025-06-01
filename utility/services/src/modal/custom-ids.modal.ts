@@ -5,7 +5,7 @@ import SayMessage from "./say-discord-message.modal";
 import Update from "./update.modal";
 import IdeaModal from "./idea.modal";
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 class CustomIds {
   private readonly _services: Types.Services;

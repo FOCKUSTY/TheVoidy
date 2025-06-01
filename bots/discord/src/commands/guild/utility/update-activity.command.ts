@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { loaders } from "@thevoidcommunity/the-void-database";
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 const { ActivitiesLoader } = loaders;
 

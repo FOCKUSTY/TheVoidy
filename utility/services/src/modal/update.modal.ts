@@ -1,8 +1,8 @@
-import { Env } from "v@develop";
+import { Env } from "@voidy/develop";
 
 import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 import DiscordModal from "./abstract.modal";
 
 class Modal extends DiscordModal {

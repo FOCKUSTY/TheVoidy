@@ -1,4 +1,4 @@
-import { Logger } from "v@develop";
+import { Logger } from "@voidy/develop";
 
 import { Client as DiscordClient } from "discord.js";
 

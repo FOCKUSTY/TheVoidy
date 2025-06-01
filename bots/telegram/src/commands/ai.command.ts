@@ -1,4 +1,4 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 import { options } from "../events/message.listener";
 
 import { Models, OPENAI_MODELS } from "@thevoidcommunity/the-void-database/ai/types";

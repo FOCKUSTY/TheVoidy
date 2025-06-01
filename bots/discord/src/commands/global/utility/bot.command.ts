@@ -1,5 +1,5 @@
-import { Env } from "v@develop";
-import { Types } from "v@types";
+import { Env } from "@voidy/develop";
+import { Types } from "@voidy/types";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from "discord.js";
 

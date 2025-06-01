@@ -1,4 +1,4 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 export default class Command extends Types.Telegram.Command {
   public constructor(services: Types.Services) {

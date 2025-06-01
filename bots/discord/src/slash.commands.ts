@@ -1,5 +1,5 @@
 import Deployer from "./deploy.commands";
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 type Command = Types.Discord.Command;
 

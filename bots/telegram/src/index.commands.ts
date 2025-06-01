@@ -1,4 +1,4 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 type Command<T, K> = Types.Telegram.CommandData<T, K>;
 

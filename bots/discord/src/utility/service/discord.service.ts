@@ -1,7 +1,7 @@
 import { Client as DiscordClient, EmbedBuilder } from "discord.js";
-import { Debug } from "v@develop";
+import { Debug } from "@voidy/develop";
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 import SendMessage from "./helpers/send-message.helper";
 import Client from "../../discord.bot";

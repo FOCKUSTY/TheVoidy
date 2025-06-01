@@ -2,7 +2,8 @@
   "name": "@voidy/discord",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/discord.bot.js",
+  "types": "dist/discord.bot.d.ts",
   "scripts": {
     "slash": "node ./dist/src/slash.commands.js",
     "slash:dev": "nodemon ./src/slash.commands.ts",

@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { Debug, Env } from "v@develop";
+import { Debug, Env } from "@voidy/develop";
 
 import type { Interaction } from "discord.js";
 import { Collection } from "discord.js";

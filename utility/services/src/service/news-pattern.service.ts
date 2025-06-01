@@ -3,8 +3,8 @@ import NewsPatternValidator, {
   Repo,
   Formatting,
   FullPresets
-} from "v@types/services/news-pattern.type";
-import { Types } from "v@types";
+} from "@voidy/types/dist/services/news-pattern.type";
+import { Types } from "@voidy/types";
 
 import DiscordFormattingService from "./discord-formatting.service";
 import TelegramFormattingService from "./telegram-formatting.service";

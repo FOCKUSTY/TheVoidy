@@ -17,7 +17,7 @@
 ```ts
 // Importing the configurator self-written module to work with .env files
 // Debug - Объект-помощник для отладки
-import { Env, Debug } from "v@develop";
+import { Env, Debug } from "@voidy/develop";
 
 // Importing methods and objects
 // ICL - Listener object for slash commands to be used by users
@@ -34,7 +34,7 @@ import DeployEvents from "./deploy.events";
 // Import additional material
 // Services - All types of services that we have (discord, telegram)
 // Debug - Helper object for debugging
-import { Services } from "v@types/all/services.type";
+import { Services } from "@voidy/types/all/services.type";
 
 // Import modules from node.js for viewing files and folders
 // path - helps find the path to files/folders
@@ -110,13 +110,13 @@ export default Client;
 ### telegram.bot.ts
 
 ```ts
-import { Env } from "v@develop";
+import { Env } from "@voidy/develop";
 
 // Import the main module
 import { Telegraf } from "telegraf";
 
 // Import a custom interaction type
-import type { Interaction } from "v@types/telegram/interaction.type";
+import type { Interaction } from "@voidy/types/telegram/interaction.type";
 
 // Deployer - Our command declarer, props - command type
 import Deployer, { Props } from "./deploy.commands";
@@ -192,7 +192,7 @@ export { THEVOIDs_CONSTANTS };
 
 ### start.bot.ts
 ```ts
-import { Env, Debug } from "v@develop";
+import { Env, Debug } from "@voidy/develop";
 
 // Initialize constants
 import "src/index.constants";
@@ -201,7 +201,7 @@ import Logger from "fock-logger";
 import Formatter, { Colors } from "f-formatter";
 
 import loggers from "./loggers.names";
-import { Debug } from "v@develop/debug.develop";
+import { Debug } from "@voidy/develop/debug.develop";
 
 import { LoginDiscord } from "@voidy/discord/dist/src/discord.bot";
 import { LoginTelegram } from "@voidy/telegram/dist/telegram.bot";

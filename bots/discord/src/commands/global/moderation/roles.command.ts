@@ -1,4 +1,4 @@
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import type { CommandInteraction, Role, Collection, EmbedField } from "discord.js";
 import Formatter from "f-formatter";

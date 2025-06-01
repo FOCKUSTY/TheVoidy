@@ -1,4 +1,4 @@
-import { Colors, Logger } from "v@develop";
+import { Colors, Logger } from "@voidy/develop";
 
 export type Names =
   | "TheVoid"

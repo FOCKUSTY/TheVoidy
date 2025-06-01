@@ -1,7 +1,7 @@
-import { Presets, Repo, DEFAULT_PRESETS } from "v@types/services/news-pattern.type";
-import { Services } from "v@services";
-import { Types } from "v@types";
-import { Debug } from "v@develop";
+import { Presets, Repo, DEFAULT_PRESETS } from "@voidy/types/dist/services/news-pattern.type";
+import { Services } from "@voidy/services";
+import { Types } from "@voidy/types";
+import { Debug } from "@voidy/develop";
 
 import { Telegraf, Format } from "telegraf";
 
@@ -12,7 +12,7 @@ import GetChatId from "./helpers/get-chat-id.helper";
 
 import Client from "../../telegram.bot";
 
-import { CreateService } from "v@types/services/pattern-formatting-service.type";
+import { CreateService } from "@voidy/types/dist/services/pattern-formatting-service.type";
 import { FmtString } from "telegraf/typings/format";
 
 class Telegram extends Types.Telegram.Service {

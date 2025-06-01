@@ -1,7 +1,7 @@
-import { Env } from "v@develop";
+import { Env } from "@voidy/develop";
 
 import { Telegraf } from "telegraf";
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 
 import Deployer from "./deploy.commands";
 

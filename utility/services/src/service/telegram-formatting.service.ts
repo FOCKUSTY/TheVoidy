@@ -5,9 +5,9 @@ import {
   VisualisationFormattingRegExpsType,
   VisualisationKeys,
   RegExpsService
-} from "v@types/services/news-pattern.type";
+} from "@voidy/types/dist/services/news-pattern.type";
 
-import { Types } from "v@types";
+import { Types } from "@voidy/types";
 import { Format } from "telegraf";
 import { FmtString } from "telegraf/typings/format";
 
