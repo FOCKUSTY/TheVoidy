@@ -18,7 +18,7 @@ Client.on("message", async (message: Types.Telegram.Interaction) => {
   MessageListener(message);
 });
 
-const fileType: ".ts" | ".js" = Env.get<false>("NODE_ENV") === "prod" ? ".js" : ".ts";
+const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
 const Login = async (services: Types.Services) => {
   const commandsPath = path.join(__dirname, "commands");

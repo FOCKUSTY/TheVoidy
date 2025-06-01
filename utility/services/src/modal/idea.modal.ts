@@ -19,7 +19,7 @@ class Modal extends DiscordModal {
     const { components } = this;
 
     const channel = interaction.client.channels.cache.get(
-      Env.get("IDEA_CHANNEL_ID")
+      Env.env.IDEA_CHANNEL_ID
     ) as TextChannel;
 
     const title = interaction.fields.getTextInputValue(components.title);
@@ -30,7 +30,7 @@ class Modal extends DiscordModal {
         name: interaction.user.globalName ? interaction.user.globalName : interaction.user.username,
         iconURL: interaction.user.avatarURL() || undefined
       })
-      .setThumbnail(interaction.guild?.iconURL() || Env.get("GUILD_ICON_URL"))
+      .setThumbnail(interaction.guild?.iconURL())
       .setTitle(title)
       .setDescription(description)
       .setFields([
@@ -47,7 +47,7 @@ class Modal extends DiscordModal {
       ])
       .setFooter({
         text: "The Void Community",
-        iconURL: Env.get("GUILD_ICON_URL")
+        iconURL: undefined // Env.get("GUILD_ICON_URL")
       })
       .setTimestamp();
 

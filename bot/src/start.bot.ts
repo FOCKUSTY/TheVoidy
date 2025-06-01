@@ -17,7 +17,7 @@ import TelegramService from "v@telegram/utility/service/telegram.service";
 Debug.Console.clear();
 Debug.Log([new Formatter().Color("Начало программы", Colors.magenta)]);
 
-const bot = Env.get<false>("BOT") || "all";
+const bot = Env.env.BOT || "all";
 
 new Loggers().execute();
 

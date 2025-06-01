@@ -50,7 +50,7 @@ class Debug {
   ): void => {
     message = Array.isArray(message) ? message : [message];
 
-    if ((enabled || Env.data.DEVELOP_MODE === "true") && !trace) this._log.execute(message);
+    if ((enabled || Env.env.DEVELOP_MODE === "true") && !trace) this._log.execute(message);
 
     if (trace) {
       const text = message

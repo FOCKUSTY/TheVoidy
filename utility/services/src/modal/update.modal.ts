@@ -58,14 +58,14 @@ class Modal extends DiscordModal {
           );
         }
 
-        discord.SendMessage(Env.get("CHANGELOG_DISCORD_CHANNEL_ID"), embeds);
-        telegram.SendMessage(Env.get("CHANGELOG_TELEGRAM_CHANNEL_ID"), `${version}\n${ru}`);
+        discord.SendMessage(Env.env.CHANGELOG_DISCORD_CHANNEL_ID, embeds);
+        telegram.SendMessage(Env.env.CHANGELOG_TELEGRAM_CHANNEL_ID, `${version}\n${ru}`);
       } else {
         discord.SendMessage(
-          Env.get("CHANGELOG_DISCORD_CHANNEL_ID"),
+          Env.env.CHANGELOG_DISCORD_CHANNEL_ID,
           `# ${version}\n${ru}\n# ${version}\n${en}`
         );
-        telegram.SendMessage(Env.get("CHANGELOG_TELEGRAM_CHANNEL_ID"), `${version}\n${ru}`);
+        telegram.SendMessage(Env.env.CHANGELOG_TELEGRAM_CHANNEL_ID, `${version}\n${ru}`);
       }
 
       return interaction.reply({

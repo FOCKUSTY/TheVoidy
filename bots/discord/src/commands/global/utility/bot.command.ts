@@ -17,9 +17,9 @@ export default new Types.Discord.Command({
 
   async execute(interaction: CommandInteraction) {
     const name = interaction.client.user.username;
-    const guild = await interaction.client.guilds.fetch(`${Env.get("GUILD_ID")}`);
-    const author = await interaction.client.users.fetch(`${Env.get("AUTHOR_ID")}`);
-    const support = await interaction.client.users.fetch(`${Env.get("FRIEND_ID")}`);
+    const guild = await interaction.client.guilds.fetch(`${Env.env.GUILD_ID}`);
+    const author = await interaction.client.users.fetch(`${Env.env.AUTHOR_ID}`);
+    const support = Env.env.FRIEND_ID ? await interaction.client.users.fetch(`${Env.env.FRIEND_ID}`) : false;
 
     const iconURL = interaction.client.user.avatarURL() || undefined;
 
@@ -66,7 +66,7 @@ export default new Types.Discord.Command({
 
         {
           name: "Поддержка:",
-          value: `${support.globalName || support.username}: ${support.id}`,
+          value: support ? `${support.globalName || support.username}: ${support.id}` : "Чистый энтузиазм!",
           inline: false
         }
       )

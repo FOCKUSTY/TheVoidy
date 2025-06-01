@@ -10,7 +10,7 @@ import path from "node:path";
 
 let using = 0;
 
-const fileType: ".ts" | ".js" = Env.get<false>("NODE_ENV") === "prod" ? ".js" : ".ts";
+const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
 class Deployer {
   private readonly _folders_path: string;

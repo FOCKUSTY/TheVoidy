@@ -5,51 +5,77 @@ import { join } from "path";
 
 config({ path: join(__filename, "../../../../.env") });
 
-const data = {
-  CLIENT_TOKEN: process.env.CLIENT_TOKEN!,
-  CLIENT_ID: process.env.CLIENT_ID!,
-  TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN!,
-  IDEA_CHANNEL_ID: process.env.IDEA_CHANNEL_ID!,
-  CHANGELOG_TELEGRAM_CHANNEL_ID: process.env.CHANGELOG_TELEGRAM_CHANNEL_ID!,
-  CHANGELOG_DISCORD_CHANNEL_ID: process.env.CHANGELOG_DISCORD_CHANNEL_ID!,
-  GUILD_ICON_URL: process.env.GUILD_ICON_URL! || "",
-  GUILD_ID: process.env.GUILD_ID!,
-  AUTHOR_ID: process.env.AUTHOR_ID!,
-  FRIEND_ID: process.env.FRIEND_ID! || "",
+const REQUIRED = [
+  "CLIENT_TOKEN",
+  "CLIENT_ID",
+  "TELEGRAM_TOKEN",
+  "IDEA_CHANNEL_ID",
+  "GUILD_ID",
+  "AUTHOR_ID",
+  "CHANGELOG_DISCORD_CHANNEL_ID",
+  "CHANGELOG_TELEGRAM_CHANNEL_ID",
+  "TELEGRAM_TEAM_IDS"
+] as const;
+type Required = typeof REQUIRED[number];
 
-  OPEN_AI_KEY: process.env.OPEN_AI_KEY!
-} as const;
+const ALL = [
+  ...REQUIRED,
+  "OPEN_AI_KEY",
+  "FRIEND_ID",
+] as const;
 
-const dynamicData = {
-  BOT: process.env.BOT,
-  NODE_ENV: process.env.NODE_ENV
+type All = typeof ALL[number];
+type PartialKeys = Exclude<All, Required>;
+
+const DEFAULT: Partial<Record<PartialKeys, string>> = {
 };
 
-type DynamicType = keyof typeof dynamicData;
-type EnvType = keyof typeof data;
-const envKeys = Object.keys(data);
+type UniversalEnv<
+  T extends boolean = true,
+> = T extends true
+  ? Required
+  : PartialKeys;
+
+const DYNAMIC = [
+  "BOT",
+  "NODE_ENV",
+  "DEVELOP_MODE"
+] as const;
+type Dynamic = typeof DYNAMIC[number];
+
+type IEnv =
+  Record<Required, string>
+  & Record<PartialKeys, string|false>
+  & Record<Dynamic, string>;
+
+const ENV: IEnv = (() => {
+  return Object.fromEntries(
+    ALL.map((key) => {
+      if (!process.env[key] && REQUIRED.includes(key as any))
+        throw new Error(`key: ${key} in .env is undefined, but must be define`);
+
+      return [key, process.env[key] || DEFAULT[key]];
+    })
+  ) as IEnv;
+})();
 
 class Env {
-  public static readonly data = process.env;
-  public readonly data = process.env;
+  public static readonly lazy = process.env;
+  public static readonly env = { ...process.env, ...ENV } as IEnv;
+  public readonly lazy = process.env;
+  public readonly env = { ...process.env, ...ENV } as IEnv;
 
-  public static get<T extends boolean | string = true>(
-    name: T extends string ? string : T extends true ? EnvType : DynamicType
-  ): T extends string ? string | undefined : T extends true ? string : string | undefined {
-    if (envKeys.includes(name) && process.env[name] === undefined)
-      throw new Error("ENV ERROR:\nValue at key: " + name + " is undefined");
+  public constructor() {};
 
-    return process.env[name]! as any;
-  }
+  public static get<T extends boolean = true>(key: UniversalEnv<T>) {
+    return (this.env[key] || false) as T extends true ? string : string|false;
+  };
 
-  public get<T extends boolean | string = true>(
-    name: T extends string ? string : T extends true ? EnvType : DynamicType
-  ): T extends string ? string | undefined : T extends true ? string : string | undefined {
-    if (envKeys.includes(name) && process.env[name] === undefined)
-      throw new Error("ENV ERROR:\nValue at key: " + name + " is undefined");
+  public get<T extends boolean = true>(key: UniversalEnv<T>) {
+    return (this.env[key] || false) as T extends true ? string : string|false;
+  };
+};
 
-    return process.env[name]! as any;
-  }
-}
+export { Env }
 
 export default Env;

@@ -10,7 +10,7 @@ import { MessageEntity } from "telegraf/types";
 import * as Telegraf from "telegraf";
 
 const { FmtString } = Telegraf.Format;
-const ids = (Env.data.TELEGRAM_TEAM_IDS || "").split(",");
+const ids = (Env.env.TELEGRAM_TEAM_IDS || "").split(",");
 const cats = ["Рыжий", "Персидский", "Голубой", "Серый", "Трёхйветный", "Сфинкс"];
 
 const week = 7 * 24 * 60 * 60 * 1000;

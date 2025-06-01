@@ -16,6 +16,14 @@ class Ai extends Classes.Ai {
     text: string = "",
     model: Models = "gpt-4o-mini"
   ): Types.Response<APIPromise<ChatCompletion> | null> {
+    if (!Env.env.OPEN_AI_KEY) {
+      return {
+        data: null,
+        text: "Ключ к Open AI не найден.",
+        type: 0
+      };
+    };
+
     try {
       const id = new Date().getTime().toString(16);
       promts.set(promt, id);
@@ -26,7 +34,7 @@ class Ai extends Classes.Ai {
         "Модель: " + model
       ]);
 
-      const data = new OpenAi(Env.get("OPEN_AI_KEY")).chat(promt, { model: model });
+      const data = new OpenAi(Env.env.OPEN_AI_KEY).chat(promt, { model: model });
 
       if (!data) {
         Debug.Error(new Error("Произошла ошибка с ответом."));
