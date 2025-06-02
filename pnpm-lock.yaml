@@ -10,8 +10,8 @@ catalogs:
       specifier: ^9.23.0
       version: 9.28.0
     '@thevoidcommunity/the-void-database':
-      specifier: 2.1.0-alpha.1
-      version: 2.1.0-alpha.1
+      specifier: 3.0.0-alpha.1a
+      version: 3.0.0-alpha.1a
     '@types/node':
       specifier: ^20.16.1
       version: 20.17.19
@@ -97,7 +97,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.1.0-alpha.1(ws@8.18.1)
+        version: 3.0.0-alpha.1a(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../utility/develop
@@ -170,7 +170,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.1.0-alpha.1(ws@8.18.1)
+        version: 3.0.0-alpha.1a(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -234,7 +234,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.1.0-alpha.1(ws@8.18.1)
+        version: 3.0.0-alpha.1a(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -301,7 +301,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 2.1.0-alpha.1(ws@8.18.1)
+        version: 3.0.0-alpha.1a(ws@8.18.1)
       discord.js:
         specifier: 'catalog:'
         version: 14.18.0
@@ -508,8 +508,8 @@ packages:
   '@telegraf/types@7.1.0':
     resolution: {integrity: sha512-kGevOIbpMcIlCDeorKGpwZmdH7kHbqlk/Yj6dEpJMKEQw5lk0KVQY0OLXaCswy8GqlIVLd5625OB+rAntP9xVw==}
 
-  '@thevoidcommunity/the-void-database@2.1.0-alpha.1':
-    resolution: {integrity: sha512-Ro5tU4DUIES4g+zn8wKFMWj7zBJHvZGGfrdMrTM8ja6Q9FSTztpeteWJDZgf3v54O0oyjMS1iXS963V71Bqx8Q==}
+  '@thevoidcommunity/the-void-database@3.0.0-alpha.1a':
+    resolution: {integrity: sha512-DHhLqxir5ldoXDdkFHQ//Wb6SyO+0xVoCUcr/BwrZWvoyVfRy42t8MsQek3tV97PyDOmWt9NZAl5SpEEP8hEYA==}
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -885,15 +885,6 @@ packages:
     resolution: {integrity: sha512-wqZbPtUZfrrUhZ/hWRiN2UHiYeWkQ6q2PR3ro7DJx+hKVQAxyBDp0/kYyuYnS4akC69AaaYsGUayQEOa2WS3Uw==}
     engines: {node: '>=7.6.0'}
     hasBin: true
-
-  fock-builder@1.0.2-beta:
-    resolution: {integrity: sha512-8SjwjpaZ5rFuIEK6xLgUF5amTAruMmaC/p6hgHbse8SvLBNclMqpWmDoxdEEaA2E6lIXIt2S0F8F/cgiH5Svqg==}
-    engines: {node: '>=7.6.0'}
-    hasBin: true
-
-  fock-logger@2.3.1:
-    resolution: {integrity: sha512-rCC75O0czlTNnnO1rKZlRJkzAvF9lHcAZWpFZFlwVcNAoc2Azmp1ydbfsCIZvu1TxwvLDqhovEaa5pUvefdpOQ==}
-    engines: {node: '>=7.6.0'}
 
   fock-logger@3.0.0:
     resolution: {integrity: sha512-vMNXPF5guxE38yHBLYCQUUChErbTK7Y2MuRnIKQB2ZQ+mt2jgMqGbtv6XiYgqD+BUF49GuHWE3hf28elJP89WA==}
@@ -1640,11 +1631,10 @@ snapshots:
 
   '@telegraf/types@7.1.0': {}
 
-  '@thevoidcommunity/the-void-database@2.1.0-alpha.1(ws@8.18.1)':
+  '@thevoidcommunity/the-void-database@3.0.0-alpha.1a(ws@8.18.1)':
     dependencies:
       f-formatter: 0.3.1
-      fock-builder: 1.0.2-beta
-      fock-logger: 2.3.1
+      fock-logger: 3.0.0
       mongoose: 8.10.1
       node: 22.14.0
       openai: 4.83.0(ws@8.18.1)
@@ -2085,17 +2075,6 @@ snapshots:
     dependencies:
       node: 22.14.0
       yargs: 17.7.2
-
-  fock-builder@1.0.2-beta:
-    dependencies:
-      node: 22.14.0
-      yargs: 17.7.2
-
-  fock-logger@2.3.1:
-    dependencies:
-      f-formatter: 0.3.1
-      fock-builder: 0.2.1
-      node: 22.14.0
 
   fock-logger@3.0.0:
     dependencies:

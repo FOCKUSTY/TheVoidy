@@ -1,5 +1,5 @@
-import { Ai as OpenAi } from "@thevoidcommunity/the-void-database/ai/openai";
-import { Models } from "@thevoidcommunity/the-void-database/ai/types";
+import { Ai as OpenAi } from "@thevoidcommunity/the-void-database/dist/ai/openai";
+import { Models } from "@thevoidcommunity/the-void-database/dist/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 

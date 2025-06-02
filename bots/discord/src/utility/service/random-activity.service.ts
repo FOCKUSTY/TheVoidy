@@ -10,9 +10,9 @@ import Formatter from "f-formatter";
 import {
   activities as loadedActivities,
   utility
-} from "@thevoidcommunity/the-void-database/loaders/data/activities.loader";
-import ObjectLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
-import { Activity } from "@thevoidcommunity/the-void-database/types/activity.types";
+} from "@thevoidcommunity/the-void-database/dist/loaders/data/activities.loader";
+import ObjectLoader from "@thevoidcommunity/the-void-database/dist/loaders/data/objects.loader";
+import { Activity } from "@thevoidcommunity/the-void-database/dist/types/activity.types";
 
 import { Services } from "@voidy/services";
 
