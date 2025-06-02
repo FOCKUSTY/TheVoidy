@@ -16,14 +16,6 @@
 
 import DCLClientLoader, { Objects as IMTObjects } from "./loaders/client.loader";
 
-import DACLModal from "./modal/abstract.modal";
-import DCLCustomIDs from "./modal/custom-ids.modal";
-
-import DCLIdeaModal from "./modal/idea.modal";
-import DCLSayDiscordMessageModal from "./modal/say-discord-message.modal";
-import DCLSayTelegramMessageModal from "./modal/say-telegram-message.modal";
-import DCLUpdateModal from "./modal/update.modal";
-
 import DCLArrayService from "./service/array.service";
 import DCLFilterService from "./service/filter.service";
 import DCLOneTimeFunctionService from "./service/one-time-function.service";
@@ -41,16 +33,6 @@ export namespace Services.Format {
 export namespace Services.Loaders {
   export class ClientLoader extends DCLClientLoader {}
   export type Objects = IMTObjects;
-}
-
-export namespace Services.Modals {
-  export abstract class Modal extends DACLModal {}
-  export class CustomIDs extends DCLCustomIDs {}
-
-  export class IdeaModal extends DCLIdeaModal {}
-  export class SayDiscordMessageModal extends DCLSayDiscordMessageModal {}
-  export class SayTelegramMessageModal extends DCLSayTelegramMessageModal {}
-  export class UpdateModal extends DCLUpdateModal {}
 }
 
 export namespace Services {

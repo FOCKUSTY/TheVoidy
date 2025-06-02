@@ -30,7 +30,7 @@ class Modal extends DiscordModal {
         name: interaction.user.globalName ? interaction.user.globalName : interaction.user.username,
         iconURL: interaction.user.avatarURL() || undefined
       })
-      .setThumbnail(interaction.guild?.iconURL())
+      .setThumbnail(interaction.guild?.iconURL() || "")
       .setTitle(title)
       .setDescription(description)
       .setFields([

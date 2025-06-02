@@ -1,4 +1,4 @@
-import DiscordModal from "./abstract.modal";
+import DiscordModal, { IModalConstructor } from "./abstract.modal";
 
 import SayTelegramMessage from "./say-telegram-message.modal";
 import SayMessage from "./say-discord-message.modal";
@@ -34,7 +34,7 @@ class CustomIds {
     return ids;
   }
 
-  static get ids() {
+  static get ids(): { [key: string]: IModalConstructor } {
     return {
       sayModal: SayMessage,
       sayTelegramModal: SayTelegramMessage,

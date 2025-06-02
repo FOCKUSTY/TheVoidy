@@ -10,10 +10,10 @@ import {
   ActionRowBuilder
 } from "discord.js";
 
-import { Services } from "@voidy/services";
+import Ids from "utility/modals/custom-ids.modal";
 import { Types } from "@voidy/types";
 
-const customIds = Services.Modals.CustomIDs.getIds();
+const customIds = Ids.getIds();
 
 export default new Types.Discord.Command({
   data: new SlashCommandBuilder().setName("update").setDescription("Сообщение с помощью бота!"),

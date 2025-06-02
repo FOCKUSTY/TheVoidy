@@ -1,15 +1,17 @@
-import { Debug } from "@voidy/develop";
 import { Interaction, InteractionType } from "discord.js";
-import { Services } from "@voidy/services";
+
+import { Debug } from "@voidy/develop";
 import { Types } from "@voidy/types";
 
+import Ids from "utility/modals/custom-ids.modal";
+
 class Listener {
-  private readonly ids: Services.Modals.CustomIDs;
+  private readonly ids: Ids;
 
   public readonly name = "modal-listener";
 
   public constructor(services: Types.Services) {
-    this.ids = new Services.Modals.CustomIDs(services);
+    this.ids = new Ids(services);
   }
 
   public async execute(interaction: Interaction) {

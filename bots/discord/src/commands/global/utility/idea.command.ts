@@ -9,12 +9,12 @@ import {
 } from "discord.js";
 
 import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
-import { Services } from "@voidy/services";
+import Ids from "utility/modals/custom-ids.modal";
 
 import { Random } from "random-js";
 import { Types } from "@voidy/types";
 
-const customIds = Services.Modals.CustomIDs.getIds();
+const customIds = Ids.getIds();
 const objects = new ObjectsLoader().execute();
 
 export default new Types.Discord.Command({
