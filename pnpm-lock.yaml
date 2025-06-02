@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.3.1
       version: 0.3.1
     fock-logger:
-      specifier: 2.3.1
-      version: 2.3.1
+      specifier: 3.0.0
+      version: 3.0.0
     globals:
       specifier: ^15.14.0
       version: 15.15.0
@@ -320,7 +320,7 @@ importers:
     dependencies:
       fock-logger:
         specifier: 'catalog:'
-        version: 2.3.1
+        version: 3.0.0
     devDependencies:
       dotenv:
         specifier: 'catalog:'
@@ -893,6 +893,10 @@ packages:
 
   fock-logger@2.3.1:
     resolution: {integrity: sha512-rCC75O0czlTNnnO1rKZlRJkzAvF9lHcAZWpFZFlwVcNAoc2Azmp1ydbfsCIZvu1TxwvLDqhovEaa5pUvefdpOQ==}
+    engines: {node: '>=7.6.0'}
+
+  fock-logger@3.0.0:
+    resolution: {integrity: sha512-vMNXPF5guxE38yHBLYCQUUChErbTK7Y2MuRnIKQB2ZQ+mt2jgMqGbtv6XiYgqD+BUF49GuHWE3hf28elJP89WA==}
     engines: {node: '>=7.6.0'}
 
   form-data-encoder@1.7.2:
@@ -2088,6 +2092,12 @@ snapshots:
       yargs: 17.7.2
 
   fock-logger@2.3.1:
+    dependencies:
+      f-formatter: 0.3.1
+      fock-builder: 0.2.1
+      node: 22.14.0
+
+  fock-logger@3.0.0:
     dependencies:
       f-formatter: 0.3.1
       fock-builder: 0.2.1

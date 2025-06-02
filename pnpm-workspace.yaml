@@ -28,4 +28,4 @@ catalog:
 
   "@thevoidcommunity/the-void-database": "2.1.0-alpha.1"
   "f-formatter": "0.3.1"
-  "fock-logger": "2.3.1"
+  "fock-logger": "3.0.0"

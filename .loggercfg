@@ -2,6 +2,11 @@
     "dir": "D:\\projects\\thevoid\\TheVoidy\\utility\\develop\\dist\\config.js\\..\\..\\..\\..\\",
     "logging": true,
     "level": "info",
+    "levels": {
+      "info": 1,
+      "warn": 2,
+      "err": 3
+    },
     "date": true,
     "deletion_interval": 7,
     "colors": [
