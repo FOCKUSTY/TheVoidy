@@ -6,7 +6,6 @@
   "keywords": [],
   "author": "FOCKUSTY",
   "license": "MIT",
-  "packageManager": "pnpm@10.6.2+sha256.20072a1f6edd17646ea9234bf32c42d563dad37b2973e97a2dde5c17774a824d",
   "scripts": {
     "build:all": "pnpm run lint && pnpm run build:packages && pnpm run build:utility && pnpm run build:bots && pnpm run build:bot",
     "build:bots": "pnpm --filter {./bots/**} build",
