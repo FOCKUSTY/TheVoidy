@@ -18,9 +18,7 @@ class Modal extends DiscordModal {
   public async execute(interaction: ModalSubmitInteraction) {
     const { components } = this;
 
-    const channel = interaction.client.channels.cache.get(
-      Env.env.IDEA_CHANNEL_ID
-    ) as TextChannel;
+    const channel = interaction.client.channels.cache.get(Env.env.IDEA_CHANNEL_ID) as TextChannel;
 
     const title = interaction.fields.getTextInputValue(components.title);
     const description = interaction.fields.getTextInputValue(components.description);

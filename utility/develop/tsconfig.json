@@ -4,7 +4,7 @@
     "target": "ES2024",
     "declaration": true,
     "declarationDir": "dist",
-    "outDir": "dist",
+    "outDir": "dist"
   },
   "include": ["."],
   "exclude": ["dist", "node_modules", "**/*.spec.ts"]

@@ -1,0 +1,5 @@
+**/*.git
+**/*.loggercfg
+**/*.md
+**/*.yaml
+**/*.yml

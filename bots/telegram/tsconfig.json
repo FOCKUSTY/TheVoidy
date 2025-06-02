@@ -1,20 +1,20 @@
 {
-    "compilerOptions": {
-        "target": "ES2024",
-        "module": "CommonJS",
-        "outDir": "./dist",
-        "removeComments": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "strictNullChecks": true,
-        "skipLibCheck": true,
-        "declaration": true,
-    },
-    "include": [ "src" ],
-    "exclude": [ "node_modules", "dist" ],
-    "ts-node": {
-        "require": ["tsconfig-paths/register"]
-    }
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

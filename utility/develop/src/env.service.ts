@@ -16,37 +16,23 @@ const REQUIRED = [
   "CHANGELOG_TELEGRAM_CHANNEL_ID",
   "TELEGRAM_TEAM_IDS"
 ] as const;
-type Required = typeof REQUIRED[number];
+type Required = (typeof REQUIRED)[number];
 
-const ALL = [
-  ...REQUIRED,
-  "OPEN_AI_KEY",
-  "FRIEND_ID",
-] as const;
+const ALL = [...REQUIRED, "OPEN_AI_KEY", "FRIEND_ID"] as const;
 
-type All = typeof ALL[number];
+type All = (typeof ALL)[number];
 type PartialKeys = Exclude<All, Required>;
 
-const DEFAULT: Partial<Record<PartialKeys, string>> = {
-};
+const DEFAULT: Partial<Record<PartialKeys, string>> = {};
 
-type UniversalEnv<
-  T extends boolean = true,
-> = T extends true
-  ? Required
-  : PartialKeys;
+type UniversalEnv<T extends boolean = true> = T extends true ? Required : PartialKeys;
 
-const DYNAMIC = [
-  "BOT",
-  "NODE_ENV",
-  "DEVELOP_MODE"
-] as const;
-type Dynamic = typeof DYNAMIC[number];
+const DYNAMIC = ["BOT", "NODE_ENV", "DEVELOP_MODE"] as const;
+type Dynamic = (typeof DYNAMIC)[number];
 
-type IEnv =
-  Record<Required, string>
-  & Record<PartialKeys, string|false>
-  & Record<Dynamic, string>;
+type IEnv = Record<Required, string> &
+  Record<PartialKeys, string | false> &
+  Record<Dynamic, string>;
 
 const ENV: IEnv = (() => {
   return Object.fromEntries(
@@ -65,17 +51,17 @@ class Env {
   public readonly lazy = process.env;
   public readonly env = { ...process.env, ...ENV } as IEnv;
 
-  public constructor() {};
+  public constructor() {}
 
   public static get<T extends boolean = true>(key: UniversalEnv<T>) {
-    return (this.env[key] || false) as T extends true ? string : string|false;
-  };
+    return (this.env[key] || false) as T extends true ? string : string | false;
+  }
 
   public get<T extends boolean = true>(key: UniversalEnv<T>) {
-    return (this.env[key] || false) as T extends true ? string : string|false;
-  };
-};
+    return (this.env[key] || false) as T extends true ? string : string | false;
+  }
+}
 
-export { Env }
+export { Env };
 
 export default Env;

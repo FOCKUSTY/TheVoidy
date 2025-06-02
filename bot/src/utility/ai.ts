@@ -22,7 +22,7 @@ class Ai extends Classes.Ai {
         text: "Ключ к Open AI не найден.",
         type: 0
       };
-    };
+    }
 
     try {
       const id = new Date().getTime().toString(16);
