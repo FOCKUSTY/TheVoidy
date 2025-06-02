@@ -8,7 +8,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.6.2+sha256.20072a1f6edd17646ea9234bf32c42d563dad37b2973e97a2dde5c17774a824d",
   "scripts": {
-    "build:all": "pnpm run build:packages && pnpm run build:utility && pnpm run build:bots && pnpm run build:bot",
+    "build:all": "pnpm run lint && pnpm run build:packages && pnpm run build:utility && pnpm run build:bots && pnpm run build:bot",
     "build:bots": "pnpm --filter {./bots/**} build",
     "build:packages": "pnpm --filter {./packages/**} build",
     "build:utility": "pnpm --filter {./utility/**} build",
@@ -16,7 +16,8 @@
     "dev:bot": "set NODE_ENV=dev&& set BOT=all&& pnpm --filter voidtype run dev",
     "start:bot": "set NODE_ENV=prod&& set BOT=all&& pnpm --filter voidtype run start:builded",
     "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build:all && pnpm run start:bot",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier . -c -w"
   },
   "devDependencies": {
     "@eslint/js": "catalog:",
