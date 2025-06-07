@@ -15,10 +15,10 @@ const { ActivitiesLoader, ObjectsLoader } = loaders;
 class Listener {
   public readonly name = Events.ClientReady;
   public readonly once = true;
-  
+
   async execute(Client: DiscordClient) {
     if (!Client.user) return;
-    
+
     const randomActivity = new RandomActiviy(Client, process.env.NODE_ENV === "dev" ? "dev" : "");
     const activiesLoader = new ActivitiesLoader();
 

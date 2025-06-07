@@ -5,20 +5,20 @@ class Service {
 
   /** @param timeout times in seconds */
   public constructor(timeout: number = 10) {
-    this._timeout = (timeout-10 >= 0 ? timeout : 10) * SECONDS_TO_MILLISECONDS;
-  };
+    this._timeout = (timeout - 10 >= 0 ? timeout : 10) * SECONDS_TO_MILLISECONDS;
+  }
 
   public execute(func: (delay: number) => void) {
     return new Promise<{
-      interval: NodeJS.Timeout,
-      timeoutDelay: number,
+      interval: NodeJS.Timeout;
+      timeoutDelay: number;
     }>((resolve) => {
       let delay: number = this._timeout / SECONDS_TO_MILLISECONDS;
       const interval = setInterval(() => {
         delay -= 1;
         func(delay);
       }, 1000);
-      
+
       setTimeout(() => {
         setTimeout(() => {
           func(1);
@@ -32,8 +32,8 @@ class Service {
         }, 2500);
       }, this._timeout - 3000);
     });
-  };
-};
+  }
+}
 
 export { Service };
 

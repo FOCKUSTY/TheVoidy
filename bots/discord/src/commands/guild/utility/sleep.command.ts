@@ -12,12 +12,17 @@ const TIMEOUT = 10;
 export default new Types.Discord.Command({
   data: new SlashCommandBuilder().setName("sleep").setDescription("Тестовое сообщение !"),
   async execute(interaction: CommandInteraction) {
-    interaction.reply({content: `Завершении программы через ${TIMEOUT} секунд.`, flags: MessageFlags.Ephemeral})
-    
-    new Sleep(TIMEOUT).execute((delay) => {
-      interaction.editReply({content:  `Завершении программы через ${delay} ${format(delay)}.`});
-    }).then(() => {
-      interaction.editReply({content: "Программа завершена."});
+    interaction.reply({
+      content: `Завершении программы через ${TIMEOUT} секунд.`,
+      flags: MessageFlags.Ephemeral
     });
+
+    new Sleep(TIMEOUT)
+      .execute((delay) => {
+        interaction.editReply({ content: `Завершении программы через ${delay} ${format(delay)}.` });
+      })
+      .then(() => {
+        interaction.editReply({ content: "Программа завершена." });
+      });
   }
 });

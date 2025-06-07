@@ -1,6 +1,11 @@
 /* eslint-disable */
 
-import { CommandInteraction, InteractionReplyOptions, MessageFlags, SlashCommandOptionsOnlyBuilder } from "discord.js";
+import {
+  CommandInteraction,
+  InteractionReplyOptions,
+  MessageFlags,
+  SlashCommandOptionsOnlyBuilder
+} from "discord.js";
 
 export type CommandCreateData<T> = {
   name?: string;
@@ -17,7 +22,7 @@ export interface CommandData<T> {
 }
 
 class Command<T = void> {
-  private readonly _error: InteractionReplyOptions  = {
+  private readonly _error: InteractionReplyOptions = {
     content:
       "По какой-то причине у данной команды не было записано функции для её исполенения.\n" +
       "Если Вы видите это сообщение, срочно обратитесь к нам: https://discord.gg/5MJrRjzPec",

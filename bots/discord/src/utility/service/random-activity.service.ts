@@ -1,9 +1,6 @@
 import { Debug, Logger } from "@voidy/develop";
 
-import {
-  ActivityType,
-  type Client as DiscordClient
-} from "discord.js";
+import { ActivityType, type Client as DiscordClient } from "discord.js";
 import { Random } from "random-js";
 import Formatter from "f-formatter";
 
@@ -50,7 +47,7 @@ class RandomActiviy {
       if (!variable) return activiy;
 
       const array = utility.titles[variable[0]];
-      Debug.Log([{array, variable}]);
+      Debug.Log([{ array, variable }]);
       const title = array[random.integer(0, array.length - 1)];
 
       activiy.text = activiy.text.replace(v, title);
