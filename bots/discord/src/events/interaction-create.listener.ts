@@ -23,7 +23,7 @@ export default class Listener {
     ]);
 
     if (!command) {
-      return Debug.Warn(`Не найдено команды ${interaction.commandName}`);
+      return Debug.Warn(`Не найдено команды ${interaction.commandName}.`);
     }
 
     if (!cooldowns.has(command.data.name)) cooldowns.set(command.data.name, new Collection());
@@ -39,7 +39,7 @@ export default class Listener {
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1_000);
         return interaction.reply({
-          content: `Please wait, you are on a cooldown for \`/${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R>.`,
+          content: `Пожалуйста, подождите откат команды \`/${command.data.name}\`. Вы можете использовать снова через: <t:${expiredTimestamp}:R>.`,
           ephemeral: true
         });
       }

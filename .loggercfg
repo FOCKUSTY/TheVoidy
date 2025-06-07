@@ -1,11 +1,11 @@
 {
-    "dir": "D:\\projects\\thevoid\\TheVoidy\\utility\\develop\\dist\\config.js\\..\\..\\..\\..\\",
+    "dir": "D:\\projects\\thevoid\\TheVoidy\\",
     "logging": true,
     "level": "info",
     "levels": {
-      "info": 1,
-      "warn": 2,
-      "err": 3
+        "info": 1,
+        "warn": 2,
+        "err": 3
     },
     "date": true,
     "deletion_interval": 7,
@@ -14,6 +14,27 @@
         "\u001b[0m"
     ],
     "loggers": {
+        "Warner": {
+            "name": "Warner",
+            "colors": [
+                "\u001b[33m",
+                "\u001b[35m"
+            ]
+        },
+        "Errorer": {
+            "name": "Errorer",
+            "colors": [
+                "\u001b[31m",
+                "\u001b[31m"
+            ]
+        },
+        "Debugger": {
+            "name": "Debugger",
+            "colors": [
+                "\u001b[36m",
+                "\u001b[35m"
+            ]
+        },
         "TheVoid": {
             "name": "TheVoid",
             "colors": [
@@ -54,27 +75,6 @@
             "colors": [
                 "\u001b[33;1m",
                 "\u001b[33m"
-            ]
-        },
-        "Warner": {
-            "name": "Warner",
-            "colors": [
-                "\u001b[33m",
-                "\u001b[35m"
-            ]
-        },
-        "Errorer": {
-            "name": "Errorer",
-            "colors": [
-                "\u001b[31m",
-                "\u001b[31m"
-            ]
-        },
-        "Debugger": {
-            "name": "Debugger",
-            "colors": [
-                "\u001b[36m",
-                "\u001b[35m"
             ]
         },
         "Fail": {

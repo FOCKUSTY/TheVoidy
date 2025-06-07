@@ -26,6 +26,10 @@ class Listener {
 
         await ids[id].execute(interaction);
       } catch (error) {
+        Debug.Log({id});
+        Debug.Log({ids});
+        Debug.Log({id2: ids[id]});
+        
         Debug.Error(error);
 
         await interaction.reply({

@@ -4,25 +4,21 @@ import { Events } from "discord.js";
 import { Types } from "@voidy/types";
 import { Logger } from "@voidy/develop";
 
+import { utility } from "@thevoidcommunity/the-void-database/loaders/data/activities.loader";
 import ClientLoader from "@voidy/services/dist/loaders/client.loader";
-import { loaders } from "@thevoidcommunity/the-void-database";
 
 import RandomActiviy from "../utility/service/random-activity.service";
 
-const { ActivitiesLoader } = loaders;
-
-import { utility } from "@thevoidcommunity/the-void-database/loaders/data/activities.loader";
-import ObjectLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
-
-const objects = new ObjectLoader().execute();
+import { loaders } from "@thevoidcommunity/the-void-database";
+const { ActivitiesLoader, ObjectsLoader } = loaders;
 
 class Listener {
   public readonly name = Events.ClientReady;
   public readonly once = true;
-
+  
   async execute(Client: DiscordClient) {
     if (!Client.user) return;
-
+    
     const randomActivity = new RandomActiviy(Client, process.env.NODE_ENV === "dev" ? "dev" : "");
     const activiesLoader = new ActivitiesLoader();
 
@@ -40,6 +36,8 @@ class Listener {
     });
 
     activiesLoader.execute();
+
+    const objects = new ObjectsLoader().execute();
     new ClientLoader(objects, utility.banwords).execute(Client);
 
     setInterval(
@@ -53,7 +51,7 @@ class Listener {
       () => {
         activiesLoader.reload();
       },
-      1000 * 60 * 10
+      1000 * 60 * 10 * 6
     );
 
     new Logger("TheVoid").execute("Начинаю работу");

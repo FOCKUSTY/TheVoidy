@@ -1,11 +1,13 @@
 import { Debug, Logger } from "@voidy/develop";
 
-import { ActivityType, Client as DiscordClient } from "discord.js";
+import {
+  ActivityType,
+  type Client as DiscordClient
+} from "discord.js";
 import { Random } from "random-js";
+import Formatter from "f-formatter";
 
 import { Types } from "@voidy/types";
-
-import Formatter from "f-formatter";
 
 import {
   activities as loadedActivities,
@@ -41,13 +43,14 @@ class RandomActiviy {
   }
 
   private readonly RegExpFormatter = (activiy: Activity) => {
-    if (titleRegExp.test(activiy.text)) {
+    if (activiy && titleRegExp.test(activiy.text)) {
       const v: string = (activiy.text.match(titleRegExp) || [""])[0];
       const variable = v.match(formatterRegExp);
 
       if (!variable) return activiy;
 
       const array = utility.titles[variable[0]];
+      Debug.Log([{array, variable}]);
       const title = array[random.integer(0, array.length - 1)];
 
       activiy.text = activiy.text.replace(v, title);
@@ -92,7 +95,7 @@ class RandomActiviy {
     } catch (err) {
       Debug.Error(err);
 
-      return { text: "cmd: Error", type: "custom" };
+      return { text: "cmd: Error!", type: "custom" };
     }
   };
 
