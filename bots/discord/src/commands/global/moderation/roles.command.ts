@@ -1,5 +1,5 @@
 import { Types } from "@voidy/types";
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, MessageFlags } from "discord.js";
 import type { CommandInteraction, Role, Collection, EmbedField } from "discord.js";
 import Formatter from "f-formatter";
 
@@ -17,7 +17,7 @@ export default new Types.Discord.Command({
     if (!interaction.guild)
       return await interaction.reply({
         content: "Вы находитесь не в гильдии",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
 
     const guildRoles: Collection<string, Role> = interaction.guild.roles.cache
@@ -33,7 +33,7 @@ export default new Types.Discord.Command({
     await interaction.reply({
       content: "# :tophat:\n Считаем роли...",
       fetchReply: true,
-      ephemeral: true
+      flags: MessageFlags.Ephemeral
     });
 
     for (let i = 0; i < rolesCount; i += 30) {

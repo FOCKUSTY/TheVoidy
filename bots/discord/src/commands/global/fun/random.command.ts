@@ -1,6 +1,6 @@
 import { Types } from "@voidy/types";
 
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { Random } from "random-js";
 
 export default new Types.Discord.Command({
@@ -21,12 +21,12 @@ export default new Types.Discord.Command({
     if (min === max)
       return await interaction.reply({
         content: "Ваши числа одинаковые",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
 
     await interaction.reply({
       content: `Выбираю между: ${min} & ${max}`,
-      ephemeral: true
+      flags: MessageFlags.Ephemeral
     });
 
     const number = new Random().integer(min, max);

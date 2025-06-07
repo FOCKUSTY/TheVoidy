@@ -3,7 +3,7 @@
 import { Debug, Env } from "@voidy/develop";
 
 import type { Interaction } from "discord.js";
-import { Collection } from "discord.js";
+import { Collection, MessageFlags } from "discord.js";
 
 export default class Listener {
   public readonly name = "interaction-create";
@@ -40,7 +40,7 @@ export default class Listener {
         const expiredTimestamp = Math.round(expirationTime / 1_000);
         return interaction.reply({
           content: `Пожалуйста, подождите откат команды \`/${command.data.name}\`. Вы можете использовать снова через: <t:${expiredTimestamp}:R>.`,
-          ephemeral: true
+          flags: MessageFlags.Ephemeral
         });
       }
     }
@@ -59,12 +59,12 @@ export default class Listener {
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
           content: "There was an error while executing this command!",
-          ephemeral: true
+          flags: MessageFlags.Ephemeral
         });
       } else {
         await interaction.reply({
           content: "There was an error while executing this command!",
-          ephemeral: true
+          flags: MessageFlags.Ephemeral
         });
       }
     }

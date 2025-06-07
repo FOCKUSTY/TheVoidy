@@ -1,6 +1,6 @@
 import { Env } from "@voidy/develop";
 
-import { EmbedBuilder, ModalSubmitInteraction, TextChannel } from "discord.js";
+import { EmbedBuilder, MessageFlags, ModalSubmitInteraction, TextChannel } from "discord.js";
 import DiscordModal from "./abstract.modal";
 
 class Modal extends DiscordModal {
@@ -66,7 +66,7 @@ class Modal extends DiscordModal {
 
     return interaction.reply({
       content: "Ваша идея была доставлена",
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
       embeds: [embed]
     });
   }

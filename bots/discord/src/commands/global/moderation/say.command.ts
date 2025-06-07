@@ -7,7 +7,8 @@ import {
   TextInputStyle,
   ModalBuilder,
   ActionRowBuilder,
-  ChannelType
+  ChannelType,
+  MessageFlags
 } from "discord.js";
 
 import { Random } from "random-js";
@@ -35,7 +36,7 @@ export default new Types.Discord.Command({
     if (!interaction.guild)
       return await interaction.reply({
         content: "Вы находитесь не в гильдии",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
 
     const components = customIds.sayModal.components;

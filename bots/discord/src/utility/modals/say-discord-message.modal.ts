@@ -2,6 +2,7 @@ import {
   Channel,
   ChannelType,
   EmbedBuilder,
+  MessageFlags,
   ModalSubmitInteraction,
   PermissionsBitField
 } from "discord.js";
@@ -27,22 +28,22 @@ class Modal extends DiscordModal {
     const channel: Channel | undefined = interaction.client.channels.cache.get(channelId);
 
     if (!channel || !interaction.guild)
-      return await interaction.reply({
+      return interaction.reply({
         content: "Ошибка при поиске канала, попробуйте снова",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
 
     if (!interaction.client.user) {
-      return await interaction.reply({
+      return interaction.reply({
         content: "Проблемы на нашей стороне...",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     }
 
     if (channel.type !== ChannelType.GuildText) {
-      return await interaction.reply({
+      return interaction.reply({
         content: "Ваш канал не является текстовым",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -55,12 +56,12 @@ class Modal extends DiscordModal {
         PermissionsBitField.Flags.ViewChannel
       ])
     ) {
-      return await interaction.reply({
+      return interaction.reply({
         content:
           "Сообщение не было доставлено на Ваш канал, возможны причины:\n" +
           "1. Ваш канал не является текстовым каналом\n" +
           "2. У меня не достаточно прав отправить сообщение на Ваш канал",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -93,20 +94,20 @@ class Modal extends DiscordModal {
         .setDescription(message.replace(/\\\\n/g, "\n"))
         .setTimestamp();
 
-      return await interaction.reply({
+      return interaction.reply({
         content: `Сообщение было доставлено на: ${channel}`,
         embeds: [embed],
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     } catch (err) {
-      return await interaction.reply({
+      return interaction.reply({
         content:
           "Сообщение не было доставлено на Ваш канал, возможны причины:\n" +
           "Ваш канал не является текстовым каналом\n" +
           "У меня не достаточно прав отправить сообщение на Ваш канал" +
           "\n ## Ошибка:\n" +
           `\`\`\`${err}\`\`\``,
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     }
   }

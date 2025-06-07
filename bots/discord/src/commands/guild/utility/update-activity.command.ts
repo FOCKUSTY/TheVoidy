@@ -1,4 +1,4 @@
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { loaders } from "@thevoidcommunity/the-void-database";
 import { Types } from "@voidy/types";
 
@@ -17,14 +17,14 @@ export default new Types.Discord.Command({
     try {
       new ActivitiesLoader().reload();
 
-      return await interaction.reply({
+      return interaction.reply({
         content: "Активности были успешно обновлены",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     } catch (err) {
-      return await interaction.reply({
+      return interaction.reply({
         content: "Произошла какая-то ошибка" + `${err}`,
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     }
   }

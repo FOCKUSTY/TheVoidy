@@ -1,6 +1,6 @@
 import { Types } from "@voidy/types";
 
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { Random } from "random-js";
 
 export default new Types.Discord.Command({
@@ -25,7 +25,7 @@ export default new Types.Discord.Command({
     ),
 
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: `Предсказываю...`, ephemeral: true });
+    await interaction.reply({ content: `Предсказываю...`, flags: MessageFlags.Ephemeral });
 
     const categoryes = [
       [

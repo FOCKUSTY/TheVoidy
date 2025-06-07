@@ -1,4 +1,4 @@
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import RandomActiviy from "utility/service/random-activity.service";
 import { Types } from "@voidy/types";
 
@@ -12,7 +12,7 @@ export default new Types.Discord.Command({
 
     return await interaction.reply({
       content: `${type} ${activity.text}`,
-      ephemeral: true
+      flags: MessageFlags.Ephemeral
     });
   }
 });

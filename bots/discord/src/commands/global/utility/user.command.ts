@@ -6,7 +6,8 @@ import {
   EmbedBuilder,
   time,
   User,
-  GuildMember
+  GuildMember,
+  MessageFlags
 } from "discord.js";
 
 export default new Types.Discord.Command({
@@ -34,7 +35,7 @@ export default new Types.Discord.Command({
     await interaction.reply({
       content: `# :tophat:\n Собираем информацию...`,
       fetchReply: true,
-      ephemeral: true
+      flags: MessageFlags.Ephemeral
     });
 
     const user = interaction.options.get("member")

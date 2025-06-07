@@ -1,4 +1,4 @@
-import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
+import { EmbedBuilder, MessageFlags, ModalSubmitInteraction } from "discord.js";
 import { Types } from "@voidy/types";
 
 import DiscordModal from "./abstract.modal";
@@ -50,12 +50,12 @@ class Modal extends DiscordModal {
       return interaction.reply({
         content: `Сообщение было доставлено на: ${channelId}`,
         embeds: [embed],
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     } catch (err) {
       return interaction.reply({
         content: `Сообщение не было доставлено на Ваш канал \`\`\`${err}\`\`\``,
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
     }
   }

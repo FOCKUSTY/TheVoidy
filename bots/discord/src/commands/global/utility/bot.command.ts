@@ -1,7 +1,7 @@
 import { Env } from "@voidy/develop";
 import { Types } from "@voidy/types";
 
-import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageFlags } from "discord.js";
 
 import commands from "src/index.commads";
 
@@ -80,6 +80,6 @@ export default new Types.Discord.Command({
       })
       .setTimestamp();
 
-    return await interaction.reply({ embeds: [embed], ephemeral: true });
+    return await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
   }
 });

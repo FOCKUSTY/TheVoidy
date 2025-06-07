@@ -1,4 +1,4 @@
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 import commands from "src/index.commads";
 import { Types } from "@voidy/types";
@@ -9,7 +9,7 @@ export default new Types.Discord.Command({
   async execute(interaction: CommandInteraction) {
     return await interaction.reply({
       content: `Все команды: \n🎩${commands.join("\n🎩")}`,
-      ephemeral: true
+      flags: MessageFlags.Ephemeral
     });
   }
 });

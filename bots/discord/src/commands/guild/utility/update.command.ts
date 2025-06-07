@@ -7,7 +7,8 @@ import {
   TextInputBuilder,
   TextInputStyle,
   ModalBuilder,
-  ActionRowBuilder
+  ActionRowBuilder,
+  MessageFlags
 } from "discord.js";
 
 import Ids from "utility/modals/custom-ids.modal";
@@ -21,7 +22,7 @@ export default new Types.Discord.Command({
     if (interaction.user.id !== Env.get("AUTHOR_ID"))
       return await interaction.reply({
         content: "У Вас нет прав на использование этой команды",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
 
     const components = customIds.updateModal.components;

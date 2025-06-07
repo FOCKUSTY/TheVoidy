@@ -1,4 +1,4 @@
-import { Interaction, InteractionType } from "discord.js";
+import { Interaction, InteractionType, MessageFlags } from "discord.js";
 
 import { Debug } from "@voidy/develop";
 import { Types } from "@voidy/types";
@@ -26,15 +26,11 @@ class Listener {
 
         await ids[id].execute(interaction);
       } catch (error) {
-        Debug.Log({id});
-        Debug.Log({ids});
-        Debug.Log({id2: ids[id]});
-        
         Debug.Error(error);
 
         await interaction.reply({
           content: "Произошла какая-то ошибка",
-          ephemeral: true
+          flags: MessageFlags.Ephemeral
         });
       }
     }
