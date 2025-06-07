@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 
 import { Random } from "random-js";
-import ObjectsLoader from "@thevoidcommunity/the-void-database/dist/loaders/data/objects.loader";
+import ObjectsLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
 import Ids from "utility/modals/custom-ids.modal";
 import { Types } from "@voidy/types";
 

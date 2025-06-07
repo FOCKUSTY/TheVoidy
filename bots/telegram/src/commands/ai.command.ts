@@ -1,7 +1,7 @@
 import { Types } from "@voidy/types";
 import { options } from "../events/message.listener";
 
-import { Models, OPENAI_MODELS } from "@thevoidcommunity/the-void-database/dist/ai/types";
+import { Models, OPENAI_MODELS } from "@thevoidcommunity/the-void-database/ai/types";
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 

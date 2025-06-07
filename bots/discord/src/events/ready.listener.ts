@@ -11,8 +11,8 @@ import RandomActiviy from "../utility/service/random-activity.service";
 
 const { ActivitiesLoader } = loaders;
 
-import { utility } from "@thevoidcommunity/the-void-database/dist/loaders/data/activities.loader";
-import ObjectLoader from "@thevoidcommunity/the-void-database/dist/loaders/data/objects.loader";
+import { utility } from "@thevoidcommunity/the-void-database/loaders/data/activities.loader";
+import ObjectLoader from "@thevoidcommunity/the-void-database/loaders/data/objects.loader";
 
 const objects = new ObjectLoader().execute();
 

@@ -1,7 +1,7 @@
 import { APIPromise } from "openai/core";
 import { Response } from "../base/response.type";
 import { ChatCompletion } from "openai/resources/chat/completions";
-import { Models } from "@thevoidcommunity/the-void-database/dist/ai/types/models.types";
+import { Models } from "@thevoidcommunity/the-void-database/ai/types/models.types";
 
 export abstract class Ai {
   public abstract chat(
