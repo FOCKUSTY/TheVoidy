@@ -7,15 +7,18 @@
   "author": "FOCKUSTY",
   "license": "MIT",
   "scripts": {
-    "build:all": "pnpm run lint && pnpm run build:packages && pnpm run build:utility && pnpm run build:bots && pnpm run build:bot",
+    "build:all": "pnpm run build:packages && pnpm run build:utility && pnpm run build:bots && pnpm run build:bot",
     "build:bots": "pnpm --filter {./bots/**} build",
     "build:packages": "pnpm --filter {./packages/**} build",
     "build:utility": "pnpm --filter {./utility/**} build",
     "build:bot": "pnpm --filter voidtype run build",
     "dev:bot": "set NODE_ENV=dev&& set BOT=all&& pnpm --filter voidtype run dev",
-    "start:bot": "set NODE_ENV=prod&& set BOT=all&& pnpm --filter voidtype run start:builded",
-    "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build:all && pnpm run start:bot",
+    "set:prod": "set NODE_ENV=prod&& set BOT=all",
+    "start:bot": "pnpm run set:prod && pnpm --filter voidtype run start:builded",
+    "start": "pnpm run set:prod && pnpm run build:all && pnpm run linter && pnpm run start:bot",
+    "linter": "pnpm run lint && pnpm run lint:fix",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prettier": "prettier . -c -w"
   },
   "devDependencies": {
