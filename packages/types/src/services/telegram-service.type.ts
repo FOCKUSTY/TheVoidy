@@ -1,14 +1,20 @@
 import { Format, Telegraf } from "telegraf";
 import { Message } from "telegraf/typings/core/types/typegram";
-
-import { Response } from "../base/response.type";
 import { TelegramInteraction as Interaction } from "../commands/interactions.type";
 
-import { CreateService as CreatePatternService } from "./pattern-formatting-service.type";
-import { FmtString } from "telegraf/typings/format";
+import { Response } from "../base/response.type";
+import { FullPresets } from "./news-pattern.type";
 
 export abstract class Service {
-  public readonly pattern: CreatePatternService<FmtString<string>>;
+  public abstract Format({
+    repos,
+    pattern,
+    linkEnabled
+  }: {
+    repos: {name: string, link: string}[],
+    pattern: FullPresets,
+    linkEnabled: boolean
+  }): string;
 
   public abstract Send(
     chatId: number | string,

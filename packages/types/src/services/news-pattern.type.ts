@@ -26,10 +26,11 @@ export const VISUALISATION_KEYS: readonly [
 
 export const DEFAULT_PRESETS: PresetsDefault = {
   visualisation: {
-    repos: "$Code([ REPO_NAME ])",
+    repos: "[ REPO_NAME ]",
     areas: "— AREA_NAME",
     items: " \u00D7 ITEM_NAME"
-  }
+  },
+  special: ["[", "]", "-"]
 };
 
 export interface LazyPresets {
@@ -68,19 +69,13 @@ export interface Presets {
    *
    * @requires repos must includes REPO_NAME
    * @requires area must includes AREA_NAME
-   *
-   * All keywords:
-   * @$Quote $Quote(NAME)
-   * @$Bold $Bold(NAME)
-   * @$Underline $Underline(NAME)
-   * @$Italic $Italic(NAME)
-   * @$Code $Code(NAME)
-   * @$Link $Link(NAME, LINK)
+   * @requires item must includes ITEM_NAME
    *
    * @example
    * visualisation {
-   *  repos: "$Quote([ $Bold(REPO_NAME) ])",
-   *  areas: "— AREA_NAME"
+   *  repos: "`[ REPO_NAME ]`",
+   *  areas: "— AREA_NAME",
+   *  items: " = ITEM_NAME"
    * }
    */
   visualisation?: {
@@ -97,92 +92,16 @@ export interface Presets {
      */
     items?: string;
   };
+
+  /**
+   * Special symbols
+   */
+  special: string[];
 }
 
 export const FORMATTING = ["discord", "telegram"] as const;
 export type Formatting = (typeof FORMATTING)[number];
 export type Repo = { name: string; link: string };
-
-export const VisualisationFindFormatStyleRegExp =
-  /\$Quote|Bold|Underline|Italic|Code|Link\([\w\W]+\)/;
-export const VisualisationFormattingRegExps = {
-  Quote: /\$Quote\([\w\W]+\)/,
-  Bold: /\$Bold\([\w\W]+\)/,
-  Underline: /\$Underline\([\w\W]+\)/,
-  Italic: /\$Italic\([\w\W]+\)/,
-  Code: /\$Code\([\w\W]+\)/,
-  Link: /\$Link\([\w\W]+, [\w\W]+\)/
-} as const;
-
-export type VisualisationFormattingRegExpsType = keyof typeof VisualisationFormattingRegExps;
-
-export class RegExpsService {
-  public FindAll = (text: string, firstFormat: VisualisationFormattingRegExpsType) => {
-    const formats: VisualisationFormattingRegExpsType[] = [firstFormat];
-
-    const getFormats = (txt: string, format: VisualisationFormattingRegExpsType) => {
-      const data = txt.match(VisualisationFormattingRegExps[format]);
-      const name = this.FindData(format, data[0], "name") as string;
-
-      const nextFormatMatched = name.match(VisualisationFindFormatStyleRegExp);
-
-      if (!nextFormatMatched) return;
-
-      const nextFormat = nextFormatMatched[0] as VisualisationFormattingRegExpsType;
-
-      formats.push(nextFormat);
-      getFormats(name, nextFormat);
-    };
-
-    getFormats(text, firstFormat);
-
-    return formats;
-  };
-
-  public FindData = (
-    type: VisualisationFormattingRegExpsType,
-    text: string,
-    returnData: "matched_data" | "expression" | "name" = "matched_data"
-  ) => {
-    const data = text.match(VisualisationFormattingRegExps[type]);
-
-    switch (returnData) {
-      case "matched_data":
-        return data;
-
-      case "expression":
-        return data[0];
-
-      case "name":
-        return data[0].slice(type.length + 2, data[0].length - 1);
-
-      default:
-        return data[0].slice(type.length + 2, data[0].length - 1);
-    }
-  };
-
-  public FindLast = (text: string, firstFormat: VisualisationFormattingRegExpsType) => {
-    const output = [text];
-
-    const getLast = (txt: string, format: VisualisationFormattingRegExpsType) => {
-      const data = txt.match(VisualisationFormattingRegExps[format]);
-      const name = this.FindData(format, data[0], "name") as string;
-
-      const nextFormatMatched = name.match(VisualisationFindFormatStyleRegExp);
-
-      if (!nextFormatMatched) return;
-
-      const nextFormat = nextFormatMatched[0] as VisualisationFormattingRegExpsType;
-
-      output.push(this.FindData(nextFormat, name, "name") as string);
-      getLast(name, nextFormat);
-    };
-
-    getLast(output.toReversed()[0], firstFormat);
-
-    return output.toReversed()[0];
-  };
-}
 
 class Validator {
   public constructor(private readonly _presets: Presets) {}
@@ -219,7 +138,8 @@ class Validator {
 
     return {
       repos: this._presets.repos,
-      visualisation
+      special: this._presets.special,
+      visualisation,
     };
   }
 }

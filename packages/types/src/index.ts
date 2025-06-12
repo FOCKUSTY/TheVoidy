@@ -28,10 +28,6 @@ import { Service as IMACLDiscordService } from "./services/discord-service.type"
 import { Service as IMACLTelegramService } from "./services/telegram-service.type";
 import { Services as IMTServices } from "./services/services.type";
 
-import {
-  CreateService as IMTCreateService,
-  Service as IMIService
-} from "./services/pattern-formatting-service.type";
 import DCLNewsPatternValidator, {
   DEFAULT_PRESETS as IMCDEFAULT_PRESETS,
   FORMATTING as IMCFORMATTING,
@@ -42,8 +38,6 @@ import DCLNewsPatternValidator, {
   Presets as IMIPresets,
   FullPresets as IMTFullPresets,
   Repo as IMTRepo,
-  RegExpsService as IMCLRegExpsService,
-  VisualisationFormattingRegExpsType as IMTVisualisationFormattingRegExpsType
 } from "./services/news-pattern.type";
 
 import {
@@ -72,7 +66,6 @@ import { Update } from "telegraf/typings/core/types/typegram";
 
 export namespace Classes {
   export class NewsPatternValidator extends DCLNewsPatternValidator {}
-  export type PatternService<T = string> = IMTCreateService<T>;
 
   export abstract class Ai extends IMACLAi {}
   export abstract class DiscordService extends IMACLDiscordService {}
@@ -96,8 +89,6 @@ export namespace Types.Patterns.Formatting {
   export const VISUALISATION_ITEMS = IMCVISUALISATION_ITEMS;
   export const VISUALISATION_KEYS = IMCVISUALISATION_KEYS;
 
-  export class RegExpsService extends IMCLRegExpsService {}
-
   export class NewsPatternValidator extends DCLNewsPatternValidator {}
 
   export type FullPresets = IMTFullPresets;
@@ -105,10 +96,6 @@ export namespace Types.Patterns.Formatting {
   export type Presets = IMIPresets;
   export type Formatting = IMTFormatting;
   export type Repo = IMTRepo;
-
-  export type VisualisationFormattingRegExpsType = IMTVisualisationFormattingRegExpsType;
-  export type IPatternService<T = string> = IMIService<T>;
-  export type PatternService = IMTCreateService;
 }
 
 export namespace Types.Discord {

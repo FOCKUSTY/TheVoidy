@@ -1,8 +1,7 @@
-import { Presets, Repo, DEFAULT_PRESETS } from "@voidy/types/dist/services/news-pattern.type";
-import { Services } from "@voidy/services";
 import { Types } from "@voidy/types";
 import { Debug } from "@voidy/develop";
 
+import { FullPresets } from "@voidy/types/dist/services/news-pattern.type";
 import { Telegraf, Format } from "telegraf";
 
 import { Message } from "telegraf/typings/core/types/typegram";
@@ -12,19 +11,51 @@ import GetChatId from "./helpers/get-chat-id.helper";
 
 import Client from "../../telegram.bot";
 
-import { CreateService } from "@voidy/types/dist/services/pattern-formatting-service.type";
-import { FmtString } from "telegraf/typings/format";
-
 class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
-  public readonly pattern: CreateService<FmtString<string>> = (repos: Repo[], presets?: Presets) =>
-    new Services.Format.TelegramFormattingService(repos, {
-      repos: presets?.repos || {},
-      visualisation: {
-        ...DEFAULT_PRESETS.visualisation,
-        ...(presets?.visualisation || DEFAULT_PRESETS.visualisation)
-      }
-    });
+
+  public Format = ({
+    repos,
+    pattern,
+    linkEnabled
+  }: {
+    repos: {name: string, link: string}[],
+    pattern: FullPresets,
+    linkEnabled: boolean
+  }): string => {
+    const links = Object.fromEntries(repos.map(r => [r.name, r.link]));
+    let output: string = "";
+
+    for (const repo of Object.keys(pattern.repos)) {
+      let repoName = repo;
+      pattern.special.forEach(special => repoName = repoName.replaceAll(special, "\\" + special));
+      
+      output += (
+        pattern.visualisation.repos
+          .replaceAll("REPO_NAME", (linkEnabled && links[repo]) ? `[${repoName}](${links[repo]})` : repoName) + "\n"
+      );
+
+      const areas = pattern.repos[repo];
+      
+      if (!areas) continue;
+
+      const enabledAreas = Object.entries(areas)
+        .filter((a) => a[1] === true)
+        .map((a) => a[0]);
+
+      if (enabledAreas.length === 0) continue;
+      
+      enabledAreas.forEach(area =>
+        output += pattern.visualisation.areas.replaceAll(
+          "AREA_NAME", area.replaceAll("_", "\\_")
+      ) + "\n");
+      output += pattern.visualisation.items.replaceAll("ITEM_NAME", "example") + "\n";
+    };
+
+    ["-"].forEach(special => output = output.replaceAll(special, "\\" + special));
+
+    return output.replaceAll("\\\\", "\\");
+  };
 
   public Send = async (
     chatId: number | string,

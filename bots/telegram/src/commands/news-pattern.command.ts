@@ -3,35 +3,48 @@ const { FmtString } = Telegraf.Format;
 
 import { Types } from "@voidy/types";
 
+const SPACE = " ==== " as const;
 const helpJSON = JSON.stringify(
   {
     "repos?": {
       "[repo_name: string]": { "[area: string]": "boolean" }
     },
     "visualisation?": {
-      "repos?": "string (REPO_NAME)",
-      "areas?": "string (AREA_NAME)",
-      "items?": "string (ITEM_NAME)"
-    }
+      "repos?": "[ REPO_NAME ]",
+      "areas?": "— AREA_NAME",
+      "items?": " = ITEM_NAME"
+    },
+    "special?": ["[", "]", "-"]
   },
   undefined,
   4
 );
 const helpString =
+  "Пример команды: /news_pattern ==== Lazy-And-Focused ==== orgs\n"+
   "Первое значение — название Вашего владельца репозиториев (Ваш Github или организация в Github)\n" +
   "Второе значение — тип Вашей организации (orgs | users)\n" +
   "Третье значение — JSON дата того, что Вы хотите видеть, то есть Ваш шаблон\n";
 
+const helpString2 = `К слову, используйте в качестве разделителя: [${SPACE}]`
+
 const getHelp = (code: string | number = "0000", str: string = "") => {
-  const help = "Код ошибки: " + code + "\n" + str + "\n" + helpString + "\n" + helpJSON;
+  const help = "Код ошибки: " + code + "\n" + str + "\n" + helpString + helpString2 + "\n" + helpJSON;
   return new FmtString(help, [
     {
       type: "blockquote",
       length: helpJSON.length,
       offset: help.length - helpJSON.length
+    },
+    {
+      type: "code",
+      length: SPACE.length,
+      offset: help.length - helpJSON.length - SPACE.length-2
     }
   ]);
 };
+
+const SPECIAL = ["[", "]", "-"];
+const OPTIONS = {parse_mode: "MarkdownV2", link_preview_options: {is_disabled: true}} as const;
 
 export default class Command extends Types.Telegram.Command {
   public constructor(services: Types.Services<{ github: Types.Github.Api }>) {
@@ -44,6 +57,7 @@ export default class Command extends Types.Telegram.Command {
           string,
           string?,
           string?,
+          string?,
           string?
         ];
 
@@ -51,11 +65,14 @@ export default class Command extends Types.Telegram.Command {
           name: lazyCommand[0],
           repoOwner: lazyCommand[1],
           ownerType: lazyCommand[2],
-          data: lazyCommand[3]
+          data: lazyCommand[3],
+          linkEnabled: lazyCommand[4]
         } as const;
 
+        const linksEnabled = command.linkEnabled === "true" ? true : false;
+
         if (
-          (lazyCommand.length !== 3 && lazyCommand.length !== 4) ||
+          (lazyCommand.length < 3) ||
           !command.repoOwner ||
           !command.ownerType
         )
@@ -94,18 +111,20 @@ export default class Command extends Types.Telegram.Command {
             command.data || JSON.stringify(Types.Patterns.Formatting.DEFAULT_PRESETS),
             undefined
           );
-          const pattern = services.telegram.pattern(reposToPattern, {
-            ...data,
-            repos: data.repos || objectRepos,
-            visualisation:
-              data.visualisation || Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation
+
+          const text = services.telegram.Format({
+            repos: reposToPattern,
+            pattern: {
+              ...data,
+              special: data.special ? [ ...data.special, "-" ] : SPECIAL,
+              repos: data.repos || objectRepos,
+              visualisation:
+                data.visualisation || Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation
+            },
+            linkEnabled: linksEnabled
           });
 
-          const generated = pattern.generate();
-
-          console.log(generated);
-
-          return await interaction.reply(new FmtString(generated.text, generated.entities));
+          return await interaction.reply(text, {...OPTIONS});
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           await interaction.reply(
@@ -116,17 +135,19 @@ export default class Command extends Types.Telegram.Command {
           );
 
           try {
-            const pattern = services.telegram.pattern(reposToPattern, {
-              repos: objectRepos,
-              visualisation: Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation
+            const text = services.telegram.Format({
+              repos: reposToPattern,
+              pattern: {
+                repos: objectRepos,
+                visualisation: Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation,
+                special: SPECIAL
+              },
+              linkEnabled: linksEnabled
             });
 
-            const generated = pattern.generate();
-
-            console.log(generated);
-
-            return await interaction.reply(new FmtString(generated.text, generated.entities));
+            return await interaction.reply(text, {...OPTIONS});
           } catch (err) {
+            console.error(err);
             return await interaction.reply(`${err}`);
           }
         }
