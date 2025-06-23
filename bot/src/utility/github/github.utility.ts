@@ -28,6 +28,31 @@ class GitHubApi extends Types.Github.Api {
     }
   }
 
+  public async getCommits(repositoryLink: string) {
+    try {
+      const data = await fetch(repositoryLink + "/commits", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const commits: Types.Github.Commit[] = await data.json();
+
+      return {
+        status: data.status,
+        text: data.statusText,
+        commits
+      }
+    } catch (err) {
+      return {
+        status: 404,
+        text: `${err}`,
+        commits: []
+      };
+    }
+  };
+
   /**
    * @param getRepository - A some repository
    * @param dateOffset - A date offset in seconds

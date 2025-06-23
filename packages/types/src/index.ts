@@ -45,7 +45,8 @@ import {
   Repo as IMIGithubRepo,
   RepoOwners as IMTGithubRepoOwners,
   RepoReturn as IMTGithubRepoReturn,
-  repoOwners as IMCGithubRepoOwners
+  repoOwners as IMCGithubRepoOwners,
+  Commit as IMIGithubCommit
 } from "./services/github-api.type";
 import { Time as IMTTime } from "./services/date.types";
 
@@ -149,6 +150,7 @@ export namespace Types.Github {
   export type Repo = IMIGithubRepo;
   export type RepoOwners = IMTGithubRepoOwners;
   export type RepoReturn = IMTGithubRepoReturn;
+  export type Commit = IMIGithubCommit;
 
   export abstract class Api extends IMACLGitHubApi {}
 }

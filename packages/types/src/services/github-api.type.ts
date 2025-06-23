@@ -44,6 +44,84 @@ export interface Repo {
   "watchers": number;
 }
 
+export type Commit = {
+  "url": string,
+  "sha": string,
+  "node_id": string,
+  "html_url": string,
+  "comments_url": string,
+  "commit": {
+    "url": string,
+    "author": {
+      "name": string,
+      "email": string,
+      "date": string
+    },
+    "committer": {
+      "name": string,
+      "email": string,
+      "date": string
+    },
+    "message": string,
+    "tree": {
+      "url": string,
+      "sha": string
+    },
+    "comment_count": number,
+    "verification": {
+      "verified": boolean,
+      "reason": string,
+      "signature": string|null,
+      "payload": string|null,
+      "verified_at": string|null
+    }
+  },
+  "author": {
+    "login": string,
+    "id": number,
+    "node_id": string,
+    "avatar_url": string,
+    "gravatar_id": string,
+    "url": string,
+    "html_url": string,
+    "followers_url": string,
+    "following_url": string,
+    "gists_url": string,
+    "starred_url": string,
+    "subscriptions_url": string,
+    "organizations_url": string,
+    "repos_url": string,
+    "events_url": string,
+    "received_events_url": string,
+    "type": string,
+    "site_admin": boolean
+  },
+  "committer": {
+    "login": string,
+    "id": number,
+    "node_id": string,
+    "avatar_url": string,
+    "gravatar_id": string,
+    "url": string,
+    "html_url": string,
+    "followers_url": string,
+    "following_url": string,
+    "gists_url": string,
+    "starred_url": string,
+    "subscriptions_url": string,
+    "organizations_url": string,
+    "repos_url": string,
+    "events_url": string,
+    "received_events_url": string,
+    "type": string,
+    "site_admin": boolean
+  },
+  "parents": {
+    "url": string,
+    "sha": string
+  }[]
+}
+
 export const repoOwners = ["orgs", "users"] as const;
 export type RepoOwners = (typeof repoOwners)[number];
 export type RepoReturn = {
@@ -51,6 +129,11 @@ export type RepoReturn = {
   text: string;
   repos: Repo[];
 };
+export type CommitReturn = {
+  status: number;
+  text: string;
+  commits: Commit[];
+}
 
 export abstract class GitHubApi {
   public abstract getRepositories(
@@ -58,6 +141,8 @@ export abstract class GitHubApi {
     type: RepoOwners,
     ignoredRepo: string[]
   ): Promise<RepoReturn>;
+
+  public abstract getCommits(repositoryLink: string): Promise<CommitReturn>;
 
   /**
    * @param getRepository - A some repository
