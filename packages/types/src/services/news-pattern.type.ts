@@ -1,4 +1,4 @@
-export const VISUALISATION_ITEMS = ["repo", "area", "item"] as const;
+export const VISUALISATION_ITEMS = ["repo", "commit"] as const;
 
 export type VisualisationItems = `${Uppercase<(typeof VISUALISATION_ITEMS)[number]>}_NAME`;
 export type VisualisationKeys = `${(typeof VISUALISATION_ITEMS)[number]}s`;
@@ -19,23 +19,21 @@ export type FullPresets = RequiredObject<Presets> & Pick<Presets, "repos">;
 
 export const VISUALISATION_KEYS: readonly [
   "repos",
-  "areas",
-  "items"
+  "commits"
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ] = VISUALISATION_ITEMS.map((i) => i + "s") as any;
 
 export const DEFAULT_PRESETS: PresetsDefault = {
   visualisation: {
     repos: "[ REPO_NAME ]",
-    areas: "— AREA_NAME",
-    items: " \u00D7 ITEM_NAME"
+    commits: "\u2A2F AREA_NAME",
   },
   special: ["[", "]", "-"]
 };
 
 export interface LazyPresets {
   repos?: {
-    [repo_name: string]: { [area: string]: boolean };
+    [repo_name: string]: string[];
   };
   visualisation?: Partial<Record<VisualisationKeys, string>>;
 }
@@ -52,14 +50,11 @@ export interface Presets {
    *
    * @example
    * repos: {
-   *  "TheTypes": {
-   *    "bots": true,
-   *    "utility": false
-   *  }
+   *  "TheTypes": ["some-commit1", "some-commit2"]
    * }
    */
   repos?: {
-    [repo_name: string]: { [area: string]: boolean };
+    [repo_name: string]: string[];
   };
 
   /**
@@ -68,14 +63,12 @@ export interface Presets {
    * In futute: discord
    *
    * @requires repos must includes REPO_NAME
-   * @requires area must includes AREA_NAME
-   * @requires item must includes ITEM_NAME
+   * @requires commits must includes COMMIT_NAME
    *
    * @example
    * visualisation {
    *  repos: "`[ REPO_NAME ]`",
-   *  areas: "— AREA_NAME",
-   *  items: " = ITEM_NAME"
+   *  commits: "⨯ AREA_NAME",
    * }
    */
   visualisation?: {
@@ -84,13 +77,9 @@ export interface Presets {
      */
     repos?: string;
     /**
-     * @requires AREA_NAME
+     * @requires COMMIT_NAME
      */
-    areas?: string;
-    /**
-     * @requires ITEM_NAME
-     */
-    items?: string;
+    commits?: string;
   };
 
   /**

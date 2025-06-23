@@ -93,18 +93,8 @@ export default class Command extends Types.Telegram.Command {
         });
 
         const objectRepos: {
-          [repo_name: string]: {
-            [area_name: string]: boolean;
-          };
+          [repo_name: string]: string[]
         } = {};
-
-        for (const repo of repos.map((r) => {
-          return { [r.name]: { "some_area": true } };
-        })) {
-          for (const data of Object.entries(repo)) {
-            objectRepos[data[0]] = data[1];
-          }
-        }
 
         try {
           const data = JSON.parse(

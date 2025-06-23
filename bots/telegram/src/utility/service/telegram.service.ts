@@ -14,47 +14,62 @@ import Client from "../../telegram.bot";
 class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
 
+  private ToFormattedVisualisation({
+    name,
+    pattern,
+    patternName,
+    link,
+    specials
+  }: {
+    name: string,
+    pattern: string,
+    patternName: string,
+    specials: string[],
+    link: string,
+  }) {
+    let output = pattern
+      .replaceAll(patternName, !link
+          ? name
+          : `[${name}](${link})`
+      ) + "\n";
+    
+    specials.forEach(special =>
+      output = output
+        .replaceAll("-", " ")
+        .replaceAll(special, "\\" + special)
+      );
+
+    return output;
+  };
+
   public Format = ({
     repos,
     pattern,
     linkEnabled
   }: {
-    repos: {name: string, link: string}[],
+    repos: {name: string, link: string, commits: string[]}[],
     pattern: FullPresets,
     linkEnabled: boolean
   }): string => {
-    const links = Object.fromEntries(repos.map(r => [r.name, r.link]));
     let output: string = "";
 
+    const repositories = Object.fromEntries(repos.map(r => [r.name, { link: r.link, commits: r.commits }]));
+
     for (const repo of Object.keys(pattern.repos)) {
-      let repoName = pattern.visualisation.repos
-        .replaceAll("REPO_NAME", (linkEnabled && links[repo])
-          ? `[${repo}](${links[repo]})`
-          : repo
-        ) + "\n";
-      
-      pattern.special.forEach(special => repoName = repoName.replaceAll("-", " ").replaceAll(special, "\\" + special));
-      
-      output += repoName;
+      const { link, commits } = repositories[repo];
 
-      const areas = pattern.repos[repo];
-      
-      if (!areas) continue;
+      output += this.ToFormattedVisualisation({
+        link: linkEnabled ? link : "",
+        specials: pattern.special,
+        patternName: "REPO_NAME",
+        name: repo,
+        pattern: pattern.visualisation.repos
+      });
 
-      const enabledAreas = Object.entries(areas)
-        .filter((a) => a[1] === true)
-        .map((a) => a[0]);
-
-      if (enabledAreas.length === 0) continue;
-      
-      enabledAreas.forEach(area =>
-        output += pattern.visualisation.areas.replaceAll(
-          "AREA_NAME", area.replaceAll("_", "\\_")
-      ) + "\n");
-      output += pattern.visualisation.items.replaceAll("ITEM_NAME", "example") + "\n";
+      commits.forEach(commit => {
+        // some code
+      });
     };
-
-    ["-"].forEach(special => output = output.replaceAll(special, "\\" + special));
 
     return output.replaceAll("\\\\", "\\");
   };
