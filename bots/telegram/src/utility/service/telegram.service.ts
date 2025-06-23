@@ -27,13 +27,15 @@ class Telegram extends Types.Telegram.Service {
     let output: string = "";
 
     for (const repo of Object.keys(pattern.repos)) {
-      let repoName = repo;
-      pattern.special.forEach(special => repoName = repoName.replaceAll(special, "\\" + special));
+      let repoName = pattern.visualisation.repos
+        .replaceAll("REPO_NAME", (linkEnabled && links[repo])
+          ? `[${repo}](${links[repo]})`
+          : repo
+        ) + "\n";
       
-      output += (
-        pattern.visualisation.repos
-          .replaceAll("REPO_NAME", (linkEnabled && links[repo]) ? `[${repoName}](${links[repo]})` : repoName) + "\n"
-      );
+      pattern.special.forEach(special => repoName = repoName.replaceAll("-", " ").replaceAll(special, "\\" + special));
+      
+      output += repoName;
 
       const areas = pattern.repos[repo];
       
