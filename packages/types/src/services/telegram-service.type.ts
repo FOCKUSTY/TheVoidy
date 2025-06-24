@@ -4,6 +4,7 @@ import { TelegramInteraction as Interaction } from "../commands/interactions.typ
 
 import { Response } from "../base/response.type";
 import { FullPresets } from "./news-pattern.type";
+import { Commit } from "./github-api.type";
 
 export abstract class Service {
   public abstract Format({
@@ -11,7 +12,7 @@ export abstract class Service {
     pattern,
     linkEnabled
   }: {
-    repos: {name: string, link: string}[],
+    repos: {[key: string]: { link: string, commits: Commit[] }},
     pattern: FullPresets,
     linkEnabled: boolean
   }): string;

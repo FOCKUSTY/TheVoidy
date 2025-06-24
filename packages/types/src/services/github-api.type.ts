@@ -16,6 +16,7 @@ export interface Repo {
   };
   "private": boolean;
   "html_url": string;
+  "url": string;
   "description": string;
   "fork": boolean;
   "language": string;
@@ -44,7 +45,7 @@ export interface Repo {
   "watchers": number;
 }
 
-export type Commit = {
+export interface Commit {
   "url": string,
   "sha": string,
   "node_id": string,
@@ -122,6 +123,32 @@ export type Commit = {
   }[]
 }
 
+export interface BranchCommit extends Commit {
+  "branch_name": string,
+
+  "files": {
+    "sha": string,
+    "filename": string,
+    "status": "added"|"modified"|"removed",
+    "additions": number,
+    "deletions": number,
+    "changes": number,
+    "blob_url": string,
+    "raw_url": string,
+    "contents_url": string,
+    "patch": string
+  }[]
+};
+
+export interface Branch   {
+  "name": string,
+  "commit": {
+    "sha": string,
+    "url": string
+  },
+  "protected": boolean
+};
+
 export const repoOwners = ["orgs", "users"] as const;
 export type RepoOwners = (typeof repoOwners)[number];
 export type RepoReturn = {
@@ -132,8 +159,13 @@ export type RepoReturn = {
 export type CommitReturn = {
   status: number;
   text: string;
-  commits: Commit[];
+  commits: BranchCommit[];
 }
+export type BranchReturn = {
+  status: number;
+  text: string;
+  branches: Branch[];
+};
 
 export abstract class GitHubApi {
   public abstract getRepositories(
@@ -142,6 +174,7 @@ export abstract class GitHubApi {
     ignoredRepo: string[]
   ): Promise<RepoReturn>;
 
+  public abstract getBranches(repositoryLink: string): Promise<BranchReturn>;
   public abstract getCommits(repositoryLink: string): Promise<CommitReturn>;
 
   /**

@@ -8,67 +8,88 @@ import { Message } from "telegraf/typings/core/types/typegram";
 
 import SendMessage from "./helpers/send-message.helper";
 import GetChatId from "./helpers/get-chat-id.helper";
+import { format } from "date-fns"
 
 import Client from "../../telegram.bot";
+import { BranchCommit, Commit } from "@voidy/types/dist/services/github-api.type";
 
 class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
-
+  
   private ToFormattedVisualisation({
     name,
     pattern,
     patternName,
     link,
-    specials
   }: {
     name: string,
     pattern: string,
     patternName: string,
-    specials: string[],
     link: string,
   }) {
-    let output = pattern
-      .replaceAll(patternName, !link
-          ? name
-          : `[${name}](${link})`
-      ) + "\n";
-    
-    specials.forEach(special =>
-      output = output
-        .replaceAll("-", " ")
-        .replaceAll(special, "\\" + special)
-      );
-
-    return output;
+    return pattern.replaceAll(patternName, !link
+      ? name : `[${name}](${link})`
+    ) + "\n";
   };
-
+  
   public Format = ({
     repos,
     pattern,
     linkEnabled
   }: {
-    repos: {name: string, link: string, commits: string[]}[],
+    repos: {[key: string]: { link: string, commits: BranchCommit[] }},
     pattern: FullPresets,
     linkEnabled: boolean
   }): string => {
     let output: string = "";
 
-    const repositories = Object.fromEntries(repos.map(r => [r.name, { link: r.link, commits: r.commits }]));
-
-    for (const repo of Object.keys(pattern.repos)) {
-      const { link, commits } = repositories[repo];
+    for (const repo of Object.keys(repos)) {
+      const { link, commits } = repos[repo];
 
       output += this.ToFormattedVisualisation({
         link: linkEnabled ? link : "",
-        specials: pattern.special,
         patternName: "REPO_NAME",
         name: repo,
         pattern: pattern.visualisation.repos
       });
 
-      commits.forEach(commit => {
-        // some code
-      });
+      if (!Array.isArray(commits)) continue;
+
+      const sortedCommits = Object.fromEntries(commits.map(commit => [
+        format(new Date(commit.commit.author.date), "yyyy.MM.dd"), {
+          branch: commit.branch_name,
+          date: format(new Date(commit.commit.author.date), "dd.MM.yyyy"),
+          data: commit
+      }]));
+
+      let lastbranch = "";
+      for (const key in sortedCommits) {
+        const { date, data: commit, branch } = sortedCommits[key];
+        
+        if (lastbranch !== branch)
+          output += this.ToFormattedVisualisation({
+            link: "",
+            name: branch,
+            pattern: pattern.visualisation.branches,
+            patternName: "BRANCH_NAME"
+          });
+
+        output += this.ToFormattedVisualisation({
+          name: date,
+          link: "",
+          pattern: pattern.visualisation.dates,
+          patternName: "DATE"
+        });
+        
+        output += this.ToFormattedVisualisation({
+          link: linkEnabled ? commit.html_url : "",
+          patternName: "COMMIT_NAME",
+          name: commit.commit.message.split("\n")[0],
+          pattern: pattern.visualisation.commits
+        });
+
+        lastbranch = branch;
+      };
     };
 
     return output.replaceAll("\\\\", "\\");

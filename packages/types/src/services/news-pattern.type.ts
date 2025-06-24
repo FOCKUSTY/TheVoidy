@@ -25,10 +25,11 @@ export const VISUALISATION_KEYS: readonly [
 
 export const DEFAULT_PRESETS: PresetsDefault = {
   visualisation: {
-    repos: "[ REPO_NAME ]",
-    commits: "\u2A2F AREA_NAME",
-  },
-  special: ["[", "]", "-"]
+    repos: "`[ REPO_NAME ]`",
+    commits: " \u2A2F COMMIT_NAME",
+    dates: "  __\u2A2F\u2A2F\u2A2F DATE \u2A2F\u2A2F\u2A2F__",
+    branches: "  __=== BRANCH_NAME ===__"
+  }
 };
 
 export interface LazyPresets {
@@ -64,11 +65,15 @@ export interface Presets {
    *
    * @requires repos must includes REPO_NAME
    * @requires commits must includes COMMIT_NAME
+   * @requires dates must includes DATE
+   * @requires branches must includes BRANCH_NAME
    *
    * @example
    * visualisation {
    *  repos: "`[ REPO_NAME ]`",
-   *  commits: "⨯ AREA_NAME",
+   *  commits: " ⨯ COMMIT_NAME",
+   *  date: "  __⨯⨯⨯ DATE ⨯⨯⨯__",
+   *  branchs: "  __=== BRANCH_NAME ===__"
    * }
    */
   visualisation?: {
@@ -80,12 +85,17 @@ export interface Presets {
      * @requires COMMIT_NAME
      */
     commits?: string;
-  };
 
-  /**
-   * Special symbols
-   */
-  special: string[];
+    /**
+     * @requires DATE
+     */
+    dates?: string;
+
+    /**
+     * @requires BRANCH_NAME
+     */
+    branches?: string
+  };
 }
 
 export const FORMATTING = ["discord", "telegram"] as const;
@@ -127,7 +137,6 @@ class Validator {
 
     return {
       repos: this._presets.repos,
-      special: this._presets.special,
       visualisation,
     };
   }

@@ -2,6 +2,7 @@ import * as Telegraf from "telegraf";
 const { FmtString } = Telegraf.Format;
 
 import { Types } from "@voidy/types";
+import { Commit } from "@voidy/types/dist/services/github-api.type";
 
 const SPACE = " ==== " as const;
 const helpJSON = JSON.stringify(
@@ -11,7 +12,7 @@ const helpJSON = JSON.stringify(
     },
     "visualisation?": {
       "repos?": "[ REPO_NAME ]",
-      "areas?": "— AREA_NAME",
+      "areas?": "— COMMIT_NAME",
       "items?": " = ITEM_NAME"
     },
     "special?": ["[", "]", "-"]
@@ -20,7 +21,7 @@ const helpJSON = JSON.stringify(
   4
 );
 const helpString =
-  "Пример команды: /news_pattern ==== Lazy-And-Focused ==== orgs\n"+
+  "Пример команды: /github_commits ==== Lazy-And-Focused ==== orgs\n"+
   "Первое значение — название Вашего владельца репозиториев (Ваш Github или организация в Github)\n" +
   "Второе значение — тип Вашей организации (orgs | users)\n" +
   "Третье значение — JSON дата того, что Вы хотите видеть, то есть Ваш шаблон\n";
@@ -43,13 +44,10 @@ const getHelp = (code: string | number = "0000", str: string = "") => {
   ]);
 };
 
-const SPECIAL = ["[", "]", "-"];
-const OPTIONS = {parse_mode: "MarkdownV2", link_preview_options: {is_disabled: true}} as const;
-
 export default class Command extends Types.Telegram.Command {
   public constructor(services: Types.Services<{ github: Types.Github.Api }>) {
     super({
-      name: "news_pattern",
+      name: "github_commits",
       async execute(interaction) {
         if (!interaction.from) return;
 
@@ -88,9 +86,13 @@ export default class Command extends Types.Telegram.Command {
           "demo-repository"
         ]);
 
-        const reposToPattern = repos.map((r) => {
-          return { name: r.name, link: r.html_url };
-        });
+        const reposToPattern: {[key: string]: { link: string, commits: Commit[]}} = {};
+        for (const repo of repos) {
+          reposToPattern[repo.name] = {
+            link: repo.html_url,
+            commits: (await services.github.getCommits(repo.url)).commits
+          };
+        };
 
         const objectRepos: {
           [repo_name: string]: string[]
@@ -106,7 +108,6 @@ export default class Command extends Types.Telegram.Command {
             repos: reposToPattern,
             pattern: {
               ...data,
-              special: data.special ? [ ...data.special, "-" ] : SPECIAL,
               repos: data.repos || objectRepos,
               visualisation:
                 data.visualisation || Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation
@@ -114,7 +115,7 @@ export default class Command extends Types.Telegram.Command {
             linkEnabled: linksEnabled
           });
 
-          return await interaction.reply(text, {...OPTIONS});
+          return await interaction.reply(text);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           await interaction.reply(
@@ -130,12 +131,11 @@ export default class Command extends Types.Telegram.Command {
               pattern: {
                 repos: objectRepos,
                 visualisation: Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation,
-                special: SPECIAL
               },
               linkEnabled: linksEnabled
             });
 
-            return await interaction.reply(text, {...OPTIONS});
+            return await interaction.reply(text);
           } catch (err) {
             console.error(err);
             return await interaction.reply(`${err}`);
