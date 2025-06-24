@@ -36,7 +36,6 @@ fs.writeFileSync(CACHE_PATH, JSON.stringify({
 }, undefined, 2), "utf-8");
 const TIME_OFFSET = 1 * 1000 * 60 * 60 * 3 // 3 hours;
 const WEEK = 1 * 1000 * 60 * 60 * 24 * 7;
-const NOW = new Date().getTime();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const readCacheFile = <T extends Cache = any>(): T => {
@@ -207,7 +206,9 @@ class GitHubApi extends Types.Github.Api {
             }
           });
 
-          commits.push({...await data.json(), branch_name: branch});
+          const c = (await data.json()).filter((commit: BranchCommit) => Date.parse(commit.commit.author.date) > (new Date().getTime()-WEEK));
+
+          commits.push({...c, branch_name: branch});
         } catch (error) {
           continue;
         };
