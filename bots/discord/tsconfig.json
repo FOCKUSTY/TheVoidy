@@ -13,6 +13,7 @@
     "declaration": true,
     "paths": {
       "src/*": ["./src/*"],
+      "subcommands/*": ["./src/subcommands/*"],
       "utility/*": ["./src/utility/*"]
     }
   },
