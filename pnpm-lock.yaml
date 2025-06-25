@@ -10,8 +10,8 @@ catalogs:
       specifier: ^9.23.0
       version: 9.28.0
     '@thevoidcommunity/the-void-database':
-      specifier: 4.0.0-beta.1
-      version: 4.0.0-beta.1
+      specifier: 4.0.1-beta.1
+      version: 4.0.1-beta.1
     '@types/node':
       specifier: ^20.16.1
       version: 20.17.19
@@ -97,7 +97,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.0-beta.1(ws@8.18.1)
+        version: 4.0.1-beta.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../utility/develop
@@ -170,7 +170,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.0-beta.1(ws@8.18.1)
+        version: 4.0.1-beta.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -234,7 +234,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.0-beta.1(ws@8.18.1)
+        version: 4.0.1-beta.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -301,7 +301,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.0-beta.1(ws@8.18.1)
+        version: 4.0.1-beta.1(ws@8.18.1)
       discord.js:
         specifier: 'catalog:'
         version: 14.18.0
@@ -524,8 +524,8 @@ packages:
   '@telegraf/types@7.1.0':
     resolution: {integrity: sha512-kGevOIbpMcIlCDeorKGpwZmdH7kHbqlk/Yj6dEpJMKEQw5lk0KVQY0OLXaCswy8GqlIVLd5625OB+rAntP9xVw==}
 
-  '@thevoidcommunity/the-void-database@4.0.0-beta.1':
-    resolution: {integrity: sha512-iYybf5Sh8Mu3cxFPD5S7fqEYh8hbmHxO8Ye+4O36z8J5+znmHv+yLkdhWb19wKf5CWObKyicbVe1muuuTZ9ugw==}
+  '@thevoidcommunity/the-void-database@4.0.1-beta.1':
+    resolution: {integrity: sha512-3y5fy4HSSlns7haodvtxZykd6qfSS4WQlGjsvqaEtXO17/0aYKvj6PShtAjtFgfeHWgDKv+NNhm7u5Oy6d994A==}
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -682,8 +682,8 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
-  bson@6.10.3:
-    resolution: {integrity: sha512-MTxGsqgYTwfshYWTRdmZRC+M7FnG1b4y7RO7p2k3X24Wq0yv1m77Wsj0BzlPzd/IowgESfsruQCUToa7vbOpPQ==}
+  bson@6.10.4:
+    resolution: {integrity: sha512-WIsKqkSC0ABoBJuT1LEX+2HEvNmNKKgnTAyd0fL8qzK4SH2i9NXg+t08YtdZp/V9IZ33cxe3iV4yM0qg8lMQng==}
     engines: {node: '>=16.20.1'}
 
   buffer-alloc-unsafe@1.1.0:
@@ -1105,11 +1105,11 @@ packages:
   mongodb-connection-string-url@3.0.2:
     resolution: {integrity: sha512-rMO7CGo/9BFwyZABcKAWL8UJwH/Kc2x0g72uhDWzG48URRax5TCIcJ7Rc3RZqffZzO/Gwff/jyKwCU9TN8gehA==}
 
-  mongodb@6.13.1:
-    resolution: {integrity: sha512-gdq40tX8StmhP6akMp1pPoEVv+9jTYFSrga/g23JxajPAQhH39ysZrHGzQCSd9PEOnuEQEdjIWqxO7ZSwC0w7Q==}
+  mongodb@6.17.0:
+    resolution: {integrity: sha512-neerUzg/8U26cgruLysKEjJvoNSXhyID3RvzvdcpsIi2COYM3FS3o9nlH7fxFtefTb942dX3W9i37oPfCVj4wA==}
     engines: {node: '>=16.20.1'}
     peerDependencies:
-      '@aws-sdk/credential-providers': ^3.632.0
+      '@aws-sdk/credential-providers': ^3.188.0
       '@mongodb-js/zstd': ^1.1.0 || ^2.0.0
       gcp-metadata: ^5.2.0
       kerberos: ^2.0.1
@@ -1132,8 +1132,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@8.10.1:
-    resolution: {integrity: sha512-5beTeBZnJNndRXU9rxPol0JmTWZMAtgkPbooROkGilswvrZALDERY4cJrGZmgGwDS9dl0mxiB7si+Mv9Yms2fg==}
+  mongoose@8.16.0:
+    resolution: {integrity: sha512-gLuAZsbwY0PHjrvfuXvUkUq9tXjyAjN3ioXph5Y6Seu7/Uo8xJaM+rrMbL/x34K4T3UTgtXRyfoq1YU16qKyIw==}
     engines: {node: '>=16.20.1'}
 
   mpath@0.9.0:
@@ -1666,13 +1666,13 @@ snapshots:
 
   '@telegraf/types@7.1.0': {}
 
-  '@thevoidcommunity/the-void-database@4.0.0-beta.1(ws@8.18.1)':
+  '@thevoidcommunity/the-void-database@4.0.1-beta.1(ws@8.18.1)':
     dependencies:
       discord.js: 14.20.0
       f-formatter: 0.3.1
       fbit-field: 1.4.0-alpha.1b
       fock-logger: 4.0.1-a
-      mongoose: 8.10.1
+      mongoose: 8.16.0
       node: 22.14.0
       openai: 4.83.0(ws@8.18.1)
     transitivePeerDependencies:
@@ -1865,7 +1865,7 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  bson@6.10.3: {}
+  bson@6.10.4: {}
 
   buffer-alloc-unsafe@1.1.0: {}
 
@@ -2306,17 +2306,17 @@ snapshots:
       '@types/whatwg-url': 11.0.5
       whatwg-url: 14.1.1
 
-  mongodb@6.13.1:
+  mongodb@6.17.0:
     dependencies:
       '@mongodb-js/saslprep': 1.2.0
-      bson: 6.10.3
+      bson: 6.10.4
       mongodb-connection-string-url: 3.0.2
 
-  mongoose@8.10.1:
+  mongoose@8.16.0:
     dependencies:
-      bson: 6.10.3
+      bson: 6.10.4
       kareem: 2.6.3
-      mongodb: 6.13.1
+      mongodb: 6.17.0
       mpath: 0.9.0
       mquery: 5.0.0
       ms: 2.1.3
