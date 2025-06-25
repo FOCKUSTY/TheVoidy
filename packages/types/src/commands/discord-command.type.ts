@@ -4,19 +4,30 @@ import {
   CommandInteraction,
   InteractionReplyOptions,
   MessageFlags,
-  SlashCommandOptionsOnlyBuilder
+  SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
+  SlashCommandSubcommandBuilder,
+  SlashCommandSubcommandGroupBuilder,
+  SlashCommandSubcommandsOnlyBuilder
 } from "discord.js";
+
+type CommandBuilder = 
+  | SlashCommandBuilder
+  | SlashCommandSubcommandBuilder
+  | SlashCommandOptionsOnlyBuilder
+  | SlashCommandSubcommandGroupBuilder
+  | SlashCommandSubcommandsOnlyBuilder;
 
 export type CommandCreateData<T> = {
   name?: string;
   cooldown?: number;
-  data: SlashCommandOptionsOnlyBuilder;
+  data: CommandBuilder;
   execute: (interaction: CommandInteraction) => Promise<T | void>;
 };
 
 export interface CommandData<T> {
   readonly name: string;
-  readonly data: SlashCommandOptionsOnlyBuilder;
+  readonly data: CommandBuilder;
   readonly cooldown: number;
   readonly execute: (interaction: CommandInteraction) => Promise<T | void>;
 }
@@ -28,7 +39,7 @@ class Command<T = void> {
       "Если Вы видите это сообщение, срочно обратитесь к нам: https://discord.gg/5MJrRjzPec",
     flags: MessageFlags.Ephemeral
   };
-  public readonly data: SlashCommandOptionsOnlyBuilder;
+  public readonly data: CommandBuilder;
   public readonly cooldown: number = 5;
   public readonly name: string;
 
@@ -51,5 +62,29 @@ class Command<T = void> {
     this.init = execute;
   }
 }
+
+export abstract class Subcommand<T> {
+  public static readonly name: string;
+  public static readonly options: {
+    [key: string]: {
+      name: string,
+      description: string
+      required: boolean
+    }
+  };
+
+  public execute: (interaction: CommandInteraction) => Promise<T>;
+};
+
+export abstract class SubcommandsInitializer<T> {
+  public readonly name: string;
+
+  public readonly subcommands: {
+    [name: string]: typeof Subcommand<T>
+  };
+
+
+  public execute: (interaction: CommandInteraction) => Promise<T>;
+};
 
 export default Command;
