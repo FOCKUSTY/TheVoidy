@@ -179,6 +179,10 @@ class GitHubApi extends Types.Github.Api {
     }
   };
 
+  private resolveCommits(commits: BranchCommit[]) {
+    return commits.filter((commit: BranchCommit) => Date.parse(commit.commit.author.date) > (new Date().getTime()-WEEK));
+  }
+
   public async getCommits(repositoryLink: string) {
     const [ owner, repo ] = repositoryLink.replace("https://api.github.com/repos/", "").split("/");
     const [ setCache, getCache ] = useCache("commits");
@@ -190,7 +194,7 @@ class GitHubApi extends Types.Github.Api {
         return {
           status: 200,
           text: "from cache",
-          commits: cache
+          commits: this.resolveCommits(cache)
         };
       };
 
@@ -206,7 +210,7 @@ class GitHubApi extends Types.Github.Api {
             }
           });
 
-          const c = (await data.json()).filter((commit: BranchCommit) => Date.parse(commit.commit.author.date) > (new Date().getTime()-WEEK));
+          const c = (await data.json());
 
           commits.push({...c, branch_name: branch});
         } catch (error) {
@@ -219,7 +223,7 @@ class GitHubApi extends Types.Github.Api {
       return {
         status: 200,
         text: "getted",
-        commits
+        commits: this.resolveCommits(commits)
       }
     } catch (err) {
       return {
