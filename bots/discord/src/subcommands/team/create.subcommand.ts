@@ -4,7 +4,8 @@ import { CategoryChannel, Channel, ChannelType, CommandInteraction, Guild, Guild
 
 import { Env } from "@voidy/develop";
 import { MODELS, Database } from "@thevoidcommunity/the-void-database/database";
-import { CHANNELS, resolveTeamName, Response, ROLES } from "./constants";
+import { CHANNELS, resolveTeamName, ROLES } from "./constants";
+import { Response } from "../constants";
 
 const { GUILD_ID } = Env.env;
 const Team = new Database(MODELS.Team);

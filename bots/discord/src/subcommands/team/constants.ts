@@ -24,8 +24,3 @@ export const CHANNELS: GuildChannelCreateOptions[] = [{
 ];
 
 export const resolveTeamName = (name: string) =>  `▨▸Команда ${name}◃▨`;
-
-export type Response = {
-  data: string;
-  successed: boolean;
-};
