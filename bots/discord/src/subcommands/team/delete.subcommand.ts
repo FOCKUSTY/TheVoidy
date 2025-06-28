@@ -19,7 +19,7 @@ export class Delete extends Subcommand<Response> {
   };
 
   public static readonly subcommand = new SlashCommandSubcommandBuilder()
-    .setName("del")
+    .setName("delete")
     .setDescription("Удаление команды")
     .addStringOption(o => o
       .setName(Delete.options.name.name)

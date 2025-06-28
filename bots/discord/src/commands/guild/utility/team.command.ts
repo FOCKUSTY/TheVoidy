@@ -5,14 +5,13 @@ import TeamSubcommands from "subcommands/team";
 
 const subcommandsInitializer = TeamSubcommands();
 const { name, subcommands } = subcommandsInitializer;
-const { create, del } = subcommands;
 
 export default new Types.Discord.Command({
   data: new SlashCommandBuilder()
     .setName(name)
     .setDescription("Управление командой !")
-    .addSubcommand(() => create.subcommand)
-    .addSubcommand(() => del.subcommand),
+    .addSubcommand(() => subcommands.create.subcommand)
+    .addSubcommand(() => subcommands.delete.subcommand),
   async execute(interaction: CommandInteraction) {
     await interaction.reply({
       content: "Подготавливаем и создаём...",
