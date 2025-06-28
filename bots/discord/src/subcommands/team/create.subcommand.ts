@@ -100,7 +100,7 @@ export class Create extends Subcommand<Response> {
         members,
         name: this._data.name,
         owner_id: this._data.owner.id,
-        channels: channels.map((channel) => channel.id),
+        channels: [...channels.map((channel) => channel.id), category.id],
         roles: new Map(roles[0].map((role) => [role.id, role.name]))
       })
     ).toObject().name;
