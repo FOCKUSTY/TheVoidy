@@ -1,6 +1,6 @@
 import { Subcommand } from "@voidy/types/dist/commands/discord-command.type";
 
-import { CategoryChannel, Channel, ChannelType, CommandInteraction, Guild, GuildMember, Role, SlashCommandSubcommandBuilder } from "discord.js";
+import { CategoryChannel, Channel, ChannelType, CommandInteraction, Guild, GuildMember, OverwriteResolvable, Role, SlashCommandSubcommandBuilder } from "discord.js";
 
 import { Env } from "@voidy/develop";
 import { MODELS, Database } from "@thevoidcommunity/the-void-database/database";
@@ -62,9 +62,8 @@ export class Create extends Subcommand<Response> {
     };
 
     const roles = await this.createRoles(guild);
-    const category = await this.createCategory(guild);
-
-    await this.createChannels({ guild, category, roles: roles[0] });
+    const category = await this.createCategory({guild, roles: roles[0]});
+    const channels = await this.createChannels({ guild, category });
 
     const id = await Team.generateId();
     const members = new Map<string, string[]>();
@@ -88,6 +87,7 @@ export class Create extends Subcommand<Response> {
       members,
       name: this._data.name,
       owner_id: this._data.owner.id,
+      channels: channels.map(channel => channel.id),
       roles: new Map(roles[0].map(role => [role.id, role.name]))
     })).toObject().name;
 
@@ -135,22 +135,34 @@ export class Create extends Subcommand<Response> {
     return output;
   };
 
-  private async createCategory(guild: Guild) {
+  private async createCategory({ guild, roles }: {guild: Guild, roles: Role[]}) {
     return await guild.channels.create({
       name: resolveTeamName(this._data.name),
       type: ChannelType.GuildCategory,
+      permissionOverwrites: [
+        {
+          id: guild.id,
+          deny: ["ViewChannel", "Connect"]
+        },
+        ...roles.map(role => {
+          return {
+            id: role.id,
+            allow: ["ViewChannel", "Connect"],
+            type: 0,
+          } as OverwriteResolvable
+        }),
+      ],
       position: 3
     });
   };
 
-  private async createChannels({ guild, category, roles }: { guild: Guild, category: CategoryChannel, roles: Role[] }) {
+  private async createChannels({ guild, category }: { guild: Guild, category: CategoryChannel }) {
     const output: Channel[] = [];
 
     for (const channelData of CHANNELS) {
       const channel = await guild.channels.create({
         ...channelData,
-        parent: category,
-        permissionOverwrites: roles
+        parent: category
       });
 
       output.push(channel);

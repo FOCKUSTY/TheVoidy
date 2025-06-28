@@ -20,7 +20,7 @@ export class Subcommands implements SubcommandsInitializer<Response> {
   } = {};
 
   public constructor() {
-    this.subcommands = Object.fromEntries(this.deploy().map(subcommand => [subcommand.name, subcommand]));
+    this.subcommands = Object.fromEntries(this.deploy().map(subcommand => [subcommand.name.toLowerCase(), subcommand]));
   }
 
   public async execute(interaction: CommandInteraction): Promise<Response> {

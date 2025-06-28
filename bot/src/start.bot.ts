@@ -14,6 +14,10 @@ import GitHubApi from "./utility/github/github.utility";
 import DiscordService from "@voidy/discord/dist/utility/service/discord.service";
 import TelegramService from "@voidy/telegram/dist/utility/service/telegram.service";
 
+import connect from "@thevoidcommunity/the-void-database/database/connection";
+
+connect(Env.env.MONGOOSE_URL);
+
 Debug.Console.clear();
 Debug.Log([new Formatter().Color("Начало программы", Colors.magenta)]);
 
@@ -31,7 +35,7 @@ new Loggers().execute();
 
   switch (bot) {
     case "discord":
-      LoginDiscord(Env.get("CLIENT_TOKEN"), services);
+      LoginDiscord(Env.env.CLIENT_TOKEN, services);
       break;
 
     case "telegram":
@@ -39,7 +43,7 @@ new Loggers().execute();
       break;
 
     default:
-      LoginDiscord(Env.get("CLIENT_TOKEN"), services);
+      LoginDiscord(Env.env.CLIENT_TOKEN, services);
       LoginTelegram(services);
       break;
   }
