@@ -12,9 +12,9 @@ export abstract class Service {
     pattern,
     linkEnabled
   }: {
-    repos: {[key: string]: { link: string, commits: Commit[] }},
-    pattern: FullPresets,
-    linkEnabled: boolean
+    repos: { [key: string]: { link: string; commits: Commit[] } };
+    pattern: FullPresets;
+    linkEnabled: boolean;
   }): string;
 
   public abstract Send(

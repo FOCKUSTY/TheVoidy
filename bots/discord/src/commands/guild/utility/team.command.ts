@@ -16,10 +16,10 @@ export default new Types.Discord.Command({
     await interaction.reply({
       content: "Подготавливаем и создаём...",
       flags: MessageFlags.Ephemeral
-    })
+    });
 
-    const { data } = (await subcommandsInitializer.execute(interaction));
-    
+    const { data } = await subcommandsInitializer.execute(interaction);
+
     return await interaction.editReply(`${data}`);
   }
 });

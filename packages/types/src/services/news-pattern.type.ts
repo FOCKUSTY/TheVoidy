@@ -94,7 +94,7 @@ export interface Presets {
     /**
      * @requires BRANCH_NAME
      */
-    branches?: string
+    branches?: string;
   };
 }
 
@@ -137,7 +137,7 @@ class Validator {
 
     return {
       repos: this._presets.repos,
-      visualisation,
+      visualisation
     };
   }
 }

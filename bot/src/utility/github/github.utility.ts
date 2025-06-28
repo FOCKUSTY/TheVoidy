@@ -6,41 +6,49 @@ import { Branch, BranchCommit, Repo } from "@voidy/types/dist/services/github-ap
 
 type Data<T> = {
   [owner: string]: {
-    date: string,
+    date: string;
     data: {
       [name: string]: {
-        date: string,
-        data: T
+        date: string;
+        data: T;
       };
     };
   };
 };
 
-type DataTypes = "repos"|"commits"|"branches";
-type GetDataTypes<T extends DataTypes> = ({
-  repos: Repo,
-  commits: BranchCommit,
-  branches: Branch
-})[T][];
+type DataTypes = "repos" | "commits" | "branches";
+type GetDataTypes<T extends DataTypes> = {
+  repos: Repo;
+  commits: BranchCommit;
+  branches: Branch;
+}[T][];
 type Cache = {
-  repos: Data<Repo>,
-  commits: Data<BranchCommit>,
-  branches: Data<Branch>
+  repos: Data<Repo>;
+  commits: Data<BranchCommit>;
+  branches: Data<Branch>;
 };
 
 const CACHE_PATH = path.join(__dirname, "github.cache.json");
-fs.writeFileSync(CACHE_PATH, JSON.stringify({
-  repos: {},
-  commits: {},
-  branches: {}
-}, undefined, 2), "utf-8");
-const TIME_OFFSET = 1 * 1000 * 60 * 60 * 3 // 3 hours;
+fs.writeFileSync(
+  CACHE_PATH,
+  JSON.stringify(
+    {
+      repos: {},
+      commits: {},
+      branches: {}
+    },
+    undefined,
+    2
+  ),
+  "utf-8"
+);
+const TIME_OFFSET = 1 * 1000 * 60 * 60 * 3; // 3 hours;
 const WEEK = 1 * 1000 * 60 * 60 * 24 * 7;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const readCacheFile = <T extends Cache = any>(): T => {
   const file = fs.readFileSync(CACHE_PATH, "utf-8");
-  
+
   return JSON.parse(file);
 };
 
@@ -49,21 +57,21 @@ const writeCacheFile = <T extends DataTypes>({
   owner,
   value
 }: {
-  type: T,
-  owner: string,
-  value: GetDataTypes<T>
+  type: T;
+  owner: string;
+  value: GetDataTypes<T>;
 }) => {
   const file = readCacheFile();
 
-  file[type][owner] = ({
+  file[type][owner] = {
     date: new Date().toISOString(),
     data: value
-  });
+  };
 
   fs.writeFileSync(CACHE_PATH, JSON.stringify(file, undefined, 2), "utf-8");
-  
+
   return file;
-}
+};
 
 const useCache = <T extends DataTypes>(type: T) => {
   return [
@@ -74,7 +82,7 @@ const useCache = <T extends DataTypes>(type: T) => {
         value
       });
     },
-    (owner: string): GetDataTypes<T>|false => {
+    (owner: string): GetDataTypes<T> | false => {
       const file = readCacheFile();
 
       if (!file[type]) {
@@ -82,24 +90,24 @@ const useCache = <T extends DataTypes>(type: T) => {
         return false;
       }
       if (!file[type][owner]) {
-        writeCacheFile({type, owner, value: [] });
+        writeCacheFile({ type, owner, value: [] });
         return false;
       }
-      
+
       const { date } = file[type][owner];
-      if (new Date().getTime()-TIME_OFFSET > new Date(date).getTime()) {
+      if (new Date().getTime() - TIME_OFFSET > new Date(date).getTime()) {
         return false;
-      };
+      }
 
       return file[type] || false;
     }
-  ] as const
+  ] as const;
 };
 
 class GitHubApi extends Types.Github.Api {
   public async getRepositories(owner: string, type: string, ignoredRepo: string[] = [".github"]) {
-    const [ setCache, getCache ] = useCache("repos");
-    
+    const [setCache, getCache] = useCache("repos");
+
     try {
       const cache = getCache(`${type}@${owner}`);
 
@@ -108,8 +116,8 @@ class GitHubApi extends Types.Github.Api {
           status: 200,
           text: "from cache",
           repos: cache
-        }
-      };
+        };
+      }
 
       const data = await fetch(`https://api.github.com/${type}/${owner}/repos`, {
         method: "GET",
@@ -140,8 +148,8 @@ class GitHubApi extends Types.Github.Api {
   }
 
   public async getBranches(repositoryLink: string) {
-    const [ owner, repo ] = repositoryLink.replace("https://api.github.com/repos/", "").split("/");
-    const [ setCache, getCache ] = useCache("branches");
+    const [owner, repo] = repositoryLink.replace("https://api.github.com/repos/", "").split("/");
+    const [setCache, getCache] = useCache("branches");
 
     try {
       const cache = getCache(`${owner}@${repo}`);
@@ -152,7 +160,7 @@ class GitHubApi extends Types.Github.Api {
           text: "from cache",
           branches: cache
         };
-      };
+      }
 
       const data = await fetch(repositoryLink + "/branches", {
         method: "GET",
@@ -161,7 +169,7 @@ class GitHubApi extends Types.Github.Api {
         }
       });
 
-      const branches = (await data.json() as Branch[])
+      const branches = (await data.json()) as Branch[];
 
       setCache(`${owner}@${repo}`, branches);
 
@@ -169,7 +177,7 @@ class GitHubApi extends Types.Github.Api {
         status: data.status,
         text: data.statusText,
         branches
-      }
+      };
     } catch (err) {
       return {
         status: 404,
@@ -177,15 +185,17 @@ class GitHubApi extends Types.Github.Api {
         branches: []
       };
     }
-  };
+  }
 
   private resolveCommits(commits: BranchCommit[]) {
-    return commits.filter((commit: BranchCommit) => Date.parse(commit.commit.author.date) > (new Date().getTime()-WEEK));
+    return commits.filter(
+      (commit: BranchCommit) => Date.parse(commit.commit.author.date) > new Date().getTime() - WEEK
+    );
   }
 
   public async getCommits(repositoryLink: string) {
-    const [ owner, repo ] = repositoryLink.replace("https://api.github.com/repos/", "").split("/");
-    const [ setCache, getCache ] = useCache("commits");
+    const [owner, repo] = repositoryLink.replace("https://api.github.com/repos/", "").split("/");
+    const [setCache, getCache] = useCache("commits");
 
     try {
       const cache = getCache(`${owner}@${repo}`);
@@ -196,10 +206,12 @@ class GitHubApi extends Types.Github.Api {
           text: "from cache",
           commits: this.resolveCommits(cache)
         };
-      };
+      }
 
       const commits = [];
-      const branches = (await this.getBranches(repositoryLink)).branches.map(branch => branch.name);
+      const branches = (await this.getBranches(repositoryLink)).branches.map(
+        (branch) => branch.name
+      );
 
       for (const branch of branches) {
         try {
@@ -210,13 +222,13 @@ class GitHubApi extends Types.Github.Api {
             }
           });
 
-          const c = (await data.json());
+          const c = await data.json();
 
-          commits.push({...c, branch_name: branch});
+          commits.push({ ...c, branch_name: branch });
         } catch (error) {
           continue;
-        };
-      };
+        }
+      }
 
       setCache(`${owner}@${repo}`, commits);
 
@@ -224,7 +236,7 @@ class GitHubApi extends Types.Github.Api {
         status: 200,
         text: "getted",
         commits: this.resolveCommits(commits)
-      }
+      };
     } catch (err) {
       return {
         status: 404,
@@ -232,7 +244,7 @@ class GitHubApi extends Types.Github.Api {
         commits: []
       };
     }
-  };
+  }
 
   /**
    * @param getRepository - A some repository

@@ -12,7 +12,7 @@ import {
   SlashCommandSubcommandsOnlyBuilder
 } from "discord.js";
 
-type CommandBuilder = 
+type CommandBuilder =
   | SlashCommandBuilder
   | SlashCommandSubcommandBuilder
   | SlashCommandOptionsOnlyBuilder
@@ -68,16 +68,16 @@ export abstract class Subcommand<T> {
   public static readonly subcommand: SlashCommandSubcommandBuilder;
 
   public execute: (interaction: CommandInteraction) => Promise<T>;
-};
+}
 
 export abstract class SubcommandsInitializer<T> {
   public readonly name: string;
 
   public readonly subcommands: {
-    [name: string]: typeof Subcommand<T>
+    [name: string]: typeof Subcommand<T>;
   };
 
   public execute: (interaction: CommandInteraction) => Promise<T>;
-};
+}
 
 export default Command;

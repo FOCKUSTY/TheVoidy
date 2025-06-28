@@ -37,7 +37,7 @@ import DCLNewsPatternValidator, {
   LazyPresets as IMILazyPresets,
   Presets as IMIPresets,
   FullPresets as IMTFullPresets,
-  Repo as IMTRepo,
+  Repo as IMTRepo
 } from "./services/news-pattern.type";
 
 import {

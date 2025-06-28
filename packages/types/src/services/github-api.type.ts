@@ -46,108 +46,108 @@ export interface Repo {
 }
 
 export interface Commit {
-  "url": string,
-  "sha": string,
-  "node_id": string,
-  "html_url": string,
-  "comments_url": string,
+  "url": string;
+  "sha": string;
+  "node_id": string;
+  "html_url": string;
+  "comments_url": string;
   "commit": {
-    "url": string,
+    "url": string;
     "author": {
-      "name": string,
-      "email": string,
-      "date": string
-    },
+      "name": string;
+      "email": string;
+      "date": string;
+    };
     "committer": {
-      "name": string,
-      "email": string,
-      "date": string
-    },
-    "message": string,
+      "name": string;
+      "email": string;
+      "date": string;
+    };
+    "message": string;
     "tree": {
-      "url": string,
-      "sha": string
-    },
-    "comment_count": number,
+      "url": string;
+      "sha": string;
+    };
+    "comment_count": number;
     "verification": {
-      "verified": boolean,
-      "reason": string,
-      "signature": string|null,
-      "payload": string|null,
-      "verified_at": string|null
-    }
-  },
+      "verified": boolean;
+      "reason": string;
+      "signature": string | null;
+      "payload": string | null;
+      "verified_at": string | null;
+    };
+  };
   "author": {
-    "login": string,
-    "id": number,
-    "node_id": string,
-    "avatar_url": string,
-    "gravatar_id": string,
-    "url": string,
-    "html_url": string,
-    "followers_url": string,
-    "following_url": string,
-    "gists_url": string,
-    "starred_url": string,
-    "subscriptions_url": string,
-    "organizations_url": string,
-    "repos_url": string,
-    "events_url": string,
-    "received_events_url": string,
-    "type": string,
-    "site_admin": boolean
-  },
+    "login": string;
+    "id": number;
+    "node_id": string;
+    "avatar_url": string;
+    "gravatar_id": string;
+    "url": string;
+    "html_url": string;
+    "followers_url": string;
+    "following_url": string;
+    "gists_url": string;
+    "starred_url": string;
+    "subscriptions_url": string;
+    "organizations_url": string;
+    "repos_url": string;
+    "events_url": string;
+    "received_events_url": string;
+    "type": string;
+    "site_admin": boolean;
+  };
   "committer": {
-    "login": string,
-    "id": number,
-    "node_id": string,
-    "avatar_url": string,
-    "gravatar_id": string,
-    "url": string,
-    "html_url": string,
-    "followers_url": string,
-    "following_url": string,
-    "gists_url": string,
-    "starred_url": string,
-    "subscriptions_url": string,
-    "organizations_url": string,
-    "repos_url": string,
-    "events_url": string,
-    "received_events_url": string,
-    "type": string,
-    "site_admin": boolean
-  },
+    "login": string;
+    "id": number;
+    "node_id": string;
+    "avatar_url": string;
+    "gravatar_id": string;
+    "url": string;
+    "html_url": string;
+    "followers_url": string;
+    "following_url": string;
+    "gists_url": string;
+    "starred_url": string;
+    "subscriptions_url": string;
+    "organizations_url": string;
+    "repos_url": string;
+    "events_url": string;
+    "received_events_url": string;
+    "type": string;
+    "site_admin": boolean;
+  };
   "parents": {
-    "url": string,
-    "sha": string
-  }[]
+    "url": string;
+    "sha": string;
+  }[];
 }
 
 export interface BranchCommit extends Commit {
-  "branch_name": string,
+  "branch_name": string;
 
   "files": {
-    "sha": string,
-    "filename": string,
-    "status": "added"|"modified"|"removed",
-    "additions": number,
-    "deletions": number,
-    "changes": number,
-    "blob_url": string,
-    "raw_url": string,
-    "contents_url": string,
-    "patch": string
-  }[]
-};
+    "sha": string;
+    "filename": string;
+    "status": "added" | "modified" | "removed";
+    "additions": number;
+    "deletions": number;
+    "changes": number;
+    "blob_url": string;
+    "raw_url": string;
+    "contents_url": string;
+    "patch": string;
+  }[];
+}
 
-export interface Branch   {
-  "name": string,
+export interface Branch {
+  "name": string;
   "commit": {
-    "sha": string,
-    "url": string
-  },
-  "protected": boolean
-};
+    "sha": string;
+    "url": string;
+  };
+  "protected": boolean;
+}
 
 export const repoOwners = ["orgs", "users"] as const;
 export type RepoOwners = (typeof repoOwners)[number];
@@ -160,7 +160,7 @@ export type CommitReturn = {
   status: number;
   text: string;
   commits: BranchCommit[];
-}
+};
 export type BranchReturn = {
   status: number;
   text: string;

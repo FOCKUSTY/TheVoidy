@@ -21,15 +21,16 @@ const helpJSON = JSON.stringify(
   4
 );
 const helpString =
-  "Пример команды: /github_commits ==== Lazy-And-Focused ==== orgs\n"+
+  "Пример команды: /github_commits ==== Lazy-And-Focused ==== orgs\n" +
   "Первое значение — название Вашего владельца репозиториев (Ваш Github или организация в Github)\n" +
   "Второе значение — тип Вашей организации (orgs | users)\n" +
   "Третье значение — JSON дата того, что Вы хотите видеть, то есть Ваш шаблон\n";
 
-const helpString2 = `К слову, используйте в качестве разделителя: [${SPACE}]`
+const helpString2 = `К слову, используйте в качестве разделителя: [${SPACE}]`;
 
 const getHelp = (code: string | number = "0000", str: string = "") => {
-  const help = "Код ошибки: " + code + "\n" + str + "\n" + helpString + helpString2 + "\n" + helpJSON;
+  const help =
+    "Код ошибки: " + code + "\n" + str + "\n" + helpString + helpString2 + "\n" + helpJSON;
   return new FmtString(help, [
     {
       type: "blockquote",
@@ -39,7 +40,7 @@ const getHelp = (code: string | number = "0000", str: string = "") => {
     {
       type: "code",
       length: SPACE.length,
-      offset: help.length - helpJSON.length - SPACE.length-2
+      offset: help.length - helpJSON.length - SPACE.length - 2
     }
   ]);
 };
@@ -69,11 +70,7 @@ export default class Command extends Types.Telegram.Command {
 
         const linksEnabled = command.linkEnabled === "true" ? true : false;
 
-        if (
-          (lazyCommand.length < 3) ||
-          !command.repoOwner ||
-          !command.ownerType
-        )
+        if (lazyCommand.length < 3 || !command.repoOwner || !command.ownerType)
           return await interaction.reply(getHelp(1, "Не хватает данных"));
 
         const ownerType = command.ownerType as Types.Github.RepoOwners;
@@ -86,16 +83,16 @@ export default class Command extends Types.Telegram.Command {
           "demo-repository"
         ]);
 
-        const reposToPattern: {[key: string]: { link: string, commits: Commit[]}} = {};
+        const reposToPattern: { [key: string]: { link: string; commits: Commit[] } } = {};
         for (const repo of repos) {
           reposToPattern[repo.name] = {
             link: repo.html_url,
             commits: (await services.github.getCommits(repo.url)).commits
           };
-        };
+        }
 
         const objectRepos: {
-          [repo_name: string]: string[]
+          [repo_name: string]: string[];
         } = {};
 
         try {
@@ -130,7 +127,7 @@ export default class Command extends Types.Telegram.Command {
               repos: reposToPattern,
               pattern: {
                 repos: objectRepos,
-                visualisation: Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation,
+                visualisation: Types.Patterns.Formatting.DEFAULT_PRESETS.visualisation
               },
               linkEnabled: linksEnabled
             });
