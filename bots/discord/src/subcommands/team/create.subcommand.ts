@@ -9,7 +9,7 @@ import { CHANNELS, resolveTeamName, Response, ROLES } from "./constants";
 const { GUILD_ID } = Env.env;
 const Team = new Database(MODELS.Team);
 
-export class Create implements Subcommand<Response> {
+export class Create extends Subcommand<Response> {
   public static readonly options = {
     owner: {
       name: "ceo",
@@ -42,11 +42,15 @@ export class Create implements Subcommand<Response> {
     owner: GuildMember;
   };
 
+  public execute: (interaction: CommandInteraction) => Promise<Response>;
+
   public constructor(interaction: CommandInteraction) {
+    super();
     this._data = this.resolveOptions(interaction);
+    this.execute = (interaction: CommandInteraction) => this.run(interaction);
   };
 
-  public async execute(interaction: CommandInteraction) {
+  private async run(interaction: CommandInteraction): Promise<Response> {
     const guild = interaction.client.guilds.cache.get(GUILD_ID);
 
     if (!guild || !interaction.member) return { successed: false, data: "No guild or member info." };

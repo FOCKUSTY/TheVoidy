@@ -74,7 +74,7 @@ export abstract class SubcommandsInitializer<T> {
   public readonly name: string;
 
   public readonly subcommands: {
-    [name: string]: new (interaction: CommandInteraction<CacheType>) => Subcommand<T>
+    [name: string]: typeof Subcommand<T>
   };
 
   public execute: (interaction: CommandInteraction) => Promise<T>;
