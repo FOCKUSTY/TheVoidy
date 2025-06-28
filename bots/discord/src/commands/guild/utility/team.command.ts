@@ -1,9 +1,9 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { Types } from "@voidy/types";
 
-import Subcommands from "subcommands/team";
+import TeamSubcommands from "subcommands/team";
 
-const subcommandsInitializer = new Subcommands();
+const subcommandsInitializer = TeamSubcommands();
 const { name, subcommands } = subcommandsInitializer;
 const { create } = subcommands;
 
