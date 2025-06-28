@@ -37,13 +37,13 @@ export class Create implements Subcommand<unknown> {
   public async execute(interaction: CommandInteraction) {
     const guild = interaction.client.guilds.cache.get(GUILD_ID);
 
-    if (!guild || !interaction.member) return false;
+    if (!guild || !interaction.member) return { successed: false, data: "No guild or member info." };
 
     const gettedTeam = await Team.getData({filter: {name: this._data.name}})
 
     if (gettedTeam.successed) {
-      return false;
-    }
+      return { successed: false, data: `Team with name ${this._data.name} is exists.` };
+    };
 
     const roles = await this.createRoles(guild);
     const category = await this.createCategory(guild);
@@ -67,13 +67,15 @@ export class Create implements Subcommand<unknown> {
       });
     }
 
-    return (await Team.create({
+    const team = (await Team.create({
       id,
       members,
       name: this._data.name,
       owner_id: this._data.owner.id,
       roles: new Map(roles[0].map(role => [role.id, role.name]))
     })).toObject().name;
+
+    return { successed: true, data: `Team "${team}" was created.` }
   };
 
   private resolveMemberRoles({ member, roles, map }: {member: GuildMember, roles: string[], map: Map<string, string[]> }) {
