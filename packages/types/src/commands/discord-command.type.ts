@@ -65,14 +65,7 @@ class Command<T = void> {
 }
 
 export abstract class Subcommand<T> {
-  public static readonly name: string;
-  public static readonly options: {
-    [key: string]: {
-      name: string,
-      description: string
-      required: boolean
-    }
-  };
+  public static readonly subcommand: SlashCommandSubcommandBuilder;
 
   public execute: (interaction: CommandInteraction) => Promise<T>;
 };
@@ -83,7 +76,6 @@ export abstract class SubcommandsInitializer<T> {
   public readonly subcommands: {
     [name: string]: new (interaction: CommandInteraction<CacheType>) => Subcommand<T>
   };
-
 
   public execute: (interaction: CommandInteraction) => Promise<T>;
 };

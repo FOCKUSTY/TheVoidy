@@ -1,12 +1,8 @@
 import { SubcommandsInitializer } from "@voidy/types/dist/commands/discord-command.type";
 import { CommandInteraction } from "discord.js";
 
+import { Response } from "./constants";
 import Create from "./create";
-
-type Response = {
-  data: string;
-  successed: boolean;
-};
 
 export class Subcommands implements SubcommandsInitializer<Response> {
   public readonly name = "team" as const;

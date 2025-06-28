@@ -1,17 +1,15 @@
 import { Subcommand } from "@voidy/types/dist/commands/discord-command.type";
 
-import { CategoryChannel, Channel, ChannelType, CommandInteraction, Guild, GuildMember, GuildMemberRoleManager, Role } from "discord.js";
+import { CategoryChannel, Channel, ChannelType, CommandInteraction, Guild, GuildMember, Role, SlashCommandSubcommandBuilder } from "discord.js";
 
 import { Env } from "@voidy/develop";
 import { MODELS, Database } from "@thevoidcommunity/the-void-database/database";
-import { CHANNELS, resolveTeamName, ROLES } from "./constants";
+import { CHANNELS, resolveTeamName, Response, ROLES } from "./constants";
 
 const { GUILD_ID } = Env.env;
 const Team = new Database(MODELS.Team);
 
-export class Create implements Subcommand<unknown> {
-  public static readonly name = "create" as const;
-
+export class Create implements Subcommand<Response> {
   public static readonly options = {
     owner: {
       name: "ceo",
@@ -25,6 +23,20 @@ export class Create implements Subcommand<unknown> {
     } as const
   } as const;
 
+  public static readonly subcommand: SlashCommandSubcommandBuilder = new SlashCommandSubcommandBuilder()
+    .setName("create")
+    .setDescription("Создание новой команды !")
+    .addStringOption(o => o
+      .setName(Create.options.name.name)
+      .setDescription(Create.options.name.description)
+      .setRequired(Create.options.name.required)
+    )
+    .addUserOption(o => o
+      .setName(Create.options.owner.name)
+      .setDescription(Create.options.owner.description)
+      .setRequired(Create.options.owner.required)
+    )
+  
   private _data: {
     name: string;
     owner: GuildMember;
