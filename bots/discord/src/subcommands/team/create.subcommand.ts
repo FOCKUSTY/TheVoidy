@@ -43,15 +43,12 @@ export class Create extends Subcommand<Response> {
     owner: GuildMember;
   };
 
-  public execute: (interaction: CommandInteraction) => Promise<Response>;
-
   public constructor(interaction: CommandInteraction) {
     super();
     this._data = this.resolveOptions(interaction);
-    this.execute = (interaction: CommandInteraction) => this.run(interaction);
   };
 
-  private async run(interaction: CommandInteraction): Promise<Response> {
+  public readonly execute = async (interaction: CommandInteraction): Promise<Response> => {
     const guild = interaction.client.guilds.cache.get(GUILD_ID);
 
     if (!guild || !interaction.member) return { successed: false, data: "No guild or member info." };
