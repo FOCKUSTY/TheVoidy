@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import {
+  CacheType,
   CommandInteraction,
   InteractionReplyOptions,
   MessageFlags,
@@ -80,7 +81,7 @@ export abstract class SubcommandsInitializer<T> {
   public readonly name: string;
 
   public readonly subcommands: {
-    [name: string]: typeof Subcommand<T>
+    [name: string]: new (interaction: CommandInteraction<CacheType>) => Subcommand<T>
   };
 
 

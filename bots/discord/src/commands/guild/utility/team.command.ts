@@ -14,15 +14,15 @@ export default new Types.Discord.Command({
     .addSubcommand((s) => s
       .setName(create.name)
       .setDescription("Создание новой команды !")
-      .addUserOption(o => o
-        .setName(create.options.owner.name)
-        .setDescription(create.options.owner.description)
-        .setRequired(create.options.owner.required)
-      )
       .addStringOption(o => o
         .setName(create.options.name.name)
         .setDescription(create.options.name.description)
         .setRequired(create.options.name.required)
+      )
+      .addUserOption(o => o
+        .setName(create.options.owner.name)
+        .setDescription(create.options.owner.description)
+        .setRequired(create.options.owner.required)
       )
   ),
   async execute(interaction: CommandInteraction) {

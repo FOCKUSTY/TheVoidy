@@ -1,4 +1,4 @@
-import { Subcommand, SubcommandsInitializer } from "@voidy/types/dist/commands/discord-command.type";
+import { SubcommandsInitializer } from "@voidy/types/dist/commands/discord-command.type";
 import { CommandInteraction } from "discord.js";
 
 import Create from "./create";
@@ -19,7 +19,7 @@ export class Subcommands implements SubcommandsInitializer<unknown> {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    new (this.subcommands as any)[subcommand]().execute(interaction);
+    new (this.subcommands as any)[subcommand](interaction).execute(interaction);
   };
 };
 

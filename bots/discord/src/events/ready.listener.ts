@@ -38,7 +38,9 @@ class Listener {
     activiesLoader.execute();
 
     const objects = new ObjectsLoader().execute();
-    new ClientLoader(objects, utility.banwords).execute(Client);
+    const clientLoader = new ClientLoader(objects, utility.banwords)
+    
+    clientLoader.execute(Client);
 
     setInterval(
       () => {

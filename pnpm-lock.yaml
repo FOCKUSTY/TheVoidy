@@ -10,8 +10,8 @@ catalogs:
       specifier: ^9.23.0
       version: 9.28.0
     '@thevoidcommunity/the-void-database':
-      specifier: 4.0.1-beta.1
-      version: 4.0.1-beta.1
+      specifier: 4.1.0-beta.1
+      version: 4.1.0-beta.1
     '@types/node':
       specifier: ^20.16.1
       version: 20.17.19
@@ -97,7 +97,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.1-beta.1(ws@8.18.1)
+        version: 4.1.0-beta.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../utility/develop
@@ -170,7 +170,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.1-beta.1(ws@8.18.1)
+        version: 4.1.0-beta.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -234,7 +234,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.1-beta.1(ws@8.18.1)
+        version: 4.1.0-beta.1(ws@8.18.1)
       '@voidy/develop':
         specifier: workspace:^
         version: link:../../utility/develop
@@ -301,7 +301,7 @@ importers:
     dependencies:
       '@thevoidcommunity/the-void-database':
         specifier: 'catalog:'
-        version: 4.0.1-beta.1(ws@8.18.1)
+        version: 4.1.0-beta.1(ws@8.18.1)
       discord.js:
         specifier: 'catalog:'
         version: 14.18.0
@@ -524,8 +524,8 @@ packages:
   '@telegraf/types@7.1.0':
     resolution: {integrity: sha512-kGevOIbpMcIlCDeorKGpwZmdH7kHbqlk/Yj6dEpJMKEQw5lk0KVQY0OLXaCswy8GqlIVLd5625OB+rAntP9xVw==}
 
-  '@thevoidcommunity/the-void-database@4.0.1-beta.1':
-    resolution: {integrity: sha512-3y5fy4HSSlns7haodvtxZykd6qfSS4WQlGjsvqaEtXO17/0aYKvj6PShtAjtFgfeHWgDKv+NNhm7u5Oy6d994A==}
+  '@thevoidcommunity/the-void-database@4.1.0-beta.1':
+    resolution: {integrity: sha512-HPgbNbycOsTJRJN+7MH+wJv3R1fPx3UPqYvetkK9+u5PeYMXgICOYldqnTDDouWg6Dprzsnac1dJ5hJnMRkB7g==}
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -1666,7 +1666,7 @@ snapshots:
 
   '@telegraf/types@7.1.0': {}
 
-  '@thevoidcommunity/the-void-database@4.0.1-beta.1(ws@8.18.1)':
+  '@thevoidcommunity/the-void-database@4.1.0-beta.1(ws@8.18.1)':
     dependencies:
       discord.js: 14.20.0
       f-formatter: 0.3.1
