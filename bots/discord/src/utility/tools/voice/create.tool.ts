@@ -19,7 +19,8 @@ export class Tool {
 
     if (!channel) return;
     if (!newVoiceState.member) return;
-    
+    if (newVoiceState.channelId !== channel) return;
+
     const createdChannel = await this.createChannel({ voiceState: newVoiceState, ownerId: newVoiceState.member.id });
     
     if (!createdChannel || !createdChannel.channel) return;

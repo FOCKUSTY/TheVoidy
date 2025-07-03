@@ -77,7 +77,8 @@ export class Channel {
     this._channel = await guild.channels.create({
       name: `${user.displayName}'s channel`,
       type: ChannelType.GuildVoice,
-      parent: channel.id,
+      parent: channel.parent,
+      position: channel.position,
       permissionOverwrites: [<OverwriteResolvable>{id: user.id, allow: [ ...PERMISSIONS.user, ...PERMISSIONS.owner ] }]
     });
 
