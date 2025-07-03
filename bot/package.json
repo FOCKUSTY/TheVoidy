@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=dev&& set BOT=all&& nodemon src/start.bot.ts",
-    "dev:telegram": "set NODE_ENV=dev&& set BOT=telegram&& nodemon src/start.bot.ts",
-    "dev:discord": "set NODE_ENV=dev&& set BOT=discord&& nodemon src/start.bot.ts",
-    "start:builded": "set NODE_ENV=prod&& set BOT=all&& node -r tsconfig-paths/register dist/src/start.bot.js",
+    "dev": "cross-env NODE_ENV=dev cross-env BOT=all nodemon src/start.bot.ts",
+    "dev:telegram": "cross-env NODE_ENV=dev cross-env BOT=telegram nodemon src/start.bot.ts",
+    "dev:discord": "cross-env NODE_ENV=dev cross-env BOT=discord nodemon src/start.bot.ts",
+    "start:builded": "cross-env NODE_ENV=prod cross-env BOT=all node -r tsconfig-paths/register dist/src/start.bot.js",
     "update": "fockupdater update",
     "lint": "eslint ../eslint.config.mjs --no-warn-ignored src/**/*.{js,mjs,cjs,ts} --fix",
     "build": "tsc && tsc-alias"
