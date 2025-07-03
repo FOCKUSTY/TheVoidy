@@ -8,14 +8,24 @@ import {
 
 const { Guild } = MODELS;
 
+const usersTimeout = new Map<string, NodeJS.Timeout>();
+
 export class Tool {
   public static name = "create";
   
   private readonly cache = cache;
   private readonly channels = channels;
 
-  public async execute(_oldVoiceState: VoiceState, newVoiceState: VoiceState) {
+  public async execute(oldVoiceState: VoiceState, newVoiceState: VoiceState) {
     const channel = await this.getCache(newVoiceState.guild.id);
+
+    usersTimeout.delete(newVoiceState.id);
+
+    if (newVoiceState.channel !== channel && oldVoiceState.channelId) {
+      const successed = await this.deleteChannel({id: oldVoiceState.channelId, oldVoiceState, newVoiceState});
+      
+      if (successed) return;
+    };
 
     if (!channel) return;
     if (!newVoiceState.member) return;
@@ -41,8 +51,20 @@ export class Tool {
     return channel;
   }
 
-  private deleteChannel(id: string) {
-    return this.channels.delete(id);
+  private async deleteChannel({oldVoiceState, newVoiceState, id}: {oldVoiceState: VoiceState, newVoiceState: VoiceState, id: string}) {
+    if (!this.channels.has(id)) return false;
+
+    return new Promise<boolean>((resolve) => {
+      const timeout = setTimeout(async () => {
+        await oldVoiceState.guild.channels.delete(id);
+        this.channels.delete(id);
+
+        usersTimeout.delete(newVoiceState.id);
+        resolve(true);
+      }, 10_000);
+
+      usersTimeout.set(newVoiceState.id, timeout);
+    });
   }
 
   private moveMember(voiceState: VoiceState, channel: VoiceChannel) {
