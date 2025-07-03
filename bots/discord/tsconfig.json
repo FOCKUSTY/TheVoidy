@@ -14,7 +14,8 @@
     "paths": {
       "src/*": ["./src/*"],
       "subcommands/*": ["./src/subcommands/*"],
-      "utility/*": ["./src/utility/*"]
+      "utility/*": ["./src/utility/*"],
+      "tools/*": ["./src/utility/tools/*"]
     }
   },
   "include": ["src"],
