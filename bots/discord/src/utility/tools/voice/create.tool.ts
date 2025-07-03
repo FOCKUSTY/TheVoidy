@@ -9,6 +9,8 @@ import {
 const { Guild } = MODELS;
 
 export class Tool {
+  public static name = "create";
+  
   private readonly cache = cache;
   private readonly channels = channels;
 

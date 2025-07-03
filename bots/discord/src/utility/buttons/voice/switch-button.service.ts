@@ -1,6 +1,6 @@
 import { MessageComponentInteraction, MessageFlags } from "discord.js";
 
-import { channels } from "tools/create-voice/data";
+import { channels } from "src/utility/tools/voice/data";
 
 export class Switcher {
   public constructor(public readonly name: string, public readonly list: "blackList"|"whiteList") {};
