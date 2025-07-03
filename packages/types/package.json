@@ -8,7 +8,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsc && tsc-alias"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,6 @@
     "telegraf": "catalog:"
   },
   "devDependencies": {
-    "tsc-alias": "catalog:"
+    "typescript": "catalog:"
   }
 }

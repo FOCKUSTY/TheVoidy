@@ -84,7 +84,7 @@ export default class Command extends Types.Telegram.Command {
         ]);
 
         const reposToPattern: { [key: string]: { link: string; commits: Commit[] } } = {};
-        for (const repo of repos) {
+        for (const repo of (repos||[])) {
           reposToPattern[repo.name] = {
             link: repo.html_url,
             commits: (await services.github.getCommits(repo.url)).commits

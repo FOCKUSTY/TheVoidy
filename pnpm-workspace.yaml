@@ -26,6 +26,6 @@ catalog:
   "tsconfig-paths": "^4.2.0"
   "typescript": "^5.7.3"
 
-  "@thevoidcommunity/the-void-database": "4.1.0-beta.1"
+  "@thevoidcommunity/the-void-database": "4.1.1-beta.1"
   "f-formatter": "0.3.1"
   "fock-logger": "4.0.1a"
