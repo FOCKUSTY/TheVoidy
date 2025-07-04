@@ -6,7 +6,7 @@ export class Button implements AbstractButton {
   public static readonly name = "switch-white-list";
   public static readonly builder = new ButtonBuilder()
     .setCustomId("voice-" + Button.name)
-    .setStyle(ButtonStyle.Primary)
+    .setStyle(ButtonStyle.Secondary)
     .setLabel("Вкл/Выкл белый список");
 
   public execute: (interaction: MessageComponentInteraction) => Promise<unknown>;

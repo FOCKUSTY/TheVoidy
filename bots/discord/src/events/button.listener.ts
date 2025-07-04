@@ -18,7 +18,7 @@ export class Listener {
     
     if (!button) return;
 
-    return button(interaction);
+    return button.execute(interaction);
   }
 }
 
