@@ -7,6 +7,7 @@ import { Collection, MessageFlags } from "discord.js";
 
 export default class Listener {
   public readonly name = "interaction-create";
+  public readonly tag = "unique" as const;
 
   async execute(
     interaction: Interaction,

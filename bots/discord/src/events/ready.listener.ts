@@ -14,6 +14,7 @@ const { ActivitiesLoader, ObjectsLoader } = loaders;
 
 class Listener {
   public readonly name = Events.ClientReady;
+  public readonly tag = Events.ClientReady;
   public readonly once = true;
 
   async execute(Client: DiscordClient) {

@@ -1,4 +1,4 @@
-import { Interaction, InteractionType, MessageFlags } from "discord.js";
+import { Events, Interaction, InteractionType, MessageFlags } from "discord.js";
 
 import { Debug } from "@voidy/develop";
 import { Types } from "@voidy/types";
@@ -9,6 +9,7 @@ class Listener {
   private readonly ids: Ids;
 
   public readonly name = "modal-listener";
+  public readonly tag = Events.InteractionCreate;
 
   public constructor(services: Types.Services) {
     this.ids = new Ids(services);
