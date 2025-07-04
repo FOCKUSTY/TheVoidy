@@ -1,5 +1,5 @@
 import { MODELS } from "@thevoidcommunity/the-void-database/database";
-import { cache, Channel, channels } from "./data";
+import { cache, Channel, channels, sendService } from "./data";
 
 import {
   VoiceChannel,
@@ -32,13 +32,14 @@ export class Tool {
     if (newVoiceState.channelId !== channel) return;
 
     const createdChannel = await this.createChannel({ voiceState: newVoiceState, ownerId: newVoiceState.member.id });
-    
+
     if (!createdChannel || !createdChannel.channel) return;
     
     await this.moveMember(newVoiceState, createdChannel.channel);
+    await this.sendService(createdChannel as (Channel & {channel: NonNullable<Channel["channel"]>}));
   };
   
-  private sendService() {}
+  private sendService = sendService;
   
   private async createChannel({ voiceState, ownerId}: {ownerId: string, voiceState: VoiceState}) {
     if (!voiceState.member?.user) return null;

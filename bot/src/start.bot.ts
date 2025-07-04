@@ -18,7 +18,6 @@ import connect from "@thevoidcommunity/the-void-database/database/connection";
 
 connect(Env.env.MONGOOSE_URL);
 
-Debug.Console.clear();
 Debug.Log([new Formatter().Color("Начало программы", Colors.magenta)]);
 
 const bot = Env.env.BOT || "all";

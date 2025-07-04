@@ -1,12 +1,18 @@
 import {
+  ActionRow,
+  ActionRowBuilder,
   ChannelType,
+  ComponentType,
   Guild as DiscordGuild,
+  EmbedBuilder,
   OverwriteResolvable,
   PermissionsBitField,
   User,
   VoiceBasedChannel,
   VoiceChannel,
 } from "discord.js";
+
+import { global as buttons } from "utility/buttons";
 
 export const cache = new Map<string, string>();
 
@@ -118,6 +124,21 @@ export class Channel {
   }
 };
 
-// class Service {
-  // require button listener
-// };
+export const sendService = async (channel: Channel & {channel: NonNullable<Channel["channel"]>}) => {
+  const embed = new EmbedBuilder()
+    .setAuthor({name: channel.channel.client.user.username, iconURL: channel.channel.client.user.avatarURL() || undefined})
+    .setTitle('Это инструменты для управления Вашим голосовым каналом!')
+    .setDescription('Снизу есть кнопки для Вашего удобства, просто жмите на них и будет выпадать модальное меню с инструкциями')
+    .setTimestamp()
+    .setFooter({text: 'The Void Commnunity', iconURL: channel.channel.client.user.avatarURL() || undefined});
+
+  channel.channel.send({
+    content: "Привет! Это настройки войс канала!",
+    embeds: [embed],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    components: [<any>new ActionRowBuilder().addComponents(...[
+      buttons["voice-switch-black-list"].builder,
+      buttons["voice-switch-white-list"].builder
+    ])]
+  });
+};
