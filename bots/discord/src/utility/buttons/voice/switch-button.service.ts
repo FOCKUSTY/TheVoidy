@@ -3,21 +3,25 @@ import { MessageComponentInteraction, MessageFlags } from "discord.js";
 import { channels } from "src/utility/tools/voice/data";
 
 export class Switcher {
-  public constructor(public readonly name: string, public readonly list: "blackList"|"whiteList") {};
+  public static readonly prefix = "voice-";
 
-  public async execute(interaction: MessageComponentInteraction) {
-    if (interaction.customId !== this.name) return null;
+  public constructor(public readonly name: string) {};
 
-    const channel = channels.get(interaction.channelId);
-
-    if (!channel) return null;
-
-    const status = channel[this.list].switch();
-    
-    return interaction.reply({
-      content: `Теперь ${this.list === "blackList" ? "черный" : "белый"} список ${status === true ? "включен" : "выключен"}`,
-      flags: MessageFlags.Ephemeral
-    })
+  public execute(list: "blackList"|"whiteList") {
+    return async(interaction: MessageComponentInteraction) => {
+      if (interaction.customId !== Switcher.prefix+this.name) return null;
+  
+      const channel = channels.get(interaction.channelId);
+  
+      if (!channel) return null;
+  
+      const status = channel[list].switch();
+      
+      return interaction.reply({
+        content: `Теперь ${list === "blackList" ? "черный" : "белый"} список ${status === true ? "включен" : "выключен"}`,
+        flags: MessageFlags.Ephemeral
+      })
+    } 
   };
 };
 

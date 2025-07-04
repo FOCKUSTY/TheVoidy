@@ -12,7 +12,7 @@ export class Button implements AbstractButton {
   public execute: (interaction: MessageComponentInteraction) => Promise<unknown>;
 
   public constructor() {
-    this.execute = new Switcher(Button.name, "blackList").execute;
+    this.execute = new Switcher(Button.name).execute("blackList");
   }
 };
 
