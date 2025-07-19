@@ -1,11 +1,11 @@
 import { Env } from "@voidy/develop";
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageFlags } from "discord.js";
 
-import commands from "src/index.commads";
+import commands from "commands/index.commads";
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder()
     .setName("bot")
     .setDescription("Информация о боте !")
@@ -56,7 +56,7 @@ export default new Types.Discord.Command({
 
         {
           name: "Количество команд:",
-          value: `${commands.length}`,
+          value: `${commands.size}`,
           inline: false
         },
 

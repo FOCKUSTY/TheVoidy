@@ -1,7 +1,7 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder().setName("test").setDescription("Тестовое сообщение !"),
   async execute(interaction: CommandInteraction) {
     return interaction.reply({

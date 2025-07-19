@@ -1,5 +1,5 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
 import Formatter from "f-formatter";
 
@@ -9,7 +9,7 @@ const formatter = new Formatter();
 const format = (seconds: number) => formatter.RuWords(seconds, ["секунду", "секунды", "секунд"]);
 const TIMEOUT = 10;
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder().setName("sleep").setDescription("Тестовое сообщение !"),
   async execute(interaction: CommandInteraction) {
     interaction.reply({

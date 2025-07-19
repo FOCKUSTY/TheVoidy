@@ -3,7 +3,7 @@ import { Env, Debug } from "@voidy/develop";
 import ICL from "./events/interaction-create.listener";
 import ML from "./events/modal.listener";
 
-import Deployer from "./deploy.commands";
+import CommandsModule from "./commands/commands.module";
 import DeployEvents from "./deploy.events";
 
 import { Types } from "@voidy/types";
@@ -18,8 +18,6 @@ import {
   GatewayIntentBits,
   Partials
 } from "discord.js";
-
-import "./slash.commands";
 
 const Client = new DiscordClient({
   intents: [
@@ -37,11 +35,23 @@ const Client = new DiscordClient({
 const Commands = new Collection();
 const Cooldowns = new Collection();
 
+type ModulesResolverReturn = ReturnType<typeof ModulesResolver>
+type ModulesType = {
+  [P in keyof ModulesResolverReturn]: ReturnType<ModulesResolverReturn[P]["execute"]>
+};
+const Modules: ModulesType = {} as ModulesType;
+
 const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
+const ModulesResolver = () => {
+  return {
+    commands: new CommandsModule(true, Commands)
+  } as const;
+};
+
 const Login = async (clientToken: string, services: Types.Services) => {
-  const foldersPath = path.join(__dirname, "commands");
-  const commandsFolder = fs.readdirSync(foldersPath);
+  const modules = Object.fromEntries(Object.values(ModulesResolver()).map(data => [data.name, data.execute()]));
+  Object.keys(modules).forEach(key => (Modules as {[key: string]: unknown})[key] = modules[key]);
 
   const eventsPath = path.join(__dirname, "events");
   const eventFiles = fs
@@ -56,7 +66,6 @@ const Login = async (clientToken: string, services: Types.Services) => {
     modalListener.execute(interaction);
   });
 
-  new Deployer(foldersPath, commandsFolder).write(Commands);
   new DeployEvents(eventsPath, eventFiles, services).execute();
 
   await Client.login(clientToken).catch((e) => Debug.Error(e));

@@ -54,10 +54,6 @@ import {
   DiscordCommand as IMIDiscordCommand,
   TelegramInteraction as IMTTelegramInteraction
 } from "./commands/interactions.type";
-import DCLDiscordCommand, {
-  CommandCreateData as IMTDiscordCommandCreateData,
-  CommandData as IMTDiscordCommandData
-} from "./commands/discord-command.type";
 import DCLTelegramCommand, {
   Props as IMTTelegramCommandData
 } from "./commands/telegram-command.type";
@@ -73,7 +69,6 @@ export namespace Classes {
   export abstract class TelegramService extends IMACLTelegramService {}
   export abstract class GitHubApi extends IMACLGitHubApi {}
 
-  export class DiscordCommand<T = any> extends DCLDiscordCommand<T> {}
   export class TelegramCommand<T = any, K = any> extends DCLTelegramCommand<T, K> {}
 }
 
@@ -110,11 +105,8 @@ export namespace Types.Discord {
   }
 
   export type ICommand = IMIDiscordCommand;
-  export type TCommandCreateData<T> = IMTDiscordCommandCreateData<T>;
-  export type CommandData<T> = IMTDiscordCommandData<T>;
 
   export abstract class Service extends IMACLDiscordService {}
-  export class Command<T = any> extends DCLDiscordCommand<T> {}
 }
 
 export namespace Types.Telegram {

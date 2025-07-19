@@ -1,5 +1,5 @@
 import { Env, Logger, Debug, Colors } from "@voidy/develop";
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
 import { REST, Routes } from "discord.js";
 
@@ -31,19 +31,23 @@ class Deployer {
   ) => {
     for (const placeFolder of this._commands_folder) {
       const commandsPath = path.join(this._folders_path, placeFolder);
-      const commands = fs.readdirSync(commandsPath);
-
-      if (placeFolder !== type && !!type) continue;
-
-      for (const folder of commands) {
-        const modifierPath = path.join(commandsPath, folder);
-        const files = fs
-          .readdirSync(modifierPath)
-          .filter((file: string) => file.endsWith(fileType) && !file.endsWith(".d.ts"));
-
-        for (const file of files) {
-          func(file, modifierPath, folder, commandsPath);
+      try {
+        const commands = fs.readdirSync(commandsPath);
+  
+        if (placeFolder !== type && !!type) continue;
+  
+        for (const folder of commands) {
+          const modifierPath = path.join(commandsPath, folder);
+          const files = fs
+            .readdirSync(modifierPath)
+            .filter((file: string) => file.endsWith(fileType) && !file.endsWith(".d.ts"));
+  
+          for (const file of files) {
+            func(file, modifierPath, folder, commandsPath);
+          }
         }
+      } catch {
+        continue;        
       }
     }
   };
@@ -54,7 +58,7 @@ class Deployer {
   ) => {
     this.ForeachFolders((file, modifierPath) => {
       const filePath = path.join(modifierPath, file);
-      const command: Types.Discord.Command = require(filePath).default;
+      const command: Command = require(filePath).default;
 
       if (!!command && !!command.data && !!command.execute) {
         const options = command.data.options;
@@ -125,7 +129,7 @@ class Deployer {
   public readonly execute = (Commands: unknown[], type: "guild" | "global") => {
     this.ForeachFolders((file, modifierPath) => {
       const filePath = path.join(modifierPath, file);
-      const command: Types.Discord.Command = require(filePath).default;
+      const command: Command = require(filePath).default;
 
       if (!!command && !!command.data && !!command.execute) Commands.push(command.data.toJSON());
       else

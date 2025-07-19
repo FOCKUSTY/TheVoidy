@@ -1,14 +1,14 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 
-import commands from "src/index.commads";
-import { Types } from "@voidy/types";
+import commands from "src/commands/index.commads";
+import Command from "types/command.type";
 
 import RegisterSubcommands from "subcommands/register"
 
 const subcommandsInitializer = RegisterSubcommands();
 const { name, subcommands } = subcommandsInitializer;
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder()
     .setName(name)
     .setDescription("Регистрация сервисов !")

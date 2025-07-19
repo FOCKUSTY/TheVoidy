@@ -1,9 +1,9 @@
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { Random } from "random-js";
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder()
     .setName("random")
     .setDescription("Случайный выбор чисел !")

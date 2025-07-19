@@ -12,11 +12,11 @@ import {
 } from "discord.js";
 
 import Ids from "utility/modals/custom-ids.modal";
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
 const customIds = Ids.getIds();
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder().setName("update").setDescription("Сообщение с помощью бота!"),
   async execute(interaction: CommandInteraction) {
     if (interaction.user.id !== Env.get("AUTHOR_ID"))

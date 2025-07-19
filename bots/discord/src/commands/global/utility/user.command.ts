@@ -1,4 +1,4 @@
-import { Types } from "@voidy/types";
+import Command from "types/command.type";
 
 import {
   CommandInteraction,
@@ -10,7 +10,7 @@ import {
   MessageFlags
 } from "discord.js";
 
-export default new Types.Discord.Command({
+export default new Command({
   data: new SlashCommandBuilder()
     .setName("user")
     .setDescription("Пользователь !")
