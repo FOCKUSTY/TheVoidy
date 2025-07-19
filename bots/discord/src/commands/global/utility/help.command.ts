@@ -1,14 +1,14 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 
-import commands from "src/commands/index.commads";
-import Command from "types/command.type";
+import { data } from "commands/commands.module";
+import Command, { DeployCommands } from "types/command.type";
 
 export default new Command({
   data: new SlashCommandBuilder().setName("help").setDescription("Все доступные команды !"),
 
   async execute(interaction: CommandInteraction) {
     return await interaction.reply({
-      content: `Все команды: \n🎩${Array.from(commands.keys()).join("\n🎩")}`,
+      content: Object.keys(data.commands).map(key => `${key}-команды:\n🎩${Array.from((data.commands as {[key: string]: DeployCommands})[key].keys()).join("\n🎩")}`).join("\n\n"),
       flags: MessageFlags.Ephemeral
     });
   }

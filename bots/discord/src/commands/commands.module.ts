@@ -3,9 +3,27 @@ import path from "path";
 import fs from "fs";
 
 import Deployer from "./deploy.commands";
+import Command, { DeployCommands } from "src/types/command.type";
 
-const foldersPath = path.join(__dirname);
-const commandsFolder = fs.readdirSync(foldersPath);
+export const data = {
+  global: [],
+  guild: [],
+  all: [],
+  commands: {
+    all: new Map(),
+    global: new Map(),
+    guild: new Map()
+  }
+} as {
+  global: Command[];
+  guild: Command[];
+  all: Command[];
+  commands: {
+    guild: DeployCommands;
+    global: DeployCommands;
+    all: DeployCommands;
+  };
+};
 
 export class CommandsModule {
   public readonly name = "commands" as const;
@@ -20,21 +38,15 @@ export class CommandsModule {
       return false as const;
     }
 
-    const { global, guild } = require("./slash.commands").register();
-    const commands = require("./index.commads").default;
-
-    this.write();
-
-    return {
-      global,
-      guild,
-      commands,
-      collection: this.commands
-    }
+    return new Deployer(this.commands).execute();
   };
 
-  private write() {
-    return new Deployer(foldersPath, commandsFolder).write(this.commands)
+  public toJson(commands: {guild: DeployCommands, global: DeployCommands}) {
+    fs.writeFileSync(
+      path.join(__dirname, "commands.json"),
+      JSON.stringify(Object.fromEntries(Object.keys(commands).map(key => [key, Object.fromEntries(Array.from((commands as {[key: string]: DeployCommands})[key].values()).map(command => [command.name, command.actived]))]))),
+      "utf-8"
+    );
   }
 };
 

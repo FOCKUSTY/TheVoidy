@@ -3,7 +3,7 @@ import Command from "types/command.type";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageFlags } from "discord.js";
 
-import commands from "commands/index.commads";
+import { data} from "commands/commands.module";
 
 export default new Command({
   data: new SlashCommandBuilder()
@@ -56,7 +56,7 @@ export default new Command({
 
         {
           name: "Количество команд:",
-          value: `${commands.size}`,
+          value: `${data.all.length}`,
           inline: false
         },
 

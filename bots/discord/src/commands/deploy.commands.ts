@@ -1,143 +1,110 @@
 import { Env, Logger, Debug, Colors } from "@voidy/develop";
-import Command from "types/command.type";
+import Command, { DeployCommands } from "types/command.type";
 
 import { REST, Routes } from "discord.js";
 
-import type { Collection as CommandsCollection } from "discord.js";
+import type { Collection, Collection as CommandsCollection } from "discord.js";
 
-import fs from "node:fs";
 import path from "node:path";
-
-let using = 0;
+import fs from "node:fs";
 
 const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
 class Deployer {
-  private readonly _folders_path: string;
-  private readonly _commands_folder: string[];
-
   private readonly _logger: Logger<"Commands"> = new Logger("Commands");
   private readonly _updater: Logger<"Updater"> = new Logger("Updater");
-  private readonly _rest: REST = new REST().setToken(process.env.CLIENT_TOKEN || "");
+  private readonly _rest: REST = new REST().setToken(Env.env.CLIENT_TOKEN);
 
-  constructor(foldersPath: string, commandsFolder: string[]) {
-    this._folders_path = foldersPath;
-    this._commands_folder = commandsFolder;
+  public constructor(public readonly collection: Collection<unknown, unknown>) {};
+
+  public execute() {
+    const data = {
+      global: [],
+      guild: [],
+      all: [],
+      commands: {
+        all: new Map(),
+        global: new Map(),
+        guild: new Map()
+      }
+    } as {
+      global: Command[]
+      guild: Command[]
+      all: Command[]
+      commands: {
+        guild: DeployCommands;
+        global: DeployCommands;
+        all: DeployCommands
+      },
+    };
+
+    (<const>["global", "guild"]).forEach(type => {
+      const commands = this.ForEachCommands<Command>(type, ({commandPath}) => {
+        return require(commandPath).default;
+      });
+
+      data[type] = commands;
+      data.commands[type] = new Map(commands.map(command => [command.name, command]));
+    });
+
+    data.all = [...data.global, ...data.guild]; 
+    data.commands.all = new Map([
+      ...data.commands.global.entries(),
+      ...data.commands.guild.entries()
+    ]);
+
+    Array.from(data.commands.all.values()).forEach(command => {
+      const options = command.data.options.map(option => option.toJSON().name).join(" | ");
+      const maxSpaceLength = 20;
+      const spaceLength = maxSpaceLength - command.data.name.length;
+      const space = new Array(spaceLength).fill(" ").join("");
+
+      this._logger.execute(`Команда ${command.data.name}${space}${options}`);
+    });
+
+    this.update(data.commands);
+
+    return data;
   }
 
-  private readonly ForeachFolders = (
-    func: (...args: string[]) => void,
-    type?: "guild" | "global"
-  ) => {
-    for (const placeFolder of this._commands_folder) {
-      const commandsPath = path.join(this._folders_path, placeFolder);
-      try {
-        const commands = fs.readdirSync(commandsPath);
-  
-        if (placeFolder !== type && !!type) continue;
-  
-        for (const folder of commands) {
-          const modifierPath = path.join(commandsPath, folder);
-          const files = fs
-            .readdirSync(modifierPath)
-            .filter((file: string) => file.endsWith(fileType) && !file.endsWith(".d.ts"));
-  
-          for (const file of files) {
-            func(file, modifierPath, folder, commandsPath);
-          }
-        }
-      } catch {
-        continue;        
-      }
-    }
-  };
-
-  public readonly write = (
-    Commands: CommandsCollection<unknown, unknown>,
-    type?: "guild" | "global"
-  ) => {
-    this.ForeachFolders((file, modifierPath) => {
-      const filePath = path.join(modifierPath, file);
-      const command: Command = require(filePath).default;
-
-      if (!!command && !!command.data && !!command.execute) {
-        const options = command.data.options;
-        const name = command.data.name;
-
-        const subcommands = [];
-        let spaces = "";
-        let text = `Команда ${command.data.name}`;
-
-        if (options.length !== 0) {
-          text = `Команда ${command.data.name}`;
-
-          for (let i = 0; i < 15 - name.length - 1; i++) spaces += " ";
-
-          subcommands.push(`${spaces} Опции:`);
-
-          for (const key in command.data.options) {
-            using += 1;
-            subcommands.push(`${options[key].toJSON().name}`);
-
-            if (using <= options.length - 1) subcommands.push("|");
-          }
-
-          using = 0;
-        }
-
-        Commands.set(command.data.name, command);
-
-        subcommands.unshift(text);
-
-        if (subcommands.length != 0) this._logger.execute(`${subcommands.join(" ")}`);
-      } else
-        Debug.Warn(
-          `The command at ${filePath} is missing a required "data" or "execute" property.`
-        );
-    }, type);
-  };
-
-  public readonly update = async (commands: unknown, type: "guild" | "global") => {
+  public readonly update = async (commands: { guild: DeployCommands; global: DeployCommands }) => {
     try {
-      if (type === "global") {
-        this._updater.execute("Начало обновления глобальных (/) команд");
-
-        await this._rest.put(Routes.applicationCommands(Env.get("CLIENT_ID")), {
-          body: commands
-        });
-
-        this._updater.execute("Успешно обновлены глобальные (/) команды", {
-          color: Colors.green
-        });
-      } else {
-        this._updater.execute("Начало обновления (/) команд гильдии");
-
-        await this._rest.put(
-          Routes.applicationGuildCommands(Env.get("CLIENT_ID"), Env.get("GUILD_ID")),
-          { body: commands }
-        );
-
-        this._updater.execute("Успешно обновлены (/) команды гильдии", {
-          color: Colors.green
-        });
-      }
+      this._updater.execute("Начало обновления глобальных (/) команд");
+      await this._rest.put(Routes.applicationCommands(Env.get("CLIENT_ID")), {
+        body: Array.from(commands.global.values()).map(command => command.data.toJSON())
+      });
+      this._updater.execute("Успешно обновлены глобальные (/) команды", {
+        color: Colors.green
+      });
+      
+      this._updater.execute("Начало обновления (/) команд гильдии");
+      await this._rest.put(
+        Routes.applicationGuildCommands(Env.get("CLIENT_ID"), Env.get("GUILD_ID")),
+        { body: Array.from(commands.guild.values()).map(command => command.data.toJSON()) }
+      );
+      this._updater.execute("Успешно обновлены (/) команды гильдии", {
+        color: Colors.green
+      });
     } catch (err) {
       return Debug.Error(err);
     }
   };
 
-  public readonly execute = (Commands: unknown[], type: "guild" | "global") => {
-    this.ForeachFolders((file, modifierPath) => {
-      const filePath = path.join(modifierPath, file);
-      const command: Command = require(filePath).default;
+  private ForEachCommands<T>(
+    type: "guild"|"global",
+    func: ({ commandPath, commands, modifierPath }: {commandPath: string, modifierPath: string, commands: string[]}) => T,
+  ) {
+    return fs.readdirSync(path.join(__dirname, type)).map(folder => {
+      const modifierPath = path.join(__dirname, type, folder);
 
-      if (!!command && !!command.data && !!command.execute) Commands.push(command.data.toJSON());
-      else
-        Debug.Warn(
-          `The command at ${filePath} is missing a required "data" or "execute" property.`
-        );
-    }, type);
-  };
+      return fs
+        .readdirSync(modifierPath)
+        .filter((command: string) => command.endsWith(fileType) && !command.endsWith(".d.ts"))
+        .map((commandPath, _index, commands) => {
+          return func({commandPath: path.join(modifierPath, commandPath), modifierPath, commands});
+        });
+    }).flatMap(v => v);
+  }
 }
 
 export default Deployer;

@@ -1,6 +1,5 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 
-import commands from "src/commands/index.commads";
 import Command from "types/command.type";
 
 import RegisterSubcommands from "subcommands/register"

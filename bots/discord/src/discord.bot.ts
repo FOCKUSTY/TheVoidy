@@ -32,14 +32,14 @@ const Client = new DiscordClient({
   partials: [Partials.Channel]
 });
 
-const Commands = new Collection();
-const Cooldowns = new Collection();
+export const Commands = new Collection();
+export const Cooldowns = new Collection();
 
 type ModulesResolverReturn = ReturnType<typeof ModulesResolver>
 type ModulesType = {
   [P in keyof ModulesResolverReturn]: ReturnType<ModulesResolverReturn[P]["execute"]>
 };
-const Modules: ModulesType = {} as ModulesType;
+export const Modules: ModulesType = {} as ModulesType;
 
 const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
@@ -52,7 +52,7 @@ const ModulesResolver = () => {
 const Login = async (clientToken: string, services: Types.Services) => {
   const modules = Object.fromEntries(Object.values(ModulesResolver()).map(data => [data.name, data.execute()]));
   Object.keys(modules).forEach(key => (Modules as {[key: string]: unknown})[key] = modules[key]);
-
+  
   const eventsPath = path.join(__dirname, "events");
   const eventFiles = fs
     .readdirSync(eventsPath)
@@ -71,6 +71,6 @@ const Login = async (clientToken: string, services: Types.Services) => {
   await Client.login(clientToken).catch((e) => Debug.Error(e));
 };
 
-export { Commands, Login as LoginDiscord };
+export { Login as LoginDiscord };
 
 export default Client;
