@@ -19,8 +19,8 @@ type CommandBuilder =
   | SlashCommandSubcommandGroupBuilder
   | SlashCommandSubcommandsOnlyBuilder;
 
-type NonFalse<T> = T extends false ? never : T
-type Modules = ModulesType & { commands: NonFalse<ModulesType["commands"]>};
+type NonFalse<T> = T extends false ? never : T;
+type Modules = ModulesType & { commands: NonFalse<ModulesType["commands"]> };
 
 export type CommandCreateData<T> = {
   name?: string;
@@ -64,7 +64,9 @@ export class Command<T = void> {
     return this.init;
   }
 
-  public set execute(execute: (interaction: CommandInteraction, modules: Modules) => Promise<T | void>) {
+  public set execute(
+    execute: (interaction: CommandInteraction, modules: Modules) => Promise<T | void>
+  ) {
     this.init = execute;
   }
 }

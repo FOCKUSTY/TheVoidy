@@ -29,7 +29,7 @@ class Deployer {
         guild: new Map()
       }
     } as {
-      collection: Collection<string, Command>,
+      collection: Collection<string, Command>;
       global: Command[];
       guild: Command[];
       all: Command[];
@@ -52,7 +52,7 @@ class Deployer {
     data.all = [...data.global, ...data.guild];
     data.all.forEach((command) => {
       data.collection.set(command.name, command);
-    })
+    });
     data.commands.all = new Map([
       ...data.commands.global.entries(),
       ...data.commands.guild.entries()
@@ -76,7 +76,9 @@ class Deployer {
     try {
       const { global, guild } = Deployer.readCommandsFile();
 
-      const globalJson = Object.keys(global).filter(key => global[key]).map(key => commands.global.get(key)?.data.toJSON());
+      const globalJson = Object.keys(global)
+        .filter((key) => global[key])
+        .map((key) => commands.global.get(key)?.data.toJSON());
 
       this._updater.execute("Начало обновления глобальных (/) команд");
       await this._rest.put(Routes.applicationCommands(Env.env.CLIENT_ID), {
@@ -86,13 +88,14 @@ class Deployer {
         color: Colors.green
       });
 
-      const guildJson = Object.keys(guild).filter(key => guild[key]).map(key => commands.guild.get(key)?.data.toJSON());
+      const guildJson = Object.keys(guild)
+        .filter((key) => guild[key])
+        .map((key) => commands.guild.get(key)?.data.toJSON());
 
       this._updater.execute("Начало обновления (/) команд гильдии");
-      await this._rest.put(
-        Routes.applicationGuildCommands(Env.env.CLIENT_ID, Env.env.GUILD_ID),
-        { body: guildJson }
-      );
+      await this._rest.put(Routes.applicationGuildCommands(Env.env.CLIENT_ID, Env.env.GUILD_ID), {
+        body: guildJson
+      });
       this._updater.execute("Успешно обновлены (/) команды гильдии", {
         color: Colors.green
       });
@@ -102,9 +105,9 @@ class Deployer {
   };
 
   public static readCommandsFile = (): {
-    all: { [key: string]: boolean },
-    guild: { [key: string]: boolean },
-    global: { [key: string]: boolean }
+    all: { [key: string]: boolean };
+    guild: { [key: string]: boolean };
+    global: { [key: string]: boolean };
   } => {
     return JSON.parse(readFileSync(join(__dirname, ".commands"), "utf-8"));
   };

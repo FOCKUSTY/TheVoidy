@@ -12,15 +12,13 @@ export default class Listener {
   public readonly name = "interaction-create";
   public readonly tag = "unique" as const;
 
-  async execute(
-    interaction: Interaction,
-    modules: ModulesType,
-    cooldowns: Collection<any, any>
-  ) {
+  async execute(interaction: Interaction, modules: ModulesType, cooldowns: Collection<any, any>) {
     if (!modules.commands) return;
     if (!interaction.isChatInputCommand()) return;
 
-    const command: Command|undefined = modules.commands.commandsCollection.get(interaction.commandName);
+    const command: Command | undefined = modules.commands.commandsCollection.get(
+      interaction.commandName
+    );
 
     Debug.Log([
       "Запуск команды " + interaction.commandName,
