@@ -36,7 +36,7 @@ export const Commands = new Collection();
 export const Cooldowns = new Collection();
 
 type ModulesResolverReturn = ReturnType<typeof ModulesResolver>;
-type ModulesType = {
+export type ModulesType = {
   [P in keyof ModulesResolverReturn]: ReturnType<ModulesResolverReturn[P]["execute"]>;
 };
 export const Modules: ModulesType = {} as ModulesType;
@@ -66,7 +66,7 @@ const Login = async (clientToken: string, services: Types.Services) => {
   const interactionListener = new ICL();
 
   Client.on(Events.InteractionCreate, async (interaction) => {
-    interactionListener.execute(interaction, Commands, Cooldowns);
+    interactionListener.execute(interaction, modules, Cooldowns);
     modalListener.execute(interaction);
   });
 

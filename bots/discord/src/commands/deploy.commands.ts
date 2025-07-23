@@ -15,7 +15,7 @@ class Deployer {
   private readonly _updater: Logger<"Updater"> = new Logger("Updater");
   private readonly _rest: REST = new REST().setToken(Env.env.CLIENT_TOKEN);
 
-  public constructor(public readonly collection: Collection<unknown, unknown>) {}
+  public constructor(public readonly collection: Collection<string, Command>) {}
 
   public execute() {
     const data = {
@@ -29,7 +29,7 @@ class Deployer {
         guild: new Map()
       }
     } as {
-      collection: Collection<unknown, unknown>,
+      collection: Collection<string, Command>,
       global: Command[];
       guild: Command[];
       all: Command[];

@@ -10,6 +10,7 @@ import {
   SlashCommandSubcommandGroupBuilder,
   SlashCommandSubcommandsOnlyBuilder
 } from "discord.js";
+import type { ModulesType } from "src/discord.bot";
 
 type CommandBuilder =
   | SlashCommandBuilder
@@ -23,14 +24,14 @@ export type CommandCreateData<T> = {
   cooldown?: number;
   actived?: boolean;
   data: CommandBuilder;
-  execute: (interaction: CommandInteraction) => Promise<T | void>;
+  execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void>;
 };
 
 export interface CommandData<T> {
   readonly name: string;
   readonly data: CommandBuilder;
   readonly cooldown: number;
-  readonly execute: (interaction: CommandInteraction) => Promise<T | void>;
+  readonly execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void>;
 }
 
 class Command<T = void> {
@@ -52,15 +53,15 @@ class Command<T = void> {
     this.execute = data.execute;
   }
 
-  private async init(interaction: CommandInteraction): Promise<T | void> {
+  private async init(interaction: CommandInteraction, modules: ModulesType): Promise<T | void> {
     await interaction.reply(this._error);
   }
 
-  public get execute(): (interaction: CommandInteraction) => Promise<T | void> {
+  public get execute(): (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void> {
     return this.init;
   }
 
-  public set execute(execute: (interaction: CommandInteraction) => Promise<T | void>) {
+  public set execute(execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void>) {
     this.init = execute;
   }
 }
@@ -68,7 +69,7 @@ class Command<T = void> {
 export abstract class Subcommand<T> {
   public static readonly subcommand: SlashCommandSubcommandBuilder;
 
-  public abstract execute: (interaction: CommandInteraction) => Promise<T>;
+  public abstract execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T>;
 }
 
 export abstract class SubcommandsInitializer<T> {
@@ -78,7 +79,7 @@ export abstract class SubcommandsInitializer<T> {
     [name: string]: typeof Subcommand<T>;
   };
 
-  public abstract execute: (interaction: CommandInteraction) => Promise<T>;
+  public abstract execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T>;
 }
 
 export default Command;

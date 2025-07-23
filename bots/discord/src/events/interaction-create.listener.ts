@@ -4,6 +4,9 @@ import { Debug, Env } from "@voidy/develop";
 
 import type { Interaction } from "discord.js";
 import { Collection, MessageFlags } from "discord.js";
+import Command from "src/types/command.type";
+
+import type { ModulesType } from "../discord.bot";
 
 export default class Listener {
   public readonly name = "interaction-create";
@@ -11,12 +14,13 @@ export default class Listener {
 
   async execute(
     interaction: Interaction,
-    commands: Collection<any, any>,
+    modules: ModulesType,
     cooldowns: Collection<any, any>
   ) {
+    if (!modules.commands) return;
     if (!interaction.isChatInputCommand()) return;
 
-    const command = commands.get(interaction.commandName);
+    const command: Command|undefined = modules.commands.collection.get(interaction.commandName);
 
     Debug.Log([
       "Запуск команды " + interaction.commandName,
@@ -53,7 +57,7 @@ export default class Listener {
 
     try {
       Debug.Log(["Запуск команды " + interaction.commandName]);
-      await command.execute(interaction);
+      await command.execute(interaction, modules);
     } catch (err) {
       Debug.Error(err);
 
