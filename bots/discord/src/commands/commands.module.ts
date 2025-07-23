@@ -5,7 +5,8 @@ import fs from "fs";
 import Deployer from "./deploy.commands";
 import Command, { DeployCommands } from "src/types/command.type";
 
-export const data = {
+export let data = {
+  collection: new Collection(),
   global: [],
   guild: [],
   all: [],
@@ -15,6 +16,7 @@ export const data = {
     guild: new Map()
   }
 } as {
+  collection: Collection<unknown, unknown>,
   global: Command[];
   guild: Command[];
   all: Command[];
@@ -23,6 +25,16 @@ export const data = {
     global: DeployCommands;
     all: DeployCommands;
   };
+};
+
+let cache: {
+  all: { [key: string]: boolean },
+  guild: { [key: string]: boolean },
+  global: { [key: string]: boolean }
+} = {
+  all: {},
+  global: {},
+  guild: {}
 };
 
 export class CommandsModule {
@@ -38,27 +50,42 @@ export class CommandsModule {
       return false as const;
     }
 
-    return new Deployer(this.commands).execute();
+    const commands = new Deployer(this.commands).execute();
+    
+    data = commands;
+    
+    CommandsModule.toJson(commands);
+
+    return commands;
   }
 
-  public toJson(commands: { guild: DeployCommands; global: DeployCommands }) {
+  public static toJson(commands: { global: Command[]; guild: Command[]; all: Command[] }) {
+    cache = Object.fromEntries(["guild", "global", "all"].map(key => [key, Object.fromEntries((commands as {[key: string]: Command[]})[key].map(command => [command.name, command.actived]))])) as {
+      all: { [key: string]: boolean },
+      guild: { [key: string]: boolean },
+      global: { [key: string]: boolean }
+    };
+    
     fs.writeFileSync(
-      path.join(__dirname, "commands.json"),
-      JSON.stringify(
-        Object.fromEntries(
-          Object.keys(commands).map((key) => [
-            key,
-            Object.fromEntries(
-              Array.from((commands as { [key: string]: DeployCommands })[key].values()).map(
-                (command) => [command.name, command.actived]
-              )
-            )
-          ])
-        )
-      ),
+      path.join(__dirname, ".commands"),
+      JSON.stringify(cache, undefined, 2),
       "utf-8"
     );
+
+    return cache;
   }
+
+  public static switchCommand(commandName: string) {
+    cache.all[commandName] = !cache.all[commandName];
+
+    fs.writeFileSync(
+      path.join(__dirname, ".commands"),
+      JSON.stringify(cache, undefined, 2),
+      "utf-8"
+    );
+
+    return cache.all;
+  };
 }
 
 export default CommandsModule;

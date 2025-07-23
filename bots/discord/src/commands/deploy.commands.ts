@@ -3,10 +3,10 @@ import Command, { DeployCommands } from "types/command.type";
 
 import { REST, Routes } from "discord.js";
 
-import type { Collection, Collection as CommandsCollection } from "discord.js";
+import { Collection } from "discord.js";
 
-import path from "node:path";
-import fs from "node:fs";
+import path, { join } from "node:path";
+import fs, { readFileSync } from "node:fs";
 
 const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
@@ -19,6 +19,7 @@ class Deployer {
 
   public execute() {
     const data = {
+      collection: this.collection,
       global: [],
       guild: [],
       all: [],
@@ -28,6 +29,7 @@ class Deployer {
         guild: new Map()
       }
     } as {
+      collection: Collection<unknown, unknown>,
       global: Command[];
       guild: Command[];
       all: Command[];
@@ -48,6 +50,9 @@ class Deployer {
     });
 
     data.all = [...data.global, ...data.guild];
+    data.all.forEach((command) => {
+      data.collection.set(command.name, command);
+    })
     data.commands.all = new Map([
       ...data.commands.global.entries(),
       ...data.commands.guild.entries()
@@ -69,18 +74,24 @@ class Deployer {
 
   public readonly update = async (commands: { guild: DeployCommands; global: DeployCommands }) => {
     try {
+      const { global, guild } = Deployer.readCommandsFile();
+
+      const globalJson = Object.keys(global).filter(key => global[key]).map(key => commands.global.get(key)?.data.toJSON());
+
       this._updater.execute("Начало обновления глобальных (/) команд");
-      await this._rest.put(Routes.applicationCommands(Env.get("CLIENT_ID")), {
-        body: Array.from(commands.global.values()).map((command) => command.data.toJSON())
+      await this._rest.put(Routes.applicationCommands(Env.env.CLIENT_ID), {
+        body: globalJson
       });
       this._updater.execute("Успешно обновлены глобальные (/) команды", {
         color: Colors.green
       });
 
+      const guildJson = Object.keys(guild).filter(key => guild[key]).map(key => commands.guild.get(key)?.data.toJSON());
+
       this._updater.execute("Начало обновления (/) команд гильдии");
       await this._rest.put(
-        Routes.applicationGuildCommands(Env.get("CLIENT_ID"), Env.get("GUILD_ID")),
-        { body: Array.from(commands.guild.values()).map((command) => command.data.toJSON()) }
+        Routes.applicationGuildCommands(Env.env.CLIENT_ID, Env.env.GUILD_ID),
+        { body: guildJson }
       );
       this._updater.execute("Успешно обновлены (/) команды гильдии", {
         color: Colors.green
@@ -88,6 +99,14 @@ class Deployer {
     } catch (err) {
       return Debug.Error(err);
     }
+  };
+
+  public static readCommandsFile = (): {
+    all: { [key: string]: boolean },
+    guild: { [key: string]: boolean },
+    global: { [key: string]: boolean }
+  } => {
+    return JSON.parse(readFileSync(join(__dirname, ".commands"), "utf-8"));
   };
 
   private ForEachCommands<T>(

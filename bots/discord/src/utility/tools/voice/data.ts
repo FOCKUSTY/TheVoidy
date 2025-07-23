@@ -157,8 +157,8 @@ export const sendService = async (
   channel.channel.send({
     content: "Привет! Это настройки войс канала!",
     embeds: [embed],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     components: [
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       <any>(
         new ActionRowBuilder().addComponents(
           ...[
