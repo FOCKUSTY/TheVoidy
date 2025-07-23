@@ -27,7 +27,7 @@ export const data = {
 
 export class CommandsModule {
   public readonly name = "commands" as const;
-  
+
   public constructor(
     public readonly actived: boolean = true,
     public readonly commands: Collection<unknown, unknown>
@@ -39,15 +39,26 @@ export class CommandsModule {
     }
 
     return new Deployer(this.commands).execute();
-  };
+  }
 
-  public toJson(commands: {guild: DeployCommands, global: DeployCommands}) {
+  public toJson(commands: { guild: DeployCommands; global: DeployCommands }) {
     fs.writeFileSync(
       path.join(__dirname, "commands.json"),
-      JSON.stringify(Object.fromEntries(Object.keys(commands).map(key => [key, Object.fromEntries(Array.from((commands as {[key: string]: DeployCommands})[key].values()).map(command => [command.name, command.actived]))]))),
+      JSON.stringify(
+        Object.fromEntries(
+          Object.keys(commands).map((key) => [
+            key,
+            Object.fromEntries(
+              Array.from((commands as { [key: string]: DeployCommands })[key].values()).map(
+                (command) => [command.name, command.actived]
+              )
+            )
+          ])
+        )
+      ),
       "utf-8"
     );
   }
-};
+}
 
 export default CommandsModule;

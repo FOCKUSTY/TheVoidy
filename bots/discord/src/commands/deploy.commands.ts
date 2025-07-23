@@ -15,7 +15,7 @@ class Deployer {
   private readonly _updater: Logger<"Updater"> = new Logger("Updater");
   private readonly _rest: REST = new REST().setToken(Env.env.CLIENT_TOKEN);
 
-  public constructor(public readonly collection: Collection<unknown, unknown>) {};
+  public constructor(public readonly collection: Collection<unknown, unknown>) {}
 
   public execute() {
     const data = {
@@ -28,33 +28,33 @@ class Deployer {
         guild: new Map()
       }
     } as {
-      global: Command[]
-      guild: Command[]
-      all: Command[]
+      global: Command[];
+      guild: Command[];
+      all: Command[];
       commands: {
         guild: DeployCommands;
         global: DeployCommands;
-        all: DeployCommands
-      },
+        all: DeployCommands;
+      };
     };
 
-    (<const>["global", "guild"]).forEach(type => {
-      const commands = this.ForEachCommands<Command>(type, ({commandPath}) => {
+    (<const>["global", "guild"]).forEach((type) => {
+      const commands = this.ForEachCommands<Command>(type, ({ commandPath }) => {
         return require(commandPath).default;
       });
 
       data[type] = commands;
-      data.commands[type] = new Map(commands.map(command => [command.name, command]));
+      data.commands[type] = new Map(commands.map((command) => [command.name, command]));
     });
 
-    data.all = [...data.global, ...data.guild]; 
+    data.all = [...data.global, ...data.guild];
     data.commands.all = new Map([
       ...data.commands.global.entries(),
       ...data.commands.guild.entries()
     ]);
 
-    Array.from(data.commands.all.values()).forEach(command => {
-      const options = command.data.options.map(option => option.toJSON().name).join(" | ");
+    Array.from(data.commands.all.values()).forEach((command) => {
+      const options = command.data.options.map((option) => option.toJSON().name).join(" | ");
       const maxSpaceLength = 20;
       const spaceLength = maxSpaceLength - command.data.name.length;
       const space = new Array(spaceLength).fill(" ").join("");
@@ -71,16 +71,16 @@ class Deployer {
     try {
       this._updater.execute("Начало обновления глобальных (/) команд");
       await this._rest.put(Routes.applicationCommands(Env.get("CLIENT_ID")), {
-        body: Array.from(commands.global.values()).map(command => command.data.toJSON())
+        body: Array.from(commands.global.values()).map((command) => command.data.toJSON())
       });
       this._updater.execute("Успешно обновлены глобальные (/) команды", {
         color: Colors.green
       });
-      
+
       this._updater.execute("Начало обновления (/) команд гильдии");
       await this._rest.put(
         Routes.applicationGuildCommands(Env.get("CLIENT_ID"), Env.get("GUILD_ID")),
-        { body: Array.from(commands.guild.values()).map(command => command.data.toJSON()) }
+        { body: Array.from(commands.guild.values()).map((command) => command.data.toJSON()) }
       );
       this._updater.execute("Успешно обновлены (/) команды гильдии", {
         color: Colors.green
@@ -91,19 +91,34 @@ class Deployer {
   };
 
   private ForEachCommands<T>(
-    type: "guild"|"global",
-    func: ({ commandPath, commands, modifierPath }: {commandPath: string, modifierPath: string, commands: string[]}) => T,
+    type: "guild" | "global",
+    func: ({
+      commandPath,
+      commands,
+      modifierPath
+    }: {
+      commandPath: string;
+      modifierPath: string;
+      commands: string[];
+    }) => T
   ) {
-    return fs.readdirSync(path.join(__dirname, type)).map(folder => {
-      const modifierPath = path.join(__dirname, type, folder);
+    return fs
+      .readdirSync(path.join(__dirname, type))
+      .map((folder) => {
+        const modifierPath = path.join(__dirname, type, folder);
 
-      return fs
-        .readdirSync(modifierPath)
-        .filter((command: string) => command.endsWith(fileType) && !command.endsWith(".d.ts"))
-        .map((commandPath, _index, commands) => {
-          return func({commandPath: path.join(modifierPath, commandPath), modifierPath, commands});
-        });
-    }).flatMap(v => v);
+        return fs
+          .readdirSync(modifierPath)
+          .filter((command: string) => command.endsWith(fileType) && !command.endsWith(".d.ts"))
+          .map((commandPath, _index, commands) => {
+            return func({
+              commandPath: path.join(modifierPath, commandPath),
+              modifierPath,
+              commands
+            });
+          });
+      })
+      .flatMap((v) => v);
   }
 }
 

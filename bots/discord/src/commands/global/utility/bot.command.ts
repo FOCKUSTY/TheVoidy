@@ -3,7 +3,7 @@ import Command from "types/command.type";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageFlags } from "discord.js";
 
-import { data} from "commands/commands.module";
+import { data } from "commands/commands.module";
 
 export default new Command({
   data: new SlashCommandBuilder()

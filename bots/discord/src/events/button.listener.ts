@@ -14,9 +14,9 @@ export class Listener {
 
   public async execute(interaction: Interaction) {
     if (interaction.type !== InteractionType.MessageComponent) return;
-  
-    const button = this.buttons.buttons[interaction.customId as ButtonsIds]
-    
+
+    const button = this.buttons.buttons[interaction.customId as ButtonsIds];
+
     if (!button) return;
 
     return button.execute(interaction);

@@ -9,7 +9,7 @@ import {
   PermissionsBitField,
   User,
   VoiceBasedChannel,
-  VoiceChannel,
+  VoiceChannel
 } from "discord.js";
 
 import { global as buttons } from "utility/buttons";
@@ -18,21 +18,21 @@ export const cache = new Map<string, string>();
 
 export const PERMISSIONS = {
   banned: [],
-  
+
   user: [
     PermissionsBitField.Flags.Stream,
     PermissionsBitField.Flags.Speak,
     PermissionsBitField.Flags.UseApplicationCommands,
-    PermissionsBitField.Flags.AttachFiles,    
+    PermissionsBitField.Flags.AttachFiles,
     PermissionsBitField.Flags.ViewChannel,
     PermissionsBitField.Flags.Connect,
-    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.SendMessages
   ],
-  
+
   owner: [
     PermissionsBitField.Flags.MuteMembers,
     PermissionsBitField.Flags.DeafenMembers,
-    PermissionsBitField.Flags.MoveMembers,
+    PermissionsBitField.Flags.MoveMembers
   ]
 };
 
@@ -44,17 +44,17 @@ export class List {
 
   public switch() {
     this._enabled = !this._enabled;
-    
+
     return this._enabled;
   }
-  
+
   public addUser(id: string) {
     this._users.set(id, true);
   }
-  
+
   public removeUser(id: string) {
     this._users.set(id, false);
-  };
+  }
 
   public get enabled(): boolean {
     return this._enabled;
@@ -63,13 +63,13 @@ export class List {
   public get users(): Map<string, boolean> {
     return this._users;
   }
-};
+}
 
 export class Channel {
   private readonly _blackList: List;
   private readonly _whiteList: List;
-  
-  private _channel: VoiceChannel|null = null;
+
+  private _channel: VoiceChannel | null = null;
   private _ownerId: string;
 
   public constructor(ownerId: string) {
@@ -79,17 +79,27 @@ export class Channel {
     this._whiteList = new List();
   }
 
-  public async execute({ guild, channel, user }: { guild: DiscordGuild, channel: VoiceBasedChannel, user: User }): Promise<{ id: string, channel: Channel }> {
+  public async execute({
+    guild,
+    channel,
+    user
+  }: {
+    guild: DiscordGuild;
+    channel: VoiceBasedChannel;
+    user: User;
+  }): Promise<{ id: string; channel: Channel }> {
     this._channel = await guild.channels.create({
       name: `${user.displayName}'s channel`,
       type: ChannelType.GuildVoice,
       parent: channel.parent,
       position: channel.position,
-      permissionOverwrites: [<OverwriteResolvable>{id: user.id, allow: [ ...PERMISSIONS.user, ...PERMISSIONS.owner ] }]
+      permissionOverwrites: [
+        <OverwriteResolvable>{ id: user.id, allow: [...PERMISSIONS.user, ...PERMISSIONS.owner] }
+      ]
     });
 
     return { id: this._channel.id, channel: this };
-  };
+  }
 
   public async transmitOwner(ownerId: string) {
     const oldOwner = this._ownerId;
@@ -97,14 +107,16 @@ export class Channel {
 
     if (!this._channel) return null;
 
-    return await this._channel.permissionOverwrites.set([{
+    return await this._channel.permissionOverwrites.set([
+      {
         id: oldOwner,
-        allow: [ ...PERMISSIONS.user ]
-      }, {
+        allow: [...PERMISSIONS.user]
+      },
+      {
         id: ownerId,
-        allow: [ ...PERMISSIONS.user, ...PERMISSIONS.owner ]
-      }]
-    );
+        allow: [...PERMISSIONS.user, ...PERMISSIONS.owner]
+      }
+    ]);
   }
 
   public get channel() {
@@ -114,31 +126,47 @@ export class Channel {
   public get ownerId() {
     return this._ownerId;
   }
-  
+
   public get blackList() {
     return this._blackList;
   }
-  
+
   public get whiteList() {
     return this._whiteList;
   }
-};
+}
 
-export const sendService = async (channel: Channel & {channel: NonNullable<Channel["channel"]>}) => {
+export const sendService = async (
+  channel: Channel & { channel: NonNullable<Channel["channel"]> }
+) => {
   const embed = new EmbedBuilder()
-    .setAuthor({name: channel.channel.client.user.username, iconURL: channel.channel.client.user.avatarURL() || undefined})
-    .setTitle('Это инструменты для управления Вашим голосовым каналом!')
-    .setDescription('Снизу есть кнопки для Вашего удобства, просто жмите на них и будет выпадать модальное меню с инструкциями')
+    .setAuthor({
+      name: channel.channel.client.user.username,
+      iconURL: channel.channel.client.user.avatarURL() || undefined
+    })
+    .setTitle("Это инструменты для управления Вашим голосовым каналом!")
+    .setDescription(
+      "Снизу есть кнопки для Вашего удобства, просто жмите на них и будет выпадать модальное меню с инструкциями"
+    )
     .setTimestamp()
-    .setFooter({text: 'The Void Commnunity', iconURL: channel.channel.client.user.avatarURL() || undefined});
+    .setFooter({
+      text: "The Void Commnunity",
+      iconURL: channel.channel.client.user.avatarURL() || undefined
+    });
 
   channel.channel.send({
     content: "Привет! Это настройки войс канала!",
     embeds: [embed],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    components: [<any>new ActionRowBuilder().addComponents(...[
-      buttons["voice-switch-black-list"].builder,
-      buttons["voice-switch-white-list"].builder
-    ])]
+    components: [
+      <any>(
+        new ActionRowBuilder().addComponents(
+          ...[
+            buttons["voice-switch-black-list"].builder,
+            buttons["voice-switch-white-list"].builder
+          ]
+        )
+      )
+    ]
   });
 };

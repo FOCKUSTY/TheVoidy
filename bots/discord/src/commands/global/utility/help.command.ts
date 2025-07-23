@@ -8,7 +8,12 @@ export default new Command({
 
   async execute(interaction: CommandInteraction) {
     return await interaction.reply({
-      content: Object.keys(data.commands).map(key => `${key}-команды:\n🎩${Array.from((data.commands as {[key: string]: DeployCommands})[key].keys()).join("\n🎩")}`).join("\n\n"),
+      content: Object.keys(data.commands)
+        .map(
+          (key) =>
+            `${key}-команды:\n🎩${Array.from((data.commands as { [key: string]: DeployCommands })[key].keys()).join("\n🎩")}`
+        )
+        .join("\n\n"),
       flags: MessageFlags.Ephemeral
     });
   }

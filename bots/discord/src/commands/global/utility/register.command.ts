@@ -2,7 +2,7 @@ import { CommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.j
 
 import Command from "types/command.type";
 
-import RegisterSubcommands from "subcommands/register"
+import RegisterSubcommands from "subcommands/register";
 
 const subcommandsInitializer = RegisterSubcommands();
 const { name, subcommands } = subcommandsInitializer;
@@ -20,7 +20,7 @@ export default new Command({
     });
 
     const { data } = await subcommandsInitializer.execute(interaction);
-    
+
     return await interaction.editReply(`${data}`);
   }
 });

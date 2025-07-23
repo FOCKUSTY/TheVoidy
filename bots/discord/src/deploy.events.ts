@@ -30,12 +30,12 @@ class EventsLoader {
       this.Logger(`Загрузка прослушивателя ${event.name}`);
 
       if (event.once) {
-        this._client.once(event.tag, (...args) => event.execute(...args))
+        this._client.once(event.tag, (...args) => event.execute(...args));
       } else if (event.execute) {
         if (event.tag === "unique") continue;
 
-        this._client.on(event.tag, (...args) => event.execute(...args))
-      };
+        this._client.on(event.tag, (...args) => event.execute(...args));
+      }
     }
   };
 }

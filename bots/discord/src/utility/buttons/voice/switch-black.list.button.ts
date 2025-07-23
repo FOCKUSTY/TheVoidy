@@ -14,6 +14,6 @@ export class Button implements AbstractButton {
   public constructor() {
     this.execute = new Switcher(Button.name).execute("blackList");
   }
-};
+}
 
 export default Button;

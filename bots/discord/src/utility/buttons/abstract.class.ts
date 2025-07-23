@@ -5,6 +5,6 @@ export class Button<T = unknown> {
   public static builder: ButtonBuilder;
 
   declare execute: (interaction: MessageComponentInteraction) => Promise<T>;
-};
+}
 
 export default Button;
