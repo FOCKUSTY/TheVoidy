@@ -20,7 +20,7 @@ export default class Listener {
     if (!modules.commands) return;
     if (!interaction.isChatInputCommand()) return;
 
-    const command: Command|undefined = modules.commands.collection.get(interaction.commandName);
+    const command: Command|undefined = modules.commands.commandsCollection.get(interaction.commandName);
 
     Debug.Log([
       "Запуск команды " + interaction.commandName,
@@ -57,7 +57,7 @@ export default class Listener {
 
     try {
       Debug.Log(["Запуск команды " + interaction.commandName]);
-      await command.execute(interaction, modules);
+      await command.execute(interaction, { ...modules, commands: modules.commands });
     } catch (err) {
       Debug.Error(err);
 

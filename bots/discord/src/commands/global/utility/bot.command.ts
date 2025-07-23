@@ -3,8 +3,6 @@ import Command from "types/command.type";
 
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageFlags } from "discord.js";
 
-import { data } from "commands/commands.module";
-
 export default new Command({
   data: new SlashCommandBuilder()
     .setName("bot")
@@ -15,7 +13,7 @@ export default new Command({
       "en-US": "Info about bot !"
     }),
 
-  async execute(interaction: CommandInteraction) {
+  async execute(interaction: CommandInteraction, modules) {
     const name = interaction.client.user.username;
     const guild = await interaction.client.guilds.fetch(`${Env.env.GUILD_ID}`);
     const author = await interaction.client.users.fetch(`${Env.env.AUTHOR_ID}`);
@@ -56,7 +54,7 @@ export default new Command({
 
         {
           name: "Количество команд:",
-          value: `${data.all.length}`,
+          value: `${modules.commands.commands.all.length}`,
           inline: false
         },
 

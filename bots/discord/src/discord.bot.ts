@@ -18,6 +18,7 @@ import {
   GatewayIntentBits,
   Partials
 } from "discord.js";
+import Command from "./types/command.type";
 
 const Client = new DiscordClient({
   intents: [
@@ -32,7 +33,7 @@ const Client = new DiscordClient({
   partials: [Partials.Channel]
 });
 
-export const Commands = new Collection();
+export const Commands = new Collection<string, Command>();
 export const Cooldowns = new Collection();
 
 type ModulesResolverReturn = ReturnType<typeof ModulesResolver>;
@@ -66,6 +67,8 @@ const Login = async (clientToken: string, services: Types.Services) => {
   const interactionListener = new ICL();
 
   Client.on(Events.InteractionCreate, async (interaction) => {
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     interactionListener.execute(interaction, modules, Cooldowns);
     modalListener.execute(interaction);
   });

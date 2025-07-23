@@ -19,22 +19,25 @@ type CommandBuilder =
   | SlashCommandSubcommandGroupBuilder
   | SlashCommandSubcommandsOnlyBuilder;
 
+type NonFalse<T> = T extends false ? never : T
+type Modules = ModulesType & { commands: NonFalse<ModulesType["commands"]>};
+
 export type CommandCreateData<T> = {
   name?: string;
   cooldown?: number;
   actived?: boolean;
   data: CommandBuilder;
-  execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void>;
+  execute: (interaction: CommandInteraction, modules: Modules) => Promise<T | void>;
 };
 
 export interface CommandData<T> {
   readonly name: string;
   readonly data: CommandBuilder;
   readonly cooldown: number;
-  readonly execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void>;
+  readonly execute: (interaction: CommandInteraction, modules: Modules) => Promise<T | void>;
 }
 
-class Command<T = void> {
+export class Command<T = void> {
   private readonly _error: InteractionReplyOptions = {
     content:
       "По какой-то причине у данной команды не было записано функции для её исполенения.\n" +
@@ -53,15 +56,15 @@ class Command<T = void> {
     this.execute = data.execute;
   }
 
-  private async init(interaction: CommandInteraction, modules: ModulesType): Promise<T | void> {
+  private async init(interaction: CommandInteraction, modules: Modules): Promise<T | void> {
     await interaction.reply(this._error);
   }
 
-  public get execute(): (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void> {
+  public get execute(): (interaction: CommandInteraction, modules: Modules) => Promise<T | void> {
     return this.init;
   }
 
-  public set execute(execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T | void>) {
+  public set execute(execute: (interaction: CommandInteraction, modules: Modules) => Promise<T | void>) {
     this.init = execute;
   }
 }
@@ -69,7 +72,7 @@ class Command<T = void> {
 export abstract class Subcommand<T> {
   public static readonly subcommand: SlashCommandSubcommandBuilder;
 
-  public abstract execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T>;
+  public abstract execute: (interaction: CommandInteraction, modules: Modules) => Promise<T>;
 }
 
 export abstract class SubcommandsInitializer<T> {
@@ -79,7 +82,7 @@ export abstract class SubcommandsInitializer<T> {
     [name: string]: typeof Subcommand<T>;
   };
 
-  public abstract execute: (interaction: CommandInteraction, modules: ModulesType) => Promise<T>;
+  public abstract execute: (interaction: CommandInteraction, modules: Modules) => Promise<T>;
 }
 
 export default Command;

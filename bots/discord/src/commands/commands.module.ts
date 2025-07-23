@@ -16,7 +16,7 @@ export let data = {
     guild: new Map()
   }
 } as {
-  collection: Collection<unknown, unknown>,
+  collection: Collection<string, Command>,
   global: Command[];
   guild: Command[];
   all: Command[];
@@ -27,7 +27,7 @@ export let data = {
   };
 };
 
-let cache: {
+export let cache: {
   all: { [key: string]: boolean },
   guild: { [key: string]: boolean },
   global: { [key: string]: boolean }
@@ -39,24 +39,28 @@ let cache: {
 
 export class CommandsModule {
   public readonly name = "commands" as const;
+  public readonly deployer: Deployer;
+  public commands: typeof data = data;
 
   public constructor(
     public readonly actived: boolean = true,
-    public readonly commands: Collection<unknown, unknown>
-  ) {}
+    public readonly commandsCollection: Collection<string, Command>
+  ) {
+    this.deployer = new Deployer(commandsCollection);
+  }
 
   public execute() {
     if (!this.actived) {
       return false as const;
     }
 
-    const commands = new Deployer(this.commands).execute();
+    this.commands = this.deployer.execute();
+    data = this.commands;
     
-    data = commands;
-    
-    CommandsModule.toJson(commands);
+    CommandsModule.toJson(this.commands);
+    this.deployer.update(this.commands.commands);
 
-    return commands;
+    return this;
   }
 
   public static toJson(commands: { global: Command[]; guild: Command[]; all: Command[] }) {
@@ -77,6 +81,8 @@ export class CommandsModule {
 
   public static switchCommand(commandName: string) {
     cache.all[commandName] = !cache.all[commandName];
+    if (cache.global[commandName] !== undefined) cache.global[commandName] = !cache.global[commandName]
+    else cache.guild[commandName] = !cache.guild[commandName];
 
     fs.writeFileSync(
       path.join(__dirname, ".commands"),
