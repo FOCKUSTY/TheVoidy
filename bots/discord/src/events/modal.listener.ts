@@ -9,7 +9,7 @@ class Listener {
   private readonly ids: Ids;
 
   public readonly name = "modal-listener";
-  public readonly tag = Events.InteractionCreate;
+  public readonly tag = "unique";
 
   public constructor(services: Types.Services) {
     this.ids = new Ids(services);
