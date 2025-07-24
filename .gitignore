@@ -4,6 +4,10 @@
 
 !start.bat
 
+# .lock
+pnpm-lock.yaml
+package-lock.json
+
 # yarn
 .yarn
 
