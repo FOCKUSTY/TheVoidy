@@ -2,6 +2,7 @@
 *.bat
 *.lnk
 *.loggercfg
+!bot/.loggercfg
 
 !start.bat
 
