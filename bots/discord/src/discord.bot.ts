@@ -3,13 +3,15 @@ import { Env, Debug } from "@voidy/develop";
 import ICL from "./events/interaction-create.listener";
 import ML from "./events/modal.listener";
 
+import KristyChatModule from "./modules/kristy/chat";
+
 import CommandsModule from "./commands/commands.module";
 import DeployEvents from "./deploy.events";
 
 import { Types } from "@voidy/types";
 
 import path from "path";
-import fs from "fs";
+import fs, { copyFileSync } from "fs";
 
 import {
   Client as DiscordClient,
@@ -46,13 +48,17 @@ const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
 const ModulesResolver = () => {
   return {
-    commands: new CommandsModule(true, Commands)
+    commands: new CommandsModule(true, Commands),
+    kristy: new KristyChatModule()
   } as const;
 };
 
 const Login = async (clientToken: string, services: Types.Services) => {
   const modules = Object.fromEntries(
-    Object.values(ModulesResolver()).map((data) => [data.name, data.execute()])
+    Object.values(ModulesResolver()).map((data) => {
+      console.log("Загрузка модуля: " + data.name);
+      return [data.name, data.execute(Client)];
+    })
   );
   Object.keys(modules).forEach(
     (key) => ((Modules as { [key: string]: unknown })[key] = modules[key])

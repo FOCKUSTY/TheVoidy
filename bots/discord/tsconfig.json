@@ -16,6 +16,7 @@
       "subcommands/*": ["./src/subcommands/*"],
       "utility/*": ["./src/utility/*"],
       "types/*": ["./src/types/*"],
+      "modules/*": ["./src/modules/*"],
       "commands/*": ["./src/commands/*"],
       "tools/*": ["./src/utility/tools/*"]
     }
