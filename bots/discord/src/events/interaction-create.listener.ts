@@ -2,6 +2,7 @@
 
 import { Debug, Env } from "@voidy/develop";
 
+import { ApplicationCommandOptionType} from "discord.js";
 import type { Interaction } from "discord.js";
 import { Collection, MessageFlags } from "discord.js";
 import Command from "src/types/command.type";
@@ -21,8 +22,15 @@ export default class Listener {
     );
 
     Debug.Log([
-      "Запуск команды " + interaction.commandName,
-      "\nПользователь " + interaction.user.username
+      "\nВзаимодействие пользователя с /" + interaction.commandName,
+      "\nПользователь " + interaction.user.username,
+      interaction.guild ? "\nГильдия " + interaction.guild.name + " >>> " + interaction.guild.id : "Не в гильдии",
+      interaction.channel ? "\nКанал " + (<any>interaction.channel.toJSON()).name + " >>> " + interaction.channelId : "Не в канале",
+      interaction.options.data.length !== 0
+        ? "\n" + interaction.options.data.map(option =>
+          `Option "${option.name}": ${ApplicationCommandOptionType[option.type]} -> ${option.value}`
+        ).join("\n")
+        : ""
     ]);
 
     if (!command) {
@@ -41,6 +49,7 @@ export default class Listener {
 
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1_000);
+        Debug.Log(["ОТМЕНА КОМАНДЫ: обнаружен кулдаун:", expiredTimestamp]);
         return interaction.reply({
           content: `Пожалуйста, подождите откат команды \`/${command.data.name}\`. Вы можете использовать снова через: <t:${expiredTimestamp}:R>.`,
           flags: MessageFlags.Ephemeral
@@ -54,7 +63,7 @@ export default class Listener {
     }
 
     try {
-      Debug.Log(["Запуск команды " + interaction.commandName]);
+      Debug.Log("Запуск команды...")
       await command.execute(interaction, { ...modules, commands: modules.commands });
     } catch (err) {
       Debug.Error(err);

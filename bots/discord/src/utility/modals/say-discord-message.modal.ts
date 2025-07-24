@@ -27,11 +27,12 @@ class Modal extends DiscordModal {
     const channelId: string = interaction.fields.getTextInputValue(components.sayChannel);
     const channel: Channel | undefined = interaction.client.channels.cache.get(channelId);
 
-    if (!channel || !interaction.guild)
+    if (!channel || !interaction.guild) {
       return interaction.reply({
         content: "Ошибка при поиске канала, попробуйте снова",
         flags: MessageFlags.Ephemeral
       });
+    }
 
     if (!interaction.client.user) {
       return interaction.reply({
@@ -51,14 +52,14 @@ class Modal extends DiscordModal {
 
     if (
       !permissions ||
-      permissions.has([
+      !permissions.has([
         PermissionsBitField.Flags.SendMessages,
         PermissionsBitField.Flags.ViewChannel
       ])
     ) {
       return interaction.reply({
         content:
-          "Сообщение не было доставлено на Ваш канал, возможны причины:\n" +
+          "Сообщение не может быть доставленым на Ваш канал, возможны причины:\n" +
           "1. Ваш канал не является текстовым каналом\n" +
           "2. У меня не достаточно прав отправить сообщение на Ваш канал",
         flags: MessageFlags.Ephemeral

@@ -5,6 +5,18 @@ import { Types } from "@voidy/types";
 
 import Ids from "utility/modals/custom-ids.modal";
 
+const lowerize = (text: string) => {
+  return text[0].toLocaleLowerCase() + text.slice(1);
+}
+
+const capitalize = (text: string) => {
+  return text[0].toUpperCase() + text.slice(1);
+}
+
+const fromKebabCaseToCamelCase = (text: string) => {
+  return lowerize(text.split("-").map(text => capitalize(text)).join(""));
+}
+
 class Listener {
   private readonly ids: Ids;
 
@@ -18,23 +30,21 @@ class Listener {
   public async execute(interaction: Interaction) {
     if (interaction.type !== InteractionType.ModalSubmit) return;
     const { ids } = this.ids;
+    const id = fromKebabCaseToCamelCase(interaction.customId);
 
-    for (const id in ids) {
-      if (interaction.customId != ids[id].id) continue;
+    Debug.Log(["Поиск модального окна под id " + id + ` (${interaction.customId})`]);
+    const modal = ids[id];
 
-      try {
-        Debug.Log(["Запуск модальника: " + ids[id], "под id: " + ids[id].id]);
+    if (!modal) {
+      Debug.Log(["Модальное окно " + interaction.customId + " не было найдено"]);
+      return interaction.reply({
+        content: "Произошла какая-то ошибка",
+        flags: MessageFlags.Ephemeral
+      })
+    };
 
-        await ids[id].execute(interaction);
-      } catch (error) {
-        Debug.Error(error);
-
-        await interaction.reply({
-          content: "Произошла какая-то ошибка",
-          flags: MessageFlags.Ephemeral
-        });
-      }
-    }
+    Debug.Log(["Запуск модального окна", modal.id]);
+    return modal.execute(interaction).then(() => Debug.Log(["Видимо, модальное окно", interaction.customId, "отработало без проблем"]));;
   }
 }
 
