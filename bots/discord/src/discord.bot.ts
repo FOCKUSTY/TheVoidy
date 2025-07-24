@@ -67,9 +67,7 @@ const Login = async (clientToken: string, services: Types.Services) => {
   const interactionListener = new ICL();
 
   Client.on(Events.InteractionCreate, async (interaction) => {
-    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    interactionListener.execute(interaction, modules, Cooldowns);
+    interactionListener.execute(interaction, Modules, Cooldowns);
     modalListener.execute(interaction);
   });
 
