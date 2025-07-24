@@ -10,7 +10,8 @@ export type Names =
   | "Fail"
   | "Debugger"
   | "Errorer"
-  | "Warner";
+  | "Warner"
+  | "Deployer";
 
 export const loggers: Record<string, { name: Names; colors: [Colors, Colors] }> = {
   TheVoid: { name: "TheVoid", colors: [Colors.red, Colors.magenta] },
@@ -22,7 +23,8 @@ export const loggers: Record<string, { name: Names; colors: [Colors, Colors] }> 
   Fail: { name: "Fail", colors: [Colors.red, Colors.red] },
   Debugger: { name: "Debugger", colors: [Colors.cyan, Colors.magenta] },
   Errorer: { name: "Errorer", colors: [Colors.red, Colors.red] },
-  Warner: { name: "Warner", colors: [Colors.yellow, Colors.magenta] }
+  Warner: { name: "Warner", colors: [Colors.yellow, Colors.magenta] },
+  Deployer: { name: "Deployer", colors: [Colors.brightYellow, Colors.cyan] }
 };
 
 class Loggers {

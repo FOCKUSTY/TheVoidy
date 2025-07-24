@@ -1,6 +1,7 @@
 # My files
 *.bat
 *.lnk
+*.loggercfg
 
 !start.bat
 

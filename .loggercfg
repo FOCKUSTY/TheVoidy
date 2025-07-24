@@ -1,40 +1,19 @@
 {
-    "dir": "D:\\projects\\thevoid\\TheVoidy\\",
     "logging": true,
+    "dir": "C:\\projects\\thevoid\\thevoidy\\",
     "level": "info",
     "levels": {
         "info": 1,
         "warn": 2,
         "err": 3
     },
-    "date": true,
     "deletion_interval": 7,
+    "date": true,
     "colors": [
         "\u001b[0m",
         "\u001b[0m"
     ],
     "loggers": {
-        "Warner": {
-            "name": "Warner",
-            "colors": [
-                "\u001b[33m",
-                "\u001b[35m"
-            ]
-        },
-        "Errorer": {
-            "name": "Errorer",
-            "colors": [
-                "\u001b[31m",
-                "\u001b[31m"
-            ]
-        },
-        "Debugger": {
-            "name": "Debugger",
-            "colors": [
-                "\u001b[36m",
-                "\u001b[35m"
-            ]
-        },
         "TheVoid": {
             "name": "TheVoid",
             "colors": [
@@ -63,6 +42,13 @@
                 "\u001b[32m"
             ]
         },
+        "Deployer": {
+            "name": "Deployer",
+            "colors": [
+                "\u001b[33;1m",
+                "\u001b[36m"
+            ]
+        },
         "Events": {
             "name": "Events",
             "colors": [
@@ -77,6 +63,27 @@
                 "\u001b[33m"
             ]
         },
+        "Warner": {
+            "name": "Warner",
+            "colors": [
+                "\u001b[33m",
+                "\u001b[35m"
+            ]
+        },
+        "Errorer": {
+            "name": "Errorer",
+            "colors": [
+                "\u001b[31m",
+                "\u001b[31m"
+            ]
+        },
+        "Debugger": {
+            "name": "Debugger",
+            "colors": [
+                "\u001b[36m",
+                "\u001b[35m"
+            ]
+        },
         "Fail": {
             "name": "Fail",
             "colors": [
@@ -87,8 +94,8 @@
         "Success": {
             "name": "Success",
             "colors": [
-                "\u001b[31m",
-                "\u001b[32m"
+                "\u001b[0m",
+                "\u001b[0m"
             ]
         }
     }

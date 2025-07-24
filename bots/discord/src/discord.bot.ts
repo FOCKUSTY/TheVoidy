@@ -1,4 +1,4 @@
-import { Env, Debug } from "@voidy/develop";
+import { Env, Debug, Logger } from "@voidy/develop";
 
 import ICL from "./events/interaction-create.listener";
 import ML from "./events/modal.listener";
@@ -11,7 +11,7 @@ import DeployEvents from "./deploy.events";
 import { Types } from "@voidy/types";
 
 import path from "path";
-import fs, { copyFileSync } from "fs";
+import fs from "fs";
 
 import {
   Client as DiscordClient,
@@ -53,10 +53,12 @@ const ModulesResolver = () => {
   } as const;
 };
 
+const loader = new Logger("Loader");
+
 const Login = async (clientToken: string, services: Types.Services) => {
   const modules = Object.fromEntries(
     Object.values(ModulesResolver()).map((data) => {
-      console.log("Загрузка модуля: " + data.name);
+      loader.execute("Загрузка модуля: " + data.name);
       return [data.name, data.execute(Client)];
     })
   );
