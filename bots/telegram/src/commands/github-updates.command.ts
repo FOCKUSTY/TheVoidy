@@ -2,7 +2,6 @@ import { Env } from "@voidy/develop";
 
 import { Types } from "@voidy/types";
 
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
 import { Random } from "random-js";
 
 import { DateFormatter } from "f-formatter";
@@ -19,6 +18,9 @@ const conclusion = "Итоги за неделю\n";
 const updates = "За последнее время были обновлены:\n";
 
 const getCat = () => cats[new Random().integer(0, cats.length - 1)];
+
+import { Interaction } from "types/interaction.type";
+import TelegramCommand from "types/command.type";
 
 export default class Command extends TelegramCommand {
   public constructor(services: Types.Services<{ github: Types.Github.Api }>) {

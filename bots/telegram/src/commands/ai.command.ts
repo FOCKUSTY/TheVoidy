@@ -5,6 +5,9 @@ import { Models, OPENAI_MODELS } from "@thevoidcommunity/the-void-database/ai/ty
 import { ChatCompletion } from "openai/resources/chat/completions";
 import { APIPromise } from "openai/core";
 
+import { Interaction } from "types/interaction.type";
+import TelegramCommand from "types/command.type";
+
 type FunctionDataType = APIPromise<ChatCompletion> | null;
 type DefaultOption = Types.Telegram.Option<FunctionDataType, [], [], [string], { text: string }>;
 type DefaultExectuteData = Types.Telegram.ExecuteData<
@@ -13,12 +16,12 @@ type DefaultExectuteData = Types.Telegram.ExecuteData<
   { text: string }
 >;
 
-export default class Command extends Types.Telegram.Command {
+export default class Command extends TelegramCommand {
   public constructor(services: Types.Services) {
     super({
       name: "ai",
       options: ["promt"],
-      async execute(interaction: Types.Telegram.Interaction) {
+      async execute(interaction: Interaction) {
         const command = interaction.message.text.split(" ");
         const model: Models = OPENAI_MODELS.includes(command[1])
           ? (command[1] as Models)

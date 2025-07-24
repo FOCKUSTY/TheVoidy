@@ -13,6 +13,8 @@ import { format } from "date-fns";
 import Client from "../../telegram.bot";
 import { BranchCommit, Commit } from "@voidy/types/dist/services/github-api.type";
 
+import { Interaction } from "types/interaction.type";
+
 class Telegram extends Types.Telegram.Service {
   private readonly _client: Telegraf = Client;
 
@@ -206,7 +208,7 @@ class Telegram extends Types.Telegram.Service {
   };
 
   public GetChatId = async (
-    message: Types.Telegram.Interaction
+    message: Interaction
   ): Promise<Types.Response<string | number>> => {
     return {
       data: await GetChatId(message),

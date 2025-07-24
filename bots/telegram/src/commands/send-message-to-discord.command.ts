@@ -1,6 +1,9 @@
-import { Types } from "@voidy/types";
+import { Interaction } from "types/interaction.type";
+import TelegramCommand from "types/command.type";
 
 import { options } from "../events/message.listener";
+
+import { Types } from "@voidy/types";
 
 type DefaultOption = Types.Telegram.Option<
   string | { type: number; text: string },
@@ -9,12 +12,12 @@ type DefaultOption = Types.Telegram.Option<
   [string]
 >;
 
-export default class Command extends Types.Telegram.Command {
+export default class Command extends TelegramCommand {
   public constructor(services: Types.Services) {
     super({
       name: "send_message_to_discord",
       options: ["channelId", "message"],
-      async execute(interaction: Types.Telegram.Interaction) {
+      async execute(interaction: Interaction) {
         if (!interaction.from) return;
 
         const replyOptions: DefaultOption[] = [
@@ -50,7 +53,7 @@ export default class Command extends Types.Telegram.Command {
 
         await interaction.reply(replyOptions[0].text);
       },
-      async executeFunc(interaction: Types.Telegram.Interaction, userId: number | string) {
+      async executeFunc(interaction: Interaction, userId: number | string) {
         if (!interaction.from) return;
 
         const replyOptions: DefaultOption[] = [

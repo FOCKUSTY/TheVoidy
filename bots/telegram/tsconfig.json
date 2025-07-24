@@ -10,11 +10,14 @@
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "types/*": ["./src/types/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": ["tsconfig-paths/register"],
   }
 }

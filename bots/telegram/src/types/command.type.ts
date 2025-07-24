@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { TelegramInteraction as Interaction } from "../commands/interactions.type";
+import { Interaction } from "./interaction.type";
 
 export type Props<T = any, K = any> = {
   name: string;
@@ -16,7 +16,7 @@ class Command<T = any, K = any> {
 
   public readonly name: string = "ERROR_NO_NAME";
   public readonly options: string[] = [];
-  public readonly executeFunc: (...data: T[]) => K;
+  public readonly executeFunc?: (...data: T[]) => K;
   public readonly execute: (interaction: Interaction) => Promise<any> = async (
     interaction: Interaction
   ) => {

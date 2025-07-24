@@ -8,12 +8,14 @@ import Deployer from "./deploy.commands";
 import MessageListener from "./events/message.listener";
 import SlashCommandsListener from "./events/slash-commands.listener";
 
+import { Interaction } from "types/interaction.type";
+
 import path from "path";
 import fs from "fs";
 
 const Client = new Telegraf(Env.get("TELEGRAM_TOKEN"));
 
-Client.on("message", async (message: Types.Telegram.Interaction) => {
+Client.on("message", async (message: Interaction) => {
   SlashCommandsListener(message);
   MessageListener(message);
 });

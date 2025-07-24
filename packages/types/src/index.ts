@@ -48,18 +48,7 @@ import {
   repoOwners as IMCGithubRepoOwners,
   Commit as IMIGithubCommit
 } from "./services/github-api.type";
-import { Time as IMTTime } from "./services/date.types";
-
-import {
-  DiscordCommand as IMIDiscordCommand,
-  TelegramInteraction as IMTTelegramInteraction
-} from "./commands/interactions.type";
-import DCLTelegramCommand, {
-  Props as IMTTelegramCommandData
-} from "./commands/telegram-command.type";
-
-import { Context } from "telegraf";
-import { Update } from "telegraf/typings/core/types/typegram";
+import { Time as IMTTime } from "./services/date.type";
 
 export namespace Classes {
   export class NewsPatternValidator extends DCLNewsPatternValidator {}
@@ -68,8 +57,6 @@ export namespace Classes {
   export abstract class DiscordService extends IMACLDiscordService {}
   export abstract class TelegramService extends IMACLTelegramService {}
   export abstract class GitHubApi extends IMACLGitHubApi {}
-
-  export class TelegramCommand<T = any, K = any> extends DCLTelegramCommand<T, K> {}
 }
 
 export namespace Types {
@@ -104,8 +91,6 @@ export namespace Types.Discord {
     competing = 5
   }
 
-  export type ICommand = IMIDiscordCommand;
-
   export abstract class Service extends IMACLDiscordService {}
 }
 
@@ -125,15 +110,8 @@ export namespace Types.Telegram {
   > = IMTOption<Response, FirstArgs, LastArgs, AddArgs, ArgumentResponse>;
 
   export type SendData<Option, Response> = IMTSendData<Option, Response>;
-  export type Interaction<T extends Context = any, K extends Update = any> = IMTTelegramInteraction<
-    T,
-    K
-  >;
-
-  export type CommandData<T = any, K = any> = IMTTelegramCommandData<T, K>;
 
   export abstract class Service extends IMACLTelegramService {}
-  export class Command<T = any, K = any> extends DCLTelegramCommand<T, K> {}
 }
 
 export namespace Types.Github {

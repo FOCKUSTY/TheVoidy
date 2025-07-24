@@ -3,13 +3,12 @@
 
 import { Format } from "telegraf";
 
+import { Debug } from "@voidy/develop";
 import { Types } from "@voidy/types";
+import { Interaction } from "types/interaction.type";
 
 import Telegram from "../utility/service/telegram.service";
 
-import { Debug } from "@voidy/develop";
-
-type Interaction = Types.Telegram.Interaction;
 type DefaultOption = Types.Telegram.Option<any, any, any>;
 
 const messages = new Map<string, number>();

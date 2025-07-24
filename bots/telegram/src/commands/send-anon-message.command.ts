@@ -1,8 +1,10 @@
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
 import { Types } from "@voidy/types";
 
 import { Message } from "telegraf/typings/core/types/typegram";
 import { anonMessages, options } from "../events/message.listener";
+
+import { Interaction } from "types/interaction.type";
+import TelegramCommand from "types/command.type";
 
 type DefaultOption = Types.Telegram.Option<
   | string
@@ -32,7 +34,7 @@ export default class Command extends TelegramCommand {
     super({
       name: "send_anonimus_message",
       options: ["userId", "message"],
-      async execute(interaction: Types.Telegram.Interaction) {
+      async execute(interaction: Interaction) {
         if (!interaction.from) return;
 
         const replyOptions: DefaultOption[] = [
@@ -80,7 +82,7 @@ export default class Command extends TelegramCommand {
 
         await interaction.reply(replyOptions[0].text);
       },
-      async executeFunc(interaction: Types.Telegram.Interaction, userId: number | string) {
+      async executeFunc(interaction: Interaction, userId: number | string) {
         if (!interaction.from) return;
 
         const replyOptions: DefaultOption[] = [

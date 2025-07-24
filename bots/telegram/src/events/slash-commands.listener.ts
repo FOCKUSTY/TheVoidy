@@ -1,9 +1,10 @@
 import { Debug } from "@voidy/develop";
-import { Types } from "@voidy/types";
 import { commands } from "../deploy.commands";
 import { lastMessageEquals } from "./message.listener";
 
-const SlashCommandsListener = async (message: Types.Telegram.Interaction) => {
+import { Interaction } from "types/interaction.type";
+
+const SlashCommandsListener = async (message: Interaction) => {
   if (!message.text) return;
   if (!message.from) return;
   if (lastMessageEquals(message.chat.id, message)) return;

@@ -1,12 +1,10 @@
-import { Types } from "@voidy/types";
-
-type Command<T, K> = Types.Telegram.CommandData<T, K>;
+import TelegramCommand from "types/command.type";
 
 class Commands<T = unknown, K = unknown> {
   private readonly _commands: string[] = [];
-  private readonly _full_commands: Command<T, K>[] = [];
+  private readonly _full_commands: TelegramCommand<T, K>[] = [];
 
-  public setCommand(command: Command<T, K>) {
+  public setCommand(command: TelegramCommand<T, K>) {
     this._full_commands.push(command);
   }
 
@@ -14,7 +12,7 @@ class Commands<T = unknown, K = unknown> {
     this._commands.push(name);
   }
 
-  public get fullCommands(): Command<T, K>[] {
+  public get fullCommands(): TelegramCommand<T, K>[] {
     return this._full_commands;
   }
 

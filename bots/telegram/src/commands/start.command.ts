@@ -1,13 +1,13 @@
-import { Types } from "@voidy/types";
 import Commands from "../index.commands";
 
-import TelegramCommand from "@voidy/types/dist/commands/telegram-command.type";
+import { Interaction } from "types/interaction.type";
+import TelegramCommand from "types/command.type";
 
 export default class Command extends TelegramCommand {
   public constructor() {
     super({
       name: "start",
-      async execute(interaction: Types.Telegram.Interaction) {
+      async execute(interaction: Interaction) {
         const reply = `Привет, вот мои команды:\n${Commands.commands.join("\n")}\nЧтобы узнать больше, можете воспользоваться /help`;
 
         if (!interaction.text?.includes("-")) return await interaction.reply(reply);

@@ -4,6 +4,9 @@ const { FmtString } = Telegraf.Format;
 import { Types } from "@voidy/types";
 import { Commit } from "@voidy/types/dist/services/github-api.type";
 
+import { Interaction } from "types/interaction.type";
+import TelegramCommand from "types/command.type";
+
 const SPACE = " ==== " as const;
 const helpJSON = JSON.stringify(
   {
@@ -45,7 +48,7 @@ const getHelp = (code: string | number = "0000", str: string = "") => {
   ]);
 };
 
-export default class Command extends Types.Telegram.Command {
+export default class Command extends TelegramCommand {
   public constructor(services: Types.Services<{ github: Types.Github.Api }>) {
     super({
       name: "github_commits",
