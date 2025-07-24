@@ -15,6 +15,8 @@ const REQUIRED = [
   "CHANGELOG_DISCORD_CHANNEL_ID",
   "CHANGELOG_TELEGRAM_CHANNEL_ID",
   "TELEGRAM_TEAM_IDS",
+  "BOT_LOVE_ID",
+  "BOT_LOVE_CHANNEL_ID",
   "MONGOOSE_URL"
 ] as const;
 type Required = (typeof REQUIRED)[number];
