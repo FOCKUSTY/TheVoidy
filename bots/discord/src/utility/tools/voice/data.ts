@@ -1,3 +1,4 @@
+import { Debug } from "@voidy/develop";
 import {
   ActionRow,
   ActionRowBuilder,
@@ -43,16 +44,19 @@ export class List {
   private _users: Map<string, boolean> = new Map();
 
   public switch() {
+    Debug.Log(["Изменения списка с", this._enabled, "на", !this._enabled]);
     this._enabled = !this._enabled;
 
     return this._enabled;
   }
 
   public addUser(id: string) {
+    Debug.Log(["Добавленение", id, "в список"]);
     this._users.set(id, true);
   }
 
   public removeUser(id: string) {
+    Debug.Log(["Удаление", id, "из списка"]),
     this._users.set(id, false);
   }
 
@@ -102,12 +106,19 @@ export class Channel {
   }
 
   public async transmitOwner(ownerId: string) {
+    Debug.Log(ownerId+ ": попытка передачи прав...")
+
     const oldOwner = this._ownerId;
     this._ownerId = ownerId;
 
-    if (!this._channel) return null;
+    if (!this._channel) {
+      Debug.Log(ownerId + ": передача не удалась: канал не найден");
+      return null;
+    };
 
-    return await this._channel.permissionOverwrites.set([
+    Debug.Log("Передача прав... наверное удалась");
+
+    return this._channel.permissionOverwrites.set([
       {
         id: oldOwner,
         allow: [...PERMISSIONS.user]

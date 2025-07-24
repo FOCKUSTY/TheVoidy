@@ -2,6 +2,7 @@ import { MODELS } from "@thevoidcommunity/the-void-database/database";
 import { cache, Channel, channels, sendService } from "./data";
 
 import { VoiceChannel, VoiceState } from "discord.js";
+import { Debug } from "@voidy/develop";
 
 const { Guild } = MODELS;
 
@@ -54,14 +55,23 @@ export class Tool {
     ownerId: string;
     voiceState: VoiceState;
   }) {
-    if (!voiceState.member?.user) return null;
-    if (!voiceState.channel) return null;
+    Debug.Log([ownerId + ": попытка создать канал..."]);
+    if (!voiceState.member?.user) {
+      Debug.Log(ownerId + ": не удалось создать канал: пользователь не найден");
+      return null;
+    };
+    if (!voiceState.channel) {
+      Debug.Log(ownerId + ": не удалось создать канал: канал не найден");
+      return null;
+    };
 
     const { id, channel } = await new Channel(ownerId).execute({
       user: voiceState.member.user,
       guild: voiceState.guild,
       channel: voiceState.channel
     });
+
+    Debug.Log(ownerId + ": канал был создан");
 
     this.channels.set(id, channel);
 
@@ -80,11 +90,15 @@ export class Tool {
     if (!this.channels.has(id)) return false;
 
     return new Promise<boolean>((resolve) => {
+      Debug.Log(`Удалю канал ${oldVoiceState.channel?.name} (${oldVoiceState.channel?.id}) через 10 секунд`);
       const timeout = setTimeout(async () => {
+        Debug.Log(`Удаляю канал ${oldVoiceState.channel?.name} (${oldVoiceState.channel?.id})`);
         await oldVoiceState.guild.channels.delete(id);
         this.channels.delete(id);
 
         usersTimeout.delete(newVoiceState.id);
+        Debug.Log(["Канал", oldVoiceState.channel?.name, "удалён"]);
+
         resolve(true);
       }, 10_000);
 
@@ -95,7 +109,12 @@ export class Tool {
   private moveMember(voiceState: VoiceState, channel: VoiceChannel) {
     if (!voiceState.member) return;
 
-    return voiceState.member.voice.setChannel(channel);
+    Debug.Log([
+      `Перемещаю пользователя из ${voiceState.channel?.name} (${voiceState.channel?.id})`,
+      `в ${channel.name} (${channel.id})`
+    ]);
+
+    return voiceState.member.voice.setChannel(channel); 
   }
 
   private async getCache(guildId: string) {
@@ -105,27 +124,25 @@ export class Tool {
       return null;
     }
 
-    if (!cachedData) {
-      const guild = await Guild.findOne({ id: guildId });
+    if (cachedData) return cachedData;
 
-      if (!guild) {
-        return null;
-      }
+    const guild = await Guild.findOne({ id: guildId });
 
-      const channelId =
-        guild.toObject().config.guild.when_user_join_into_voice_create_voice_and_move_him;
-
-      if (!channelId) {
-        this.cache.set(guildId, "null_of_channel_id");
-        return null;
-      }
-
-      this.cache.set(guildId, channelId);
-
-      return channelId;
+    if (!guild) {
+      return null;
     }
 
-    return cachedData;
+    const channelId =
+      guild.toObject().config.guild.when_user_join_into_voice_create_voice_and_move_him;
+
+    if (!channelId) {
+      this.cache.set(guildId, "null_of_channel_id");
+      return null;
+    }
+
+    this.cache.set(guildId, channelId);
+
+    return channelId;
   }
 }
 

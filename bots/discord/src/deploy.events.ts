@@ -1,4 +1,4 @@
-import { Logger } from "@voidy/develop";
+import { Debug, Logger } from "@voidy/develop";
 
 import type { Client as DiscordClient } from "discord.js";
 import Discord from "./utility/service/discord.service";
@@ -32,8 +32,12 @@ class EventsLoader {
       if (event.once) {
         this._client.once(event.tag, (...args) => event.execute(...args));
       } else if (event.execute) {
-        if (event.tag === "unique") continue;
+        if (event.tag === "unique") {
+          Debug.Log(["Пропускаю", event.name, "из-за уникального запуска"]);
+          continue;
+        };
 
+        Debug.Log(["Инициализация", event.tag + "..."])
         this._client.on(event.tag, (...args) => event.execute(...args));
       }
     }

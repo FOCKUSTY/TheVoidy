@@ -2,7 +2,7 @@ import type { Client as DiscordClient } from "discord.js";
 import { Events } from "discord.js";
 
 import { Types } from "@voidy/types";
-import { Logger } from "@voidy/develop";
+import { Debug, Logger } from "@voidy/develop";
 
 import { utility } from "@thevoidcommunity/the-void-database/loaders/data/activities.loader";
 import ClientLoader from "@voidy/services/dist/loaders/client.loader";
@@ -18,11 +18,18 @@ class Listener {
   public readonly once = true;
 
   async execute(Client: DiscordClient) {
+    Debug.Log("Инициализация Discord бота...");
     if (!Client.user) return;
 
+    Debug.Log("Загрузка активностей...")
     const randomActivity = new RandomActiviy(Client, process.env.NODE_ENV === "dev" ? "dev" : "");
+    
     const activiesLoader = new ActivitiesLoader();
+    activiesLoader.execute();
 
+    Debug.Log("Активности загружены (подробнее в логах активностей)")
+
+    Debug.Log("Установка статуса...")
     Client.user.setPresence({
       activities: [
         {
@@ -35,14 +42,18 @@ class Listener {
       ],
       status: "idle"
     });
+    Debug.Log("Статус установлен");
 
-    activiesLoader.execute();
 
+    Debug.Log("Инициализация объектов и исключений...")
     const objects = new ObjectsLoader().execute();
-    const clientLoader = new ClientLoader(objects, utility.banwords);
 
+    const clientLoader = new ClientLoader(objects, utility.banwords);
     clientLoader.execute(Client);
 
+    Debug.Log("Объекты и исключения инициализированны (подробнее в логах загрузчика)")
+
+    Debug.Log("Установка интервала...")
     setInterval(
       () => {
         randomActivity.execute();
@@ -56,8 +67,10 @@ class Listener {
       },
       1000 * 60 * 10 * 6
     );
+    Debug.Log("Интервал инициализрован");
 
     new Logger("TheVoid").execute("Начинаю работу");
+    Debug.Log("Бот инициализирован");
   }
 }
 

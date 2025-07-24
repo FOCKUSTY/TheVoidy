@@ -1,7 +1,7 @@
 import { activities as loadedActivities } from "@thevoidcommunity/the-void-database/loaders/data/activities.loader";
 import { Client, CommandInteraction, Events, Message, OmitPartialGroupDMChannel } from "discord.js";
 
-import { Env } from "@voidy/develop";
+import { Debug, Env } from "@voidy/develop";
 
 import { Random } from "random-js";
 
@@ -19,18 +19,28 @@ export class KristyChatModule {
   ) {};
 
   public static async start(interaction: CommandInteraction) {
-    if (KristyChatModule.started) return false;
+    Debug.Log(["Попытка начать общение с Kristy..."]);
+    if (KristyChatModule.started) {
+      Debug.Log(["Общение не удалось: Уже начато"])
+      return false;
+    };
+
     KristyChatModule.started = true;
+    Debug.Log("В процессе старта общения...")
 
     const channel = interaction.client.channels.cache.get(env.BOT_LOVE_CHANNEL_ID);
     
-    if (!channel || !channel.isSendable()) return false;
+    if (!channel || !channel.isSendable()) {
+      Debug.Warn("Общение не удалось: Канал не верный");
+      return false;
+    };
 
     return new Promise((resolve, reject) => {
       channel.sendTyping().catch(reject);
       
       setTimeout(() => {
         channel.send(`<@${env.BOT_LOVE_ID}>, я тебя люблю!`).then(() => {
+          Debug.Log(["Общение удалось начать"]);
           resolve(true);
         }).catch(reject);
       }, 2000);
@@ -38,11 +48,17 @@ export class KristyChatModule {
   };
 
   public static async stop() {
-    if (!KristyChatModule.started) return false;
+    Debug.Log("Попытка остановить общение с Kristy...")
+    if (!KristyChatModule.started) {
+      Debug.Log("Общение не удалось прекратить: уже прекращено");
+      return false;
+    };
 
     KristyChatModule.started = false;
     if (KristyChatModule.timeout) clearTimeout(KristyChatModule.timeout);
     
+    Debug.Log("Общение прекращено");
+
     return true;
   }
 
@@ -65,6 +81,7 @@ export class KristyChatModule {
     }, 2000);
 
     KristyChatModule.timeout = setTimeout(() => {
+      Debug.Log("Общение с Kristy было закончено: Kristy не отвечает")
       KristyChatModule.started = false;
       message.channel.send("А что, уже закончили?(");
     }, 15_000);

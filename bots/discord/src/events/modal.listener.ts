@@ -36,7 +36,7 @@ class Listener {
     const modal = ids[id];
 
     if (!modal) {
-      Debug.Log(["Модальное окно " + interaction.customId + " не было найдено"]);
+      Debug.Warn(["Модальное окно " + interaction.customId + " не было найдено"]);
       return interaction.reply({
         content: "Произошла какая-то ошибка",
         flags: MessageFlags.Ephemeral
