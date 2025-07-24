@@ -20,6 +20,7 @@ export class KristyChatModule {
 
   public static async start(interaction: CommandInteraction) {
     if (KristyChatModule.started) return false;
+    KristyChatModule.started = true;
 
     const channel = interaction.client.channels.cache.get(env.BOT_LOVE_CHANNEL_ID);
     
@@ -35,6 +36,15 @@ export class KristyChatModule {
       }, 2000);
     })
   };
+
+  public static async stop() {
+    if (!KristyChatModule.started) return false;
+
+    KristyChatModule.started = false;
+    if (KristyChatModule.timeout) clearTimeout(KristyChatModule.timeout);
+    
+    return true;
+  }
 
   public execute(client: Client) {
     client.on(Events.MessageCreate, (message => {
@@ -60,6 +70,7 @@ export class KristyChatModule {
     }, 15_000);
   }
 
+  // idk, wait Kristy
   private isKristyStarting(message: OmitPartialGroupDMChannel<Message<boolean>>) {
     if (message.channel.id !== env.BOT_LOVE_CHANNEL_ID) return false;
     if (message.author.id !== env.BOT_LOVE_ID) return false;
@@ -69,11 +80,6 @@ export class KristyChatModule {
   }
 
   private validateMessage(message: OmitPartialGroupDMChannel<Message<boolean>>) {
-    if (!KristyChatModule.started && this.isKristyStarting(message)) {
-      KristyChatModule.started = true;
-      return true;
-    };
-
     if (!KristyChatModule.started) return false;
     
     if (message.channel.id !== env.BOT_LOVE_CHANNEL_ID) return false;
