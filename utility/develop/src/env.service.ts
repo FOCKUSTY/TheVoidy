@@ -2,6 +2,7 @@
 
 import { config } from "dotenv";
 import { join } from "path";
+import { Debug } from "./debug.service";
 
 config({ path: join(__filename, "../../../../.env") });
 
@@ -41,7 +42,7 @@ const ENV: IEnv = (() => {
   return Object.fromEntries(
     ALL.map((key) => {
       if (!process.env[key] && REQUIRED.includes(key as any))
-        throw new Error(`key: ${key} in .env is undefined, but must be define`);
+        throw Debug.Error(`key: ${key} in .env is undefined, but must be define`);
 
       return [key, process.env[key] || DEFAULT[key]];
     })

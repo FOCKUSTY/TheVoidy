@@ -1,3 +1,5 @@
+import { Debug } from "@voidy/develop";
+
 const SECONDS_TO_MILLISECONDS = 1000;
 
 class Service {
@@ -9,6 +11,8 @@ class Service {
   }
 
   public execute(func: (delay: number) => void) {
+    Debug.Log(["Программа скоро завершит работу"]);
+
     return new Promise<{
       interval: NodeJS.Timeout;
       timeoutDelay: number;
@@ -27,8 +31,12 @@ class Service {
 
         setTimeout(() => {
           resolve({ interval: interval, timeoutDelay: this._timeout });
-
-          setTimeout(() => process.exit(), 5000);
+          
+          Debug.Log(["Завершении программы через 5 секунд..."])
+          setTimeout(() => {
+            Debug.Log(["Завершение программы"]);
+            process.exit();
+          }, 5000);
         }, 2500);
       }, this._timeout - 3000);
     });

@@ -1,12 +1,9 @@
 import { Subcommand } from "@voidy/types/dist/commands/discord-command.type";
 
-import { Env } from "@voidy/develop";
 import { MODELS, Database } from "@thevoidcommunity/the-void-database/database";
-import { CHANNELS, resolveTeamName, ROLES } from "./constants";
 import { Response } from "../constants";
 import { CommandInteraction, SlashCommandSubcommandBuilder } from "discord.js";
 
-const { GUILD_ID } = Env.env;
 const Team = new Database(MODELS.Team);
 
 export class Delete extends Subcommand<Response> {

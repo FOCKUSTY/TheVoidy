@@ -47,7 +47,7 @@ class RandomActiviy {
       if (!variable) return activiy;
 
       const array = utility.titles[variable[0]];
-      Debug.Log([{ array, variable }]);
+      Debug.Log([{ array: array || null, variable, titles: utility.titles }]);
       const title = array[random.integer(0, array.length - 1)];
 
       activiy.text = activiy.text.replace(v, title);
@@ -60,33 +60,34 @@ class RandomActiviy {
     try {
       if (!this._client.user) return { text: "cmd: Error", type: "custom" };
 
-      const history = historyObject.get(type) ? historyObject.get(type) : [];
+      const history = historyObject.get(type) ?? [];
       historyObject.set(type, history);
 
       const activities = Services.ArrayService.Shuffle(
         loadedActivities[type === "guild" ? "guild" : "name"]
       );
 
-      const randomActivityNumber = random.integer(0, activities.length - 1);
-      const randomActivity = activities[randomActivityNumber];
+      const randomActivityIndex = random.integer(0, activities.length - 1);
+      const randomActivity = activities[randomActivityIndex];
 
       const array = this._clientLoader.Get(type);
 
-      const firstRandomElementNumber = random.integer(0, array.length - 1);
-      const secondRandomElementNumber = random.integer(0, array.length - 1);
+      const firstRandomElementIndex = random.integer(0, array.length - 1);
+      const secondRandomElementIndex = random.integer(0, array.length - 1);
 
-      const firstRandomElement = array[firstRandomElementNumber];
-      const secondRandomElement = array[secondRandomElementNumber];
+      const firstRandomElement = array[firstRandomElementIndex];
+      const secondRandomElement = array[secondRandomElementIndex];
 
       const text: string =
         randomActivity.text
           .replace("{random}", firstRandomElement)
           .replace("{randomTwo}", secondRandomElement) + this._preffix;
 
-      if (this._setActivity)
+      if (this._setActivity) {
         Debug.Log([
           `Случайные элементы: ${firstRandomElement} & ${secondRandomElement} из ${array.length}`
         ]);
+      }
 
       return { text: text, type: randomActivity.type };
     } catch (err) {
@@ -100,13 +101,13 @@ class RandomActiviy {
     try {
       if (!this._client.user) return { text: "cmd: Error", type: "custom" };
 
-      const history = historyObject.get("activities") ? historyObject.get("activities") : [];
+      const history = historyObject.get("activities") ?? [];
       historyObject.set("activities", history);
 
       const activities = Services.ArrayService.Shuffle(loadedActivities["other"]);
 
-      const randomActivityNumber = random.integer(0, activities.length - 1);
-      const randomActivity: Activity = this.RegExpFormatter(activities[randomActivityNumber]);
+      const randomActivityIndex = random.integer(0, activities.length - 1);
+      const randomActivity: Activity = this.RegExpFormatter(activities[randomActivityIndex]);
 
       return {
         text: randomActivity.text + this._preffix,
@@ -121,14 +122,15 @@ class RandomActiviy {
   public readonly execute = async (): Promise<Activity> => {
     if (!this._client.user) return { text: "cmd: Error", type: "custom" };
 
-    const history = historyObject.get("number-activity") ? historyObject.get("activities") : [];
+    const history = historyObject.get("activities") ?? [];
     historyObject.set("number-activity", history);
 
     const randomChance = random.integer(0, 100);
 
     const Log = (activity: Activity) => {
-      if (this._setActivity)
+      if (this._setActivity) {
         this.Logger(`Устанавливаю активность: "${activity.text}", тип: ${activity.type}`);
+      }
 
       return { text: activity.text, type: activity.type };
     };
@@ -168,11 +170,12 @@ class RandomActiviy {
     if (randomChance >= 40) {
       const activity = await this.Standart();
 
-      if (this._setActivity)
+      if (this._setActivity) {
         this._client.user.setActivity({
           name: activity.text,
           type: Number(Types.Discord.ActivityTypes[activity.type])
         });
+      }
 
       return Log(activity);
     }

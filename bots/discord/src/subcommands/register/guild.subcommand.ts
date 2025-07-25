@@ -5,8 +5,11 @@ import { CommandInteraction, SlashCommandSubcommandBuilder, Sticker } from "disc
 import { MODELS } from "@thevoidcommunity/the-void-database/database";
 import { IGuild } from "@thevoidcommunity/the-void-database/types/guild.type";
 import { Settings } from "@thevoidcommunity/the-void-database/settings/settings";
+import { Debug } from "@voidy/develop";
 
 const { Guild: GuildModel } = MODELS;
+
+const cache = new Map<string, boolean>();
 
 export class Guild extends Subcommand<Response> {
   public static readonly subcommand = new SlashCommandSubcommandBuilder()
@@ -18,18 +21,25 @@ export class Guild extends Subcommand<Response> {
   }
 
   public readonly execute = async (interaction: CommandInteraction) => {
+    Debug.Log([interaction.guild + ": попытка регистрации гильдии..."]);
     const guild = interaction.guild;
 
     if (!guild) {
+      Debug.Log(["Гильдия не была найдена: возможно вы не в гильдии"]);
       return { successed: false, data: "Гильдия не была найдена." };
     }
 
-    const finded = await GuildModel.findOne({ id: guild.id });
+    const finded = cache.get(guild.id) ?? await GuildModel.findOne({ id: guild.id });
 
     if (finded) {
+      cache.set(guild.id, true);
+      Debug.Log(interaction.guild + ": гильдия не была зарегистрирована: гильдия уже зарегистрирована")
       return { successed: false, data: "Гильдия уже зарегистрированна." };
     }
 
+    cache.set(guild.id, true);
+    Debug.Log(interaction.guild.id + ": регистрация гильдии...");
+    
     await GuildModel.create(<IGuild>{
       id: guild.id,
       name: guild.name,
@@ -67,6 +77,7 @@ export class Guild extends Subcommand<Response> {
       }
     });
 
+    Debug.Log(interaction.guild.id + ": гильдия была зарегистрирована")
     return { successed: true, data: "Гильдия была зарегистрированна." };
   };
 }

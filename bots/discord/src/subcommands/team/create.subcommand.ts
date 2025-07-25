@@ -12,7 +12,7 @@ import {
   SlashCommandSubcommandBuilder
 } from "discord.js";
 
-import { Env } from "@voidy/develop";
+import { Debug, Env } from "@voidy/develop";
 import { MODELS, Database } from "@thevoidcommunity/the-void-database/database";
 import { CHANNELS, resolveTeamName, ROLES } from "./constants";
 import { Response } from "../constants";
@@ -38,17 +38,15 @@ export class Create extends Subcommand<Response> {
     new SlashCommandSubcommandBuilder()
       .setName("create")
       .setDescription("Создание новой команды !")
-      .addStringOption((o) =>
-        o
-          .setName(Create.options.name.name)
-          .setDescription(Create.options.name.description)
-          .setRequired(Create.options.name.required)
+      .addStringOption(o => o
+        .setName(Create.options.name.name)
+        .setDescription(Create.options.name.description)
+        .setRequired(Create.options.name.required)
       )
-      .addUserOption((o) =>
-        o
-          .setName(Create.options.owner.name)
-          .setDescription(Create.options.owner.description)
-          .setRequired(Create.options.owner.required)
+      .addUserOption(o => o
+        .setName(Create.options.owner.name)
+        .setDescription(Create.options.owner.description)
+        .setRequired(Create.options.owner.required)
       );
 
   private _data: {
@@ -62,24 +60,31 @@ export class Create extends Subcommand<Response> {
   }
 
   public readonly execute = async (interaction: CommandInteraction): Promise<Response> => {
+    Debug.Log([interaction.member?.user.id + ": попытка регистрации команды...."]);
     const guild = interaction.client.guilds.cache.get(GUILD_ID);
 
-    if (!guild || !interaction.member)
+    if (!guild || !interaction.member) {
+      Debug.Log(["Команда не была зарегистрирована: гильдия или пользователь не найдены"]);
       return { successed: false, data: "No guild or member info." };
+    }
 
     const gettedTeam = await Team.getData({ filter: { name: this._data.name } });
 
     if (gettedTeam.successed) {
+      Debug.Log([interaction.user.id + ": команда не была зарегистрирована: команда уже зарегестрирована"]);
       return { successed: false, data: `Team with name ${this._data.name} is exists.` };
     }
 
+    Debug.Log([interaction.user.id + ": инициализация каналов и ролей..."]);
     const roles = await this.createRoles(guild);
     const category = await this.createCategory({ guild, roles: roles[0] });
     const channels = await this.createChannels({ guild, category });
+    Debug.Log([interaction.user.id + "каналы и роли инициализированы"])
 
     const id = await Team.generateId();
     const members = new Map<string, string[]>();
 
+    Debug.Log([interaction.user.id + ": выдача ролей..."])
     this.resolveMemberRoles({
       member: interaction.member as GuildMember,
       map: members,
@@ -93,7 +98,9 @@ export class Create extends Subcommand<Response> {
         roles: roles[1]
       });
     }
+    Debug.Log([interaction.user.id + ": роли выданы"])
 
+    Debug.Log([interaction.user.id + ": создание команды..."])
     const team = (
       await Team.create({
         id,
@@ -104,6 +111,7 @@ export class Create extends Subcommand<Response> {
         roles: new Map(roles[0].map((role) => [role.id, role.name]))
       })
     ).toObject().name;
+    Debug.Log([interaction.user.id + ": команда", '"' + team + '"', "создана"])
 
     return { successed: true, data: `Team "${team}" was created.` };
   };
@@ -130,7 +138,7 @@ export class Create extends Subcommand<Response> {
     const owner = (interaction.options.get(Create.options.owner.name)?.member ||
       interaction.member) as GuildMember | null;
 
-    if (!owner) throw new Error("owner is not defined");
+    if (!owner) throw Debug.Error("owner is not defined");
 
     return (this._data = {
       name,
@@ -142,13 +150,19 @@ export class Create extends Subcommand<Response> {
     const output: [Role[], string[]] = [[], []];
 
     for (const roleName of ROLES) {
+      Debug.Log(["Создаю роль", roleName + "..."]);
       const role = await guild.roles.create({
         name: roleName + " | " + this._data.name,
         position: 9
       });
 
+      Debug.Log([`Роль ${role.name} (${role.id}) создана`]);
+
       if (roleName === "CEO" || roleName === "TEAM") {
-        this._data.owner.roles.add(role);
+        Debug.Log([this._data.owner.id + ": выдача роли", roleName + "..."]);
+        this._data.owner.roles.add(role).then(() => {
+          Debug.Log([this._data.owner.id + ": роль", roleName, "выдана"]);
+        });
       }
 
       output[0].push(role);
@@ -158,8 +172,9 @@ export class Create extends Subcommand<Response> {
     return output;
   }
 
-  private async createCategory({ guild, roles }: { guild: Guild; roles: Role[] }) {
-    return await guild.channels.create({
+  private createCategory({ guild, roles }: { guild: Guild; roles: Role[] }) {
+    Debug.Log(["Создаю категорию", resolveTeamName(this._data.name) + "..."]);
+    return guild.channels.create({
       name: resolveTeamName(this._data.name),
       type: ChannelType.GuildCategory,
       permissionOverwrites: [
@@ -183,11 +198,13 @@ export class Create extends Subcommand<Response> {
     const output: Channel[] = [];
 
     for (const channelData of CHANNELS) {
+      Debug.Log(["Создаю канал", channelData.name + "..."])
       const channel = await guild.channels.create({
         ...channelData,
         parent: category
       });
 
+      Debug.Log([`Создан ${channel.name} (${channel.id})`]);
       output.push(channel);
     }
 

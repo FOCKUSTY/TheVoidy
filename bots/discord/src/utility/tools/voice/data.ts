@@ -1,9 +1,7 @@
 import { Debug } from "@voidy/develop";
 import {
-  ActionRow,
   ActionRowBuilder,
   ChannelType,
-  ComponentType,
   Guild as DiscordGuild,
   EmbedBuilder,
   OverwriteResolvable,
@@ -56,7 +54,7 @@ export class List {
   }
 
   public removeUser(id: string) {
-    Debug.Log(["Удаление", id, "из списка"]),
+    Debug.Log(["Удаление", id, "из списка"]);
     this._users.set(id, false);
   }
 
@@ -150,6 +148,7 @@ export class Channel {
 export const sendService = async (
   channel: Channel & { channel: NonNullable<Channel["channel"]> }
 ) => {
+  Debug.Log([`Отправляю настройки голосового канала в ${channel.channel.name} (${channel.channel.id})....`])
   const embed = new EmbedBuilder()
     .setAuthor({
       name: channel.channel.client.user.username,
@@ -179,5 +178,7 @@ export const sendService = async (
         )
       )
     ]
+  }).then(() => {
+    Debug.Log([`Настройки голосового канала были отправлены в ${channel.channel.name} (${channel.channel.id})`]);
   });
 };

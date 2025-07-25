@@ -11,6 +11,7 @@ export default new Command({
     .addSubcommand(option => option.setName("start").setDescription("Начать общение"))
     .addSubcommand(option => option.setName("stop").setDescription("Остановить общение")),
   async execute(interaction: CommandInteraction) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const subcommand = (interaction.options as any).getSubcommand()
     const channel = interaction.client.channels.cache.get(env.BOT_LOVE_CHANNEL_ID)
 
