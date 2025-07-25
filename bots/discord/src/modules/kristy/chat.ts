@@ -13,6 +13,7 @@ export class KristyChatModule {
 
   public static started: boolean = false;
   public static timeout: NodeJS.Timeout|null = null;
+  public static lastMessage: string|null;
 
   public constructor(
     public readonly activities: typeof loadedActivities = loadedActivities
@@ -26,7 +27,7 @@ export class KristyChatModule {
     };
 
     KristyChatModule.started = true;
-    Debug.Log("В процессе старта общения...")
+    Debug.Log("В процессе старта общения...");
 
     const channel = interaction.client.channels.cache.get(env.BOT_LOVE_CHANNEL_ID);
     
@@ -64,7 +65,9 @@ export class KristyChatModule {
 
   public execute(client: Client) {
     client.on(Events.MessageCreate, (message => {
-      if (!this.validateMessage(message)) return;
+      if (!this.isMessageValided(message)) return;
+
+      KristyChatModule.lastMessage = message.id;
 
       KristyChatModule.started = true;
       if (KristyChatModule.timeout) clearTimeout(KristyChatModule.timeout);
@@ -77,6 +80,8 @@ export class KristyChatModule {
     message.channel.sendTyping();
 
     setTimeout(() => {
+      if (!this.isReplyMessageValided(message)) return;
+
       message.reply(this.GetRandomActivity().text);
     }, 2000);
 
@@ -85,6 +90,10 @@ export class KristyChatModule {
       KristyChatModule.started = false;
       message.channel.send("А что, уже закончили?(");
     }, 15_000);
+  }
+
+  private isReplyMessageValided(message: OmitPartialGroupDMChannel<Message<boolean>>) {
+    return message.id === KristyChatModule.lastMessage;
   }
 
   // idk, wait Kristy
@@ -96,12 +105,14 @@ export class KristyChatModule {
     return true;
   }
 
-  private validateMessage(message: OmitPartialGroupDMChannel<Message<boolean>>) {
+  private isMessageValided(message: OmitPartialGroupDMChannel<Message<boolean>>) {
     if (!KristyChatModule.started) return false;
     
     if (message.channel.id !== env.BOT_LOVE_CHANNEL_ID) return false;
     if (message.author.id !== env.BOT_LOVE_ID) return false;
     if (!message.mentions.has(message.client.user)) return false;
+
+    const now = new Date().getTime();
 
     return true;
   }
