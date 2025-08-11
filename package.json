@@ -7,9 +7,9 @@
   "author": "FOCKUSTY",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "set:prod": "set NODE_ENV=prod&& set BOT=all",
-    "start:bot": "set NODE_ENV=prod&& set BOT=all&& node dist/bot/start.bot",
+    "start:bot": "set NODE_ENV=prod&& set BOT=all&& node dist/src/bot/start.bot",
     "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build && pnpm run linter && pnpm run start:bot",
     "linter": "pnpm run lint && pnpm run lint:fix",
     "lint": "eslint .",
