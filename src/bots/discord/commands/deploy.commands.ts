@@ -72,6 +72,43 @@ class Deployer {
     return data;
   }
 
+  public find() {
+    const data = {
+      collection: this.collection,
+      global: [],
+      guild: [],
+      all: [],
+      commands: {
+        all: new Map(),
+        global: new Map(),
+        guild: new Map()
+      }
+    } as {
+      collection: Collection<string, Command>;
+      global: Command[];
+      guild: Command[];
+      all: Command[];
+      commands: {
+        guild: DeployCommands;
+        global: DeployCommands;
+        all: DeployCommands;
+      };
+    };
+
+    (<const>["global", "guild"]).forEach((type) => {
+      const commands = this.ForEachCommands<Command>(type, ({ commandPath }) => {
+        return require(commandPath).default;
+      });
+
+      data[type] = commands;
+      data.commands[type] = new Map(commands.map((command) => [command.name, command]));
+    });
+
+    data.all = [ ...data.global, ...data.guild ];
+
+    return data;
+  }
+
   public readonly update = async (commands: { guild: DeployCommands; global: DeployCommands }) => {
     try {
       const { global, guild } = Deployer.readCommandsFile();

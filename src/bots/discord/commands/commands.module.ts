@@ -37,6 +37,14 @@ export let cache: {
   guild: {}
 };
 
+fs.writeFileSync(
+  path.join(__dirname, ".commands"),
+  fs.existsSync(path.join(__dirname, ".commands"))
+    ? fs.readFileSync(path.join(__dirname, ".commands"))
+    : JSON.stringify(cache, undefined, 2),
+  "utf-8"
+);
+
 export class CommandsModule {
   public readonly name = "commands" as const;
   public readonly deployer: Deployer;
@@ -54,10 +62,10 @@ export class CommandsModule {
       return false as const;
     }
 
+    CommandsModule.toJson(this.deployer.find());
     this.commands = this.deployer.execute();
     data = this.commands;
 
-    CommandsModule.toJson(this.commands);
     this.deployer.update(this.commands.commands);
 
     return this;
