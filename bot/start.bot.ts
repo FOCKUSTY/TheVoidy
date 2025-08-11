@@ -1,6 +1,6 @@
 import { Env, Debug } from "@voidy/develop";
 
-import "src/index.constants";
+import "./index.constants";
 
 import Formatter, { Colors } from "f-formatter";
 

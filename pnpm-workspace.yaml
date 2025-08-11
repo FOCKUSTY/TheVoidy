@@ -14,7 +14,7 @@ catalog:
 
   "date-fns": "^2.30.0"
   "random-js": "^2.1.0"
-  "discord.js": "^14.18.0"
+  "discord.js": "14.19.0"
   "telegraf": "^4.16.3"
   "openai": "4.83.0"
 

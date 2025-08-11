@@ -1,4 +1,4 @@
-import { Subcommand } from "@voidy/types/dist/commands/discord-command.type";
+import { Subcommand } from "types/command.type";
 import { Response } from "../constants";
 import { CommandInteraction, SlashCommandSubcommandBuilder, Sticker } from "discord.js";
 

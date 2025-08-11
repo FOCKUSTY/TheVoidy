@@ -1,4 +1,4 @@
-import { Subcommand } from "@voidy/types/dist/commands/discord-command.type";
+import { Subcommand } from "types/command.type";
 
 import {
   CategoryChannel,

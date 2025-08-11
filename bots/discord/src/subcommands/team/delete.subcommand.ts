@@ -1,4 +1,4 @@
-import { Subcommand } from "@voidy/types/dist/commands/discord-command.type";
+import { Subcommand } from "types/command.type";
 
 import { MODELS, Database } from "@thevoidcommunity/the-void-database/database";
 import { Response } from "../constants";

@@ -2,7 +2,7 @@ import { Logger } from "@voidy/develop";
 import {
   Subcommand,
   SubcommandsInitializer
-} from "@voidy/types/dist/commands/discord-command.type";
+} from "types/command.type";
 
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
