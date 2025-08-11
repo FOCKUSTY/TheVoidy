@@ -11,7 +11,23 @@
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@bot": ["./src/bot"],
+      "@bots": ["./src/bots"],
+      "@types": ["./src/types"],
+      "@utility": ["./src/utility"],
+      "@develop": ["./src/utility/develop"],
+      "@services": ["./src/utility/services"],
+      "@bot/*": ["./src/bot/*"],
+      "@bots/*": ["./src/bots/*"],
+      "@telegram/*": ["./src/bots/telegram/*"],
+      "@discord/*": ["./src/bots/discord/*"],
+      "@types/*": ["./src/types/*"],
+      "@utility/*": ["./src/utility/*"],
+      "@develop/*": ["./src/utility/develop/*"],
+      "@services/*": ["./src/utility/services/*"],
+    }
   },
   "include": [
     "./**/*.ts",
