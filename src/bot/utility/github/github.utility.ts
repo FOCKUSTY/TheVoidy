@@ -97,7 +97,7 @@ const useCache = <T extends DataTypes>(type: T) => {
         return false;
       }
 
-      return file[type] || false;
+      return file[type][owner] || false;
     }
   ] as const;
 };
@@ -219,6 +219,14 @@ class GitHubApi extends GitHubApiClass {
               "Content-Type": "application/json"
             }
           });
+
+          if (data.status !== 200) {
+            return {
+              status: data.status,
+              text: "error",
+              commits: []
+            }
+          }
 
           const c = await data.json();
 
