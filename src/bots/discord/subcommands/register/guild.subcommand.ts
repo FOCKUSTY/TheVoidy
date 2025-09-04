@@ -52,12 +52,12 @@ export class Guild extends Subcommand<Response> {
       ).toString(),
       config: {
         guild: {
-          when_user_join_into_guild_send_message_to_user: [] as string[],
-          when_user_join_into_guild_grant_roles: null,
-          when_user_join_into_guild_send_hello_message_to_channel: null,
-          when_user_join_into_voice_create_voice_and_move_him: null,
-          when_user_leave_from_guild_send_goodbye_message_to_channel: null,
-          when_user_leave_from_guild_send_message_to_user: null
+          when_user_join_into_guild_grant_roles: [] as string[],
+          when_user_join_into_guild_send_message_to_user: { channel_id: null, message: "" },
+          when_user_join_into_guild_send_hello_message_to_channel: { channel_id: null, message: "" },
+          when_user_join_into_voice_create_voice_and_move_him: { channel_id: null, message: "" },
+          when_user_leave_from_guild_send_goodbye_message_to_channel: { channel_id: null, message: "" },
+          when_user_leave_from_guild_send_message_to_user: { channel_id: null, message: "" }
         },
         logging: {
           when_bot_join_into_guild_send_log_into_channel: null,

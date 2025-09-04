@@ -132,8 +132,8 @@ export class Tool {
       return null;
     }
 
-    const channelId =
-      guild.toObject().config.guild.when_user_join_into_voice_create_voice_and_move_him;
+    const channelId = null;
+      // guild.toObject().config.guild.when_user_join_into_voice_create_voice_and_move_him;
 
     if (!channelId) {
       this.cache.set(guildId, "null_of_channel_id");

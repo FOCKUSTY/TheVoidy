@@ -81,7 +81,7 @@ export class Create extends Subcommand<Response> {
     const channels = await this.createChannels({ guild, category });
     Debug.Log([interaction.user.id + "каналы и роли инициализированы"])
 
-    const id = await Team.generateId();
+    const id = Database.generateId();
     const members = new Map<string, string[]>();
 
     Debug.Log([interaction.user.id + ": выдача ролей..."])
