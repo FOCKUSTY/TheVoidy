@@ -5,22 +5,17 @@ import { APIPromise } from "openai/core";
 
 import { Debug, Env } from "@develop";
 import { Colors } from "f-formatter";
-import { Ai as AiClass, Response } from "@types";
+import { Ai as AiClass } from "@types";
 
 const promts = new Map<string, string>();
 
 class Ai extends AiClass {
   public chat(
     promt: string,
-    text: string = "",
     model: Models = "gpt-4o-mini"
-  ): Response<APIPromise<ChatCompletion> | null> {
+  ): APIPromise<ChatCompletion> | null {
     if (!Env.env.OPEN_AI_KEY) {
-      return {
-        data: null,
-        text: "Ключ к Open AI не найден.",
-        type: 0
-      };
+      throw new Error("OPEN_AI_KEY");
     }
 
     try {
@@ -36,35 +31,16 @@ class Ai extends AiClass {
       const data = new OpenAi(Env.env.OPEN_AI_KEY).chat(promt, { model: model });
 
       if (!data) {
-        Debug.Error(new Error("Произошла ошибка с ответом."));
-
-        return {
-          data: null,
-          text: "Произошла ошибка.",
-          type: 0
-        };
+        throw Debug.Error(new Error("Произошла ошибка с ответом."));
       }
 
       data.then((r) =>
         Debug.Log(["Ответ на запрос: " + id + ":", r.choices[0].message.content || ""])
       );
 
-      return {
-        data: data,
-        text: `${text}\nМодель: ${model}\nВаш id: ${id}\n`,
-        type: 1,
-        dataContent: {
-          text: ".choices[0].message.content"
-        }
-      };
+      return data;
     } catch (error) {
-      Debug.Error(error);
-
-      return {
-        data: null,
-        text: "Произошла ошибка",
-        type: 0
-      };
+      throw Debug.Error(error);
     }
   }
 }

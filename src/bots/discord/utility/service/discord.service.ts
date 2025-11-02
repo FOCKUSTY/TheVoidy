@@ -1,52 +1,42 @@
 import { Client as DiscordClient, EmbedBuilder } from "discord.js";
-import { Debug } from "@develop";
 
-import SendMessage from "./helpers/send-message.helper";
+import sendMessage from "./helpers/send-message.helper";
 import Client from "../../discord.bot";
-import { DiscordService, Response } from "@types";
+
+import { Debug } from "@develop";
+import { DiscordService } from "@types";
 
 class Discord extends DiscordService {
   private readonly _client: DiscordClient = Client;
 
-  public readonly SendMessage = async (
+  public readonly sendMessage = async (
     channelId: string,
     message: string | EmbedBuilder[]
-  ): Promise<string | { type: number; text: string }> => {
-    if (!this._client) return Debug.Error("Client is not defined");
+  ): Promise<{ type: number; text: string }> => {
+    if (!this._client) {
+      throw Debug.Error("Client is not defined")
+    };
 
-    return await SendMessage(this._client, channelId, message);
+    return await sendMessage(this._client, channelId, message);
   };
 
-  public readonly SendMessageToTelegram = async (
+  public readonly sendMessageToTelegram = async (
     channelId: string,
     message: string,
     telegramName: string
-  ): Promise<Response<string | { type: number; text: string }>> => {
-    if (!this._client)
-      return {
-        data: Debug.Error("Client is not defined"),
-        text: "Client is not defined",
-        type: 0
-      };
+  ): Promise<{ type: number; text: string }> => {
+    if (!this._client) {
+      throw Debug.Error("Client is not defined");
+    }
 
     try {
-      return {
-        data: await SendMessage(
-          this._client,
-          channelId,
-          `Отправлено из Telegram от ${telegramName} \n${message}`
-        ),
-        text: "Сообщение успешно отправлено",
-        type: 1
-      };
+      return sendMessage(
+        this._client,
+        channelId,
+        `Отправлено из Telegram от ${telegramName} \n${message}`
+      )
     } catch (error) {
-      Debug.Error(error);
-
-      return {
-        data: `${error}`,
-        text: "Сообщение не было отправлено",
-        type: 0
-      };
+      throw Debug.Error(error);
     }
   };
 

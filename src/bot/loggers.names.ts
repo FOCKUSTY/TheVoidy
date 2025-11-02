@@ -27,8 +27,10 @@ export const loggers: Record<string, { name: Names; colors: [Colors, Colors] }> 
   Deployer: { name: "Deployer", colors: [Colors.brightYellow, Colors.cyan] }
 };
 
+type MyLogger = Logger<Names, string>;
+
 class Loggers {
-  private readonly _loggers: Logger<Names>[] = [];
+  private readonly _loggers: MyLogger[] = [];
 
   public constructor() {
     this.init();
@@ -36,7 +38,7 @@ class Loggers {
 
   private init() {
     for (const name in loggers) {
-      this._loggers.push(new Logger<Names>(loggers[name].name, { colors: loggers[name].colors }));
+      this._loggers.push(<MyLogger>new Logger(loggers[name].name, { colors: loggers[name].colors }));
     }
   }
 
@@ -46,7 +48,7 @@ class Loggers {
     }
   }
 
-  public get loggers(): Logger<Names>[] {
+  public get loggers(): MyLogger[] {
     return this._loggers;
   }
 }

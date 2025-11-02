@@ -1,6 +1,5 @@
 import DiscordModal, { IModalConstructor } from "./abstract.modal";
 
-import SayTelegramMessage from "./say-telegram-message.modal";
 import SayMessage from "./say-discord-message.modal";
 import Update from "./update.modal";
 import IdeaModal from "./idea.modal";
@@ -36,7 +35,6 @@ class CustomIds {
   static get ids(): { [key: string]: IModalConstructor } {
     return {
       sayModal: SayMessage,
-      sayTelegramModal: SayTelegramMessage,
       updateModal: Update,
       ideaModal: IdeaModal
     };
@@ -45,7 +43,6 @@ class CustomIds {
   get ids(): { [key: string]: DiscordModal } {
     return {
       sayModal: new SayMessage(),
-      sayTelegramModal: new SayTelegramMessage(this._services),
       updateModal: new Update(this._services),
       ideaModal: new IdeaModal()
     };

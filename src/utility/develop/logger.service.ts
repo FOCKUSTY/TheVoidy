@@ -1,6 +1,6 @@
 import { config } from "./config";
 
-import Logger, { Configurator, Colors } from "fock-logger";
+import Logger, { Colors } from "fock-logger";
 
-export { Colors, Configurator, config };
+export { Colors, config };
 export default Logger;

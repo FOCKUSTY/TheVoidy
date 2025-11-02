@@ -11,8 +11,8 @@ import fs, { readFileSync } from "node:fs";
 const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
 
 class Deployer {
-  private readonly _logger: Logger<"Commands"> = new Logger("Commands");
-  private readonly _updater: Logger<"Updater"> = new Logger("Updater");
+  private readonly _logger = new Logger("Commands");
+  private readonly _updater = new Logger("Updater");
   private readonly _rest: REST = new REST().setToken(Env.env.CLIENT_TOKEN);
 
   public constructor(public readonly collection: Collection<string, Command>) {}

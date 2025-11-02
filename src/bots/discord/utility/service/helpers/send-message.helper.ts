@@ -1,7 +1,7 @@
 import { Debug } from "@develop";
 import { ChannelType, Client as DiscordClient, EmbedBuilder } from "discord.js";
 
-const SendMessage = async (
+const sendMessage = async (
   Client: DiscordClient,
   channelId: string,
   message: string | EmbedBuilder[]
@@ -30,4 +30,4 @@ const SendMessage = async (
   }
 };
 
-export default SendMessage;
+export default sendMessage;

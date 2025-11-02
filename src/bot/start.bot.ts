@@ -10,7 +10,6 @@ import { LoginDiscord } from "@discord/discord.bot";
 import { LoginTelegram } from "@telegram/telegram.bot";
 
 import Ai from "./utility/ai";
-import GitHubApi from "./utility/github/github.utility";
 
 import DiscordService from "@discord/utility/service/discord.service";
 import TelegramService from "@telegram/utility/service/telegram.service";
@@ -30,7 +29,6 @@ new Loggers().execute();
     discord: new DiscordService(),
     telegram: new TelegramService(),
     ai: new Ai(),
-    github: new GitHubApi()
   };
 
   switch (bot) {

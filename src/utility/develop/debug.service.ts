@@ -7,19 +7,19 @@ const warn = "\n------------- !Внимание! --------------\n";
 const toString = <T = unknown>(data: T) => JSON.stringify(data, undefined, 2);
 
 class Debug {
-  private static readonly _log: Logger<"Debugger"> = new Logger("Debugger", {
+  private static readonly _log = new Logger("Debugger", {
     write: true,
     prefix: "debug",
     level: "info"
   });
 
-  private static readonly _error: Logger<"Errorer"> = new Logger("Errorer", {
+  private static readonly _error = new Logger("Errorer", {
     write: true,
     prefix: "error",
     level: "err"
   });
 
-  private static readonly _warn: Logger<"Warner"> = new Logger("Warner", {
+  private static readonly _warn = new Logger("Warner", {
     write: true,
     prefix: "warn",
     level: "warn"
