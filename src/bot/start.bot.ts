@@ -7,7 +7,7 @@ import Formatter, { Colors } from "f-formatter";
 import Loggers from "./loggers.names";
 
 import { LoginDiscord } from "@discord/discord.bot";
-import { LoginTelegram } from "@telegram/telegram.bot";
+import { loginTelegram } from "@telegram/telegram.bot";
 
 import Ai from "./utility/ai";
 
@@ -37,12 +37,12 @@ new Loggers().execute();
       break;
 
     case "telegram":
-      LoginTelegram(services);
+      loginTelegram(services);
       break;
 
     default:
       LoginDiscord(Env.env.CLIENT_TOKEN, services);
-      LoginTelegram(services);
+      loginTelegram(services);
       break;
   }
 })();
