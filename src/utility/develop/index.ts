@@ -7,4 +7,6 @@ export * from "./env.service";
 export * from "./logger.service";
 export * from "./debug.service";
 
+export const { env } = Env;
+
 export { Logger, Env };

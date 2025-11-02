@@ -18,7 +18,8 @@ const REQUIRED = [
   "TELEGRAM_TEAM_IDS",
   "BOT_LOVE_ID",
   "BOT_LOVE_CHANNEL_ID",
-  "MONGOOSE_URL"
+  "MONGOOSE_URL",
+  "FILE_TYPE"
 ] as const;
 type Required = (typeof REQUIRED)[number];
 
@@ -38,16 +39,21 @@ type IEnv = Record<Required, string> &
   Record<PartialKeys, string | false> &
   Record<Dynamic, string>;
 
-const ENV: IEnv = (() => {
-  return Object.fromEntries(
-    ALL.map((key) => {
-      if (!process.env[key] && REQUIRED.includes(key as any))
-        throw Debug.Error(`key: ${key} in .env is undefined, but must be define`);
+const FILE_TYPE = process.env.NODE_ENV === "production" ? "js" : "ts";
 
-      return [key, process.env[key] || DEFAULT[key as PartialKeys]];
-    })
-  ) as IEnv;
-})();
+const ENV: IEnv = {
+  ...(() => {
+    return Object.fromEntries(
+      ALL.map((key) => {
+        if (!process.env[key] && REQUIRED.includes(key as any))
+          throw Debug.Error(`key: ${key} in .env is undefined, but must be define`);
+
+        return [key, process.env[key] || DEFAULT[key as PartialKeys]];
+      })
+    ) as IEnv;
+  })(),
+  FILE_TYPE
+};
 
 class Env {
   public static readonly lazy = process.env;
