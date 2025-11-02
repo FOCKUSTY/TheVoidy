@@ -65,11 +65,6 @@ const Login = async (clientToken: string, services: Services) => {
     (key) => ((Modules as { [key: string]: unknown })[key] = modules[key])
   );
 
-  const eventsPath = path.join(__dirname, "events");
-  const eventFiles = fs
-    .readdirSync(eventsPath)
-    .filter((file) => file.endsWith(fileType) && !file.endsWith(".d.ts"));
-
   const modalListener = new ML(services);
   const interactionListener = new ICL();
 
@@ -78,7 +73,7 @@ const Login = async (clientToken: string, services: Services) => {
     modalListener.execute(interaction);
   });
 
-  new DeployEvents(eventsPath, eventFiles, services).execute();
+  new DeployEvents(services).execute();
 
   await Client.login(clientToken).catch((e) => Debug.Error(e));
 };

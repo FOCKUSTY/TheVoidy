@@ -47,10 +47,6 @@ export default [
       "@typescript-eslint/prefer-namespace-keyword": "error",
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unified-signatures": "error",
-      "no-array-constructor": "error",
-      "no-unused-expressions": "error",
-      "no-unused-vars": "error",
-      "no-useless-constructor": "error"
     }
   }
 ];

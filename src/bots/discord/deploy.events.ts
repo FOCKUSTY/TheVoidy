@@ -1,46 +1,42 @@
 import { Debug, Logger } from "@develop";
 
 import type { Client as DiscordClient } from "discord.js";
-import Discord from "./utility/service/discord.service";
 
-import path from "node:path";
+import Discord from "./utility/service/discord.service";
+import { FilesLoader } from "@utility/services/loaders/files.loader";
+
+import { join } from "node:path";
 import { Services } from "@types";
 
-class EventsLoader {
-  private readonly Logger = new Logger("Events").execute;
+const dir = join(__dirname, "events");
+const filesLoader = new FilesLoader(dir);
+
+export class EventsLoader {
+  private readonly logger = new Logger("Events");
   private readonly _client: DiscordClient = new Discord().client;
 
-  private readonly _path: string;
-  private readonly _files: string[];
-  private readonly _services: Services;
+  public constructor(private readonly _services: Services) {};
 
-  public constructor(eventsPath: string, eventFiles: string[], services: Services) {
-    this._path = eventsPath;
-    this._files = eventFiles;
-    this._services = services;
-  }
+  public execute() {
+    return filesLoader.execute((path) => {
+      this.logger.execute(`Загрузка прослушивателя ${path}`);
 
-  public readonly execute = () => {
-    for (const file of this._files) {
-      const filePath = path.join(this._path, file);
-
-      const event = new (require(filePath).default)(this._services);
-
-      this.Logger(`Загрузка прослушивателя ${event.name}`);
+      const EventClass = require(path).default;
+      const event = new EventClass(this._services);
 
       if (event.once) {
         this._client.once(event.tag, (...args) => event.execute(...args));
       } else if (event.execute) {
         if (event.tag === "unique") {
           Debug.Log(["Пропускаю", event.name, "из-за уникального запуска"]);
-          continue;
+          return;
         }
 
         Debug.Log(["Инициализация", event.tag + "..."]);
         this._client.on(event.tag, (...args) => event.execute(...args));
       }
-    }
-  };
-}
+    })
+  }
+};
 
 export default EventsLoader;

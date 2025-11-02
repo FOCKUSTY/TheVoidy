@@ -19,7 +19,7 @@ export type Objects = {
 };
 
 export class ClientLoader {
-  private readonly Logger = new Logger("Loader").execute;
+  private readonly logger = new Logger("Loader");
   private readonly _filter: Filter;
 
   private readonly _objects: Objects;
@@ -39,7 +39,7 @@ export class ClientLoader {
   private readonly UsersLoader = async (Client: DiscordClient) => {
     const size = Client.users.cache.filter((u) => !u.bot).size;
 
-    this.Logger(`Загрузка ${size} ` + formatter.RuWords(size, ["пользователя", "пользователей"]), {
+    this.logger.execute(`Загрузка ${size} ` + formatter.RuWords(size, ["пользователя", "пользователей"]), {
       color: Colors.yellow
     });
 
@@ -50,12 +50,12 @@ export class ClientLoader {
     });
 
     if (size - users.length > 0)
-      this.Logger(
+      this.logger.execute(
         `Отсеивание ${size - users.length} ${formatter.RuWords(size - users.length, ["пользователя", "пользователей"])}`,
         { color: Colors.yellow }
       );
 
-    this.Logger(
+    this.logger.execute(
       `Загрузка ${users.length} ${formatter.RuWords(users.length, ["пользователя", "пользователей"])} успешна`,
       { color: Colors.green }
     );
@@ -64,7 +64,7 @@ export class ClientLoader {
   private readonly GuildsLoader = async (Client: DiscordClient) => {
     const size = Client.guilds.cache.size;
 
-    this.Logger(`Загрузка ${size} ` + formatter.RuWords(size, ["гильдии", "гильдий"]), {
+    this.logger.execute(`Загрузка ${size} ` + formatter.RuWords(size, ["гильдии", "гильдий"]), {
       color: Colors.yellow
     });
 
@@ -75,12 +75,12 @@ export class ClientLoader {
     });
 
     if (size - guilds.length > 0)
-      this.Logger(
+      this.logger.execute(
         `Отсеивание ${size - guilds.length} ${formatter.RuWords(size - guilds.length, ["гильдии", "гильдий"])}`,
         { color: Colors.yellow }
       );
 
-    this.Logger(
+    this.logger.execute(
       `Загрузка ${guilds.length} ${formatter.RuWords(guilds.length, ["гильдии", "гильдий"])} успешна`,
       { color: Colors.green }
     );

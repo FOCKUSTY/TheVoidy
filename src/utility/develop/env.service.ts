@@ -19,9 +19,13 @@ const REQUIRED = [
   "BOT_LOVE_ID",
   "BOT_LOVE_CHANNEL_ID",
   "MONGOOSE_URL",
-  "FILE_TYPE"
 ] as const;
 type Required = (typeof REQUIRED)[number];
+
+const SELF = [
+  "FILE_TYPE"
+] as const;
+type Self = (typeof SELF)[number];
 
 const ALL = [...REQUIRED, "OPEN_AI_KEY", "FRIEND_ID"] as const;
 
@@ -37,6 +41,7 @@ type Dynamic = (typeof DYNAMIC)[number];
 
 type IEnv = Record<Required, string> &
   Record<PartialKeys, string | false> &
+  Record<Self, string> &
   Record<Dynamic, string>;
 
 const FILE_TYPE = process.env.NODE_ENV === "production" ? "js" : "ts";
@@ -45,8 +50,9 @@ const ENV: IEnv = {
   ...(() => {
     return Object.fromEntries(
       ALL.map((key) => {
-        if (!process.env[key] && REQUIRED.includes(key as any))
+        if (!process.env[key] && REQUIRED.includes(key as any)) {
           throw Debug.Error(`key: ${key} in .env is undefined, but must be define`);
+        }
 
         return [key, process.env[key] || DEFAULT[key as PartialKeys]];
       })
