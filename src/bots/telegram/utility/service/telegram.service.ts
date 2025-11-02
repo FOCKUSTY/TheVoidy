@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { TelegramInteraction } from "@types";
 
 import { TelegramService } from "@types";
