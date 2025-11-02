@@ -7,15 +7,20 @@ import { Services } from "@types";
 
 const lowerize = (text: string) => {
   return text[0].toLocaleLowerCase() + text.slice(1);
-}
+};
 
 const capitalize = (text: string) => {
   return text[0].toUpperCase() + text.slice(1);
-}
+};
 
 const fromKebabCaseToCamelCase = (text: string) => {
-  return lowerize(text.split("-").map(text => capitalize(text)).join(""));
-}
+  return lowerize(
+    text
+      .split("-")
+      .map((text) => capitalize(text))
+      .join("")
+  );
+};
 
 class Listener {
   private readonly ids: Ids;
@@ -40,11 +45,15 @@ class Listener {
       return interaction.reply({
         content: "Произошла какая-то ошибка",
         flags: MessageFlags.Ephemeral
-      })
-    };
+      });
+    }
 
     Debug.Log(["Запуск модального окна", modal.id]);
-    return modal.execute(interaction).then(() => Debug.Log(["Видимо, модальное окно", interaction.customId, "отработало без проблем"]));;
+    return modal
+      .execute(interaction)
+      .then(() =>
+        Debug.Log(["Видимо, модальное окно", interaction.customId, "отработало без проблем"])
+      );
   }
 }
 

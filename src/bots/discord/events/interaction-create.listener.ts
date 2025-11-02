@@ -2,7 +2,7 @@
 
 import { Debug, Env } from "@develop";
 
-import { ApplicationCommandOptionType} from "discord.js";
+import { ApplicationCommandOptionType } from "discord.js";
 import type { Interaction } from "discord.js";
 import { Collection, MessageFlags } from "discord.js";
 import Command from "@discord/types/command.type";
@@ -24,12 +24,20 @@ export default class Listener {
     Debug.Log([
       "\nВзаимодействие пользователя с /" + interaction.commandName,
       "\nПользователь " + interaction.user.username,
-      interaction.guild ? "\nГильдия " + interaction.guild.name + " >>> " + interaction.guild.id : "Не в гильдии",
-      interaction.channel ? "\nКанал " + (<any>interaction.channel.toJSON()).name + " >>> " + interaction.channelId : "Не в канале",
+      interaction.guild
+        ? "\nГильдия " + interaction.guild.name + " >>> " + interaction.guild.id
+        : "Не в гильдии",
+      interaction.channel
+        ? "\nКанал " + (<any>interaction.channel.toJSON()).name + " >>> " + interaction.channelId
+        : "Не в канале",
       interaction.options.data.length !== 0
-        ? "\n" + interaction.options.data.map(option =>
-          `Option "${option.name}": ${ApplicationCommandOptionType[option.type]} -> ${option.value}`
-        ).join("\n")
+        ? "\n" +
+          interaction.options.data
+            .map(
+              (option) =>
+                `Option "${option.name}": ${ApplicationCommandOptionType[option.type]} -> ${option.value}`
+            )
+            .join("\n")
         : ""
     ]);
 
@@ -63,7 +71,7 @@ export default class Listener {
     }
 
     try {
-      Debug.Log("Запуск команды...")
+      Debug.Log("Запуск команды...");
       await command.execute(interaction, { ...modules, commands: modules.commands });
     } catch (err) {
       Debug.Error(err);

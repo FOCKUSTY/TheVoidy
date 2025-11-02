@@ -1,8 +1,5 @@
 import { Logger } from "@develop";
-import {
-  Subcommand,
-  SubcommandsInitializer
-} from "@discord/types/command.type";
+import { Subcommand, SubcommandsInitializer } from "@discord/types/command.type";
 
 import { readdirSync } from "node:fs";
 import { join } from "node:path";

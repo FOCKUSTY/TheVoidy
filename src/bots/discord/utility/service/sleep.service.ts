@@ -31,8 +31,8 @@ class Service {
 
         setTimeout(() => {
           resolve({ interval: interval, timeoutDelay: this._timeout });
-          
-          Debug.Log(["Завершении программы через 5 секунд..."])
+
+          Debug.Log(["Завершении программы через 5 секунд..."]);
           setTimeout(() => {
             Debug.Log(["Завершение программы"]);
             process.exit();

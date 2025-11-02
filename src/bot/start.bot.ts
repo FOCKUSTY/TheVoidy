@@ -28,7 +28,7 @@ new Loggers().execute();
   const services = {
     discord: new DiscordService(),
     telegram: new TelegramService(),
-    ai: new Ai(),
+    ai: new Ai()
   };
 
   switch (bot) {

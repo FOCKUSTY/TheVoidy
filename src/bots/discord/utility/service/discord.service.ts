@@ -14,8 +14,8 @@ class Discord extends DiscordService {
     message: string | EmbedBuilder[]
   ): Promise<{ type: number; text: string }> => {
     if (!this._client) {
-      throw Debug.Error("Client is not defined")
-    };
+      throw Debug.Error("Client is not defined");
+    }
 
     return await sendMessage(this._client, channelId, message);
   };
@@ -34,7 +34,7 @@ class Discord extends DiscordService {
         this._client,
         channelId,
         `Отправлено из Telegram от ${telegramName} \n${message}`
-      )
+      );
     } catch (error) {
       throw Debug.Error(error);
     }

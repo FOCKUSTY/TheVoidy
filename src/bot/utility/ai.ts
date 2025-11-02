@@ -10,10 +10,7 @@ import { Ai as AiClass } from "@types";
 const promts = new Map<string, string>();
 
 class Ai extends AiClass {
-  public chat(
-    promt: string,
-    model: Models = "gpt-4o-mini"
-  ): APIPromise<ChatCompletion> | null {
+  public chat(promt: string, model: Models = "gpt-4o-mini"): APIPromise<ChatCompletion> | null {
     if (!Env.env.OPEN_AI_KEY) {
       throw new Error("OPEN_AI_KEY");
     }

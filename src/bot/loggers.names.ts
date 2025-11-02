@@ -38,7 +38,9 @@ class Loggers {
 
   private init() {
     for (const name in loggers) {
-      this._loggers.push(<MyLogger>new Logger(loggers[name].name, { colors: loggers[name].colors }));
+      this._loggers.push(
+        <MyLogger>new Logger(loggers[name].name, { colors: loggers[name].colors })
+      );
     }
   }
 

@@ -104,7 +104,7 @@ export class Channel {
   }
 
   public async transmitOwner(ownerId: string) {
-    Debug.Log(ownerId+ ": попытка передачи прав...")
+    Debug.Log(ownerId + ": попытка передачи прав...");
 
     const oldOwner = this._ownerId;
     this._ownerId = ownerId;
@@ -112,7 +112,7 @@ export class Channel {
     if (!this._channel) {
       Debug.Log(ownerId + ": передача не удалась: канал не найден");
       return null;
-    };
+    }
 
     Debug.Log("Передача прав... наверное удалась");
 
@@ -148,7 +148,9 @@ export class Channel {
 export const sendService = async (
   channel: Channel & { channel: NonNullable<Channel["channel"]> }
 ) => {
-  Debug.Log([`Отправляю настройки голосового канала в ${channel.channel.name} (${channel.channel.id})....`])
+  Debug.Log([
+    `Отправляю настройки голосового канала в ${channel.channel.name} (${channel.channel.id})....`
+  ]);
   const embed = new EmbedBuilder()
     .setAuthor({
       name: channel.channel.client.user.username,
@@ -164,21 +166,25 @@ export const sendService = async (
       iconURL: channel.channel.client.user.avatarURL() || undefined
     });
 
-  channel.channel.send({
-    content: "Привет! Это настройки войс канала!",
-    embeds: [embed],
-    components: [
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      <any>(
-        new ActionRowBuilder().addComponents(
-          ...[
-            buttons["voice-switch-black-list"].builder,
-            buttons["voice-switch-white-list"].builder
-          ]
+  channel.channel
+    .send({
+      content: "Привет! Это настройки войс канала!",
+      embeds: [embed],
+      components: [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        <any>(
+          new ActionRowBuilder().addComponents(
+            ...[
+              buttons["voice-switch-black-list"].builder,
+              buttons["voice-switch-white-list"].builder
+            ]
+          )
         )
-      )
-    ]
-  }).then(() => {
-    Debug.Log([`Настройки голосового канала были отправлены в ${channel.channel.name} (${channel.channel.id})`]);
-  });
+      ]
+    })
+    .then(() => {
+      Debug.Log([
+        `Настройки голосового канала были отправлены в ${channel.channel.name} (${channel.channel.id})`
+      ]);
+    });
 };

@@ -21,15 +21,15 @@ class Listener {
     Debug.Log("Инициализация Discord бота...");
     if (!Client.user) return;
 
-    Debug.Log("Загрузка активностей...")
+    Debug.Log("Загрузка активностей...");
     const randomActivity = new RandomActiviy(Client, process.env.NODE_ENV === "dev" ? "dev" : "");
-    
+
     const activiesLoader = new ActivitiesLoader();
     activiesLoader.execute();
 
-    Debug.Log("Активности загружены (подробнее в логах активностей)")
+    Debug.Log("Активности загружены (подробнее в логах активностей)");
 
-    Debug.Log("Установка статуса...")
+    Debug.Log("Установка статуса...");
     Client.user.setPresence({
       activities: [
         {
@@ -44,16 +44,15 @@ class Listener {
     });
     Debug.Log("Статус установлен");
 
-
-    Debug.Log("Инициализация объектов и исключений...")
+    Debug.Log("Инициализация объектов и исключений...");
     const objects = new ObjectsLoader().execute();
 
     const clientLoader = new ClientLoader(objects, utility.banwords);
     clientLoader.execute(Client);
 
-    Debug.Log("Объекты и исключения инициализированны (подробнее в логах загрузчика)")
+    Debug.Log("Объекты и исключения инициализированны (подробнее в логах загрузчика)");
 
-    Debug.Log("Установка интервала...")
+    Debug.Log("Установка интервала...");
     setInterval(
       () => {
         randomActivity.execute();

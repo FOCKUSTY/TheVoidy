@@ -20,9 +20,9 @@ export class Listener {
     const button = this.buttons.buttons[interaction.customId as ButtonsIds];
 
     if (!button) {
-      Debug.Warn(["Кнопка", interaction.customId, "не была найдена"])
+      Debug.Warn(["Кнопка", interaction.customId, "не была найдена"]);
       return;
-    };
+    }
 
     return button.execute(interaction);
   }

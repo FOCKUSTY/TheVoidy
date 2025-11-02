@@ -34,9 +34,9 @@ class EventsLoader {
         if (event.tag === "unique") {
           Debug.Log(["Пропускаю", event.name, "из-за уникального запуска"]);
           continue;
-        };
+        }
 
-        Debug.Log(["Инициализация", event.tag + "..."])
+        Debug.Log(["Инициализация", event.tag + "..."]);
         this._client.on(event.tag, (...args) => event.execute(...args));
       }
     }

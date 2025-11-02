@@ -104,7 +104,7 @@ class Deployer {
       data.commands[type] = new Map(commands.map((command) => [command.name, command]));
     });
 
-    data.all = [ ...data.global, ...data.guild ];
+    data.all = [...data.global, ...data.guild];
 
     return data;
   }

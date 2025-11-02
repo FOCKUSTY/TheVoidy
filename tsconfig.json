@@ -26,21 +26,11 @@
       "@types/*": ["./src/types/*"],
       "@utility/*": ["./src/utility/*"],
       "@develop/*": ["./src/utility/develop/*"],
-      "@services/*": ["./src/utility/services/*"],
+      "@services/*": ["./src/utility/services/*"]
     }
   },
-  "include": [
-    "./**/*.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "packages",
-    "log",
-    "docs",
-    "bots",
-    "utility"
-  ],
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", "dist", "packages", "log", "docs", "bots", "utility"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   }

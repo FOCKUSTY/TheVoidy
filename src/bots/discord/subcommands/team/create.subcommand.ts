@@ -38,15 +38,17 @@ export class Create extends Subcommand<Response> {
     new SlashCommandSubcommandBuilder()
       .setName("create")
       .setDescription("Создание новой команды !")
-      .addStringOption(o => o
-        .setName(Create.options.name.name)
-        .setDescription(Create.options.name.description)
-        .setRequired(Create.options.name.required)
+      .addStringOption((o) =>
+        o
+          .setName(Create.options.name.name)
+          .setDescription(Create.options.name.description)
+          .setRequired(Create.options.name.required)
       )
-      .addUserOption(o => o
-        .setName(Create.options.owner.name)
-        .setDescription(Create.options.owner.description)
-        .setRequired(Create.options.owner.required)
+      .addUserOption((o) =>
+        o
+          .setName(Create.options.owner.name)
+          .setDescription(Create.options.owner.description)
+          .setRequired(Create.options.owner.required)
       );
 
   private _data: {
@@ -71,7 +73,9 @@ export class Create extends Subcommand<Response> {
     const gettedTeam = await Team.getData({ filter: { name: this._data.name } });
 
     if (gettedTeam.successed) {
-      Debug.Log([interaction.user.id + ": команда не была зарегистрирована: команда уже зарегестрирована"]);
+      Debug.Log([
+        interaction.user.id + ": команда не была зарегистрирована: команда уже зарегестрирована"
+      ]);
       return { successed: false, data: `Team with name ${this._data.name} is exists.` };
     }
 
@@ -79,12 +83,12 @@ export class Create extends Subcommand<Response> {
     const roles = await this.createRoles(guild);
     const category = await this.createCategory({ guild, roles: roles[0] });
     const channels = await this.createChannels({ guild, category });
-    Debug.Log([interaction.user.id + "каналы и роли инициализированы"])
+    Debug.Log([interaction.user.id + "каналы и роли инициализированы"]);
 
     const id = Database.generateId();
     const members = new Map<string, string[]>();
 
-    Debug.Log([interaction.user.id + ": выдача ролей..."])
+    Debug.Log([interaction.user.id + ": выдача ролей..."]);
     this.resolveMemberRoles({
       member: interaction.member as GuildMember,
       map: members,
@@ -98,9 +102,9 @@ export class Create extends Subcommand<Response> {
         roles: roles[1]
       });
     }
-    Debug.Log([interaction.user.id + ": роли выданы"])
+    Debug.Log([interaction.user.id + ": роли выданы"]);
 
-    Debug.Log([interaction.user.id + ": создание команды..."])
+    Debug.Log([interaction.user.id + ": создание команды..."]);
     const team = (
       await Team.create({
         id,
@@ -111,7 +115,7 @@ export class Create extends Subcommand<Response> {
         roles: new Map(roles[0].map((role) => [role.id, role.name]))
       })
     ).toObject().name;
-    Debug.Log([interaction.user.id + ": команда", '"' + team + '"', "создана"])
+    Debug.Log([interaction.user.id + ": команда", '"' + team + '"', "создана"]);
 
     return { successed: true, data: `Team "${team}" was created.` };
   };
@@ -198,7 +202,7 @@ export class Create extends Subcommand<Response> {
     const output: Channel[] = [];
 
     for (const channelData of CHANNELS) {
-      Debug.Log(["Создаю канал", channelData.name + "..."])
+      Debug.Log(["Создаю канал", channelData.name + "..."]);
       const channel = await guild.channels.create({
         ...channelData,
         parent: category

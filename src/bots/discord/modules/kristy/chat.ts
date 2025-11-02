@@ -12,59 +12,60 @@ export class KristyChatModule {
   public readonly name = "kristy-chat" as const;
 
   public static started: boolean = false;
-  public static timeout: NodeJS.Timeout|null = null;
-  public static lastMessage: string|null;
+  public static timeout: NodeJS.Timeout | null = null;
+  public static lastMessage: string | null;
 
-  public constructor(
-    public readonly activities: typeof loadedActivities = loadedActivities
-  ) {};
+  public constructor(public readonly activities: typeof loadedActivities = loadedActivities) {}
 
   public static async start(interaction: CommandInteraction) {
     Debug.Log(["Попытка начать общение с Kristy..."]);
     if (KristyChatModule.started) {
-      Debug.Log(["Общение не удалось: Уже начато"])
+      Debug.Log(["Общение не удалось: Уже начато"]);
       return false;
-    };
+    }
 
     KristyChatModule.started = true;
     Debug.Log("В процессе старта общения...");
 
     const channel = interaction.client.channels.cache.get(env.BOT_LOVE_CHANNEL_ID);
-    
+
     if (!channel || !channel.isSendable()) {
       Debug.Warn("Общение не удалось: Канал не верный");
       return false;
-    };
+    }
 
     return new Promise((resolve, reject) => {
       channel.sendTyping().catch(reject);
-      
+
       setTimeout(() => {
-        channel.send(`<@${env.BOT_LOVE_ID}>, я тебя люблю!`).then(() => {
-          Debug.Log(["Общение удалось начать"]);
-          resolve(true);
-        }).catch(reject);
+        channel
+          .send(`<@${env.BOT_LOVE_ID}>, я тебя люблю!`)
+          .then(() => {
+            Debug.Log(["Общение удалось начать"]);
+            resolve(true);
+          })
+          .catch(reject);
       }, 2000);
-    })
-  };
+    });
+  }
 
   public static async stop() {
-    Debug.Log("Попытка остановить общение с Kristy...")
+    Debug.Log("Попытка остановить общение с Kristy...");
     if (!KristyChatModule.started) {
       Debug.Log("Общение не удалось прекратить: уже прекращено");
       return false;
-    };
+    }
 
     KristyChatModule.started = false;
     if (KristyChatModule.timeout) clearTimeout(KristyChatModule.timeout);
-    
+
     Debug.Log("Общение прекращено");
 
     return true;
   }
 
   public execute(client: Client) {
-    client.on(Events.MessageCreate, (message => {
+    client.on(Events.MessageCreate, (message) => {
       if (!this.isMessageValided(message)) return;
 
       KristyChatModule.lastMessage = message.id;
@@ -73,9 +74,9 @@ export class KristyChatModule {
       if (KristyChatModule.timeout) clearTimeout(KristyChatModule.timeout);
 
       this.reply(message);
-    }));
+    });
   }
-  
+
   public reply(message: OmitPartialGroupDMChannel<Message<boolean>>) {
     message.channel.sendTyping();
 
@@ -86,7 +87,7 @@ export class KristyChatModule {
     }, 2000);
 
     KristyChatModule.timeout = setTimeout(() => {
-      Debug.Log("Общение с Kristy было закончено: Kristy не отвечает")
+      Debug.Log("Общение с Kristy было закончено: Kristy не отвечает");
       KristyChatModule.started = false;
       message.channel.send("А что, уже закончили?(");
     }, 15_000);
@@ -107,7 +108,7 @@ export class KristyChatModule {
 
   private isMessageValided(message: OmitPartialGroupDMChannel<Message<boolean>>) {
     if (!KristyChatModule.started) return false;
-    
+
     if (message.channel.id !== env.BOT_LOVE_CHANNEL_ID) return false;
     if (message.author.id !== env.BOT_LOVE_ID) return false;
     if (!message.mentions.has(message.client.user)) return false;
@@ -118,8 +119,8 @@ export class KristyChatModule {
   }
 
   private GetRandomActivity() {
-    return this.activities.other[random.integer(0, this.activities.other.length-1)];
+    return this.activities.other[random.integer(0, this.activities.other.length - 1)];
   }
-};
+}
 
 export default KristyChatModule;

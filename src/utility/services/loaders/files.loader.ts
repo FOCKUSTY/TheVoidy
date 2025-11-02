@@ -24,27 +24,25 @@ export class FilesLoader<T> {
     const files = await readdir(dir);
 
     const output: string[] = [];
-    
+
     for (const file of files) {
       const path = join(dir, file);
       const resolvedPath = await this.resolvePath(path);
-      const toPush = Array.isArray(resolvedPath)
-        ? resolvedPath
-        : [resolvedPath];
+      const toPush = Array.isArray(resolvedPath) ? resolvedPath : [resolvedPath];
 
       output.push(...toPush);
-    };
+    }
 
     return output;
   }
 
-  private async resolvePath(path: string): Promise<string|string[]> {
+  private async resolvePath(path: string): Promise<string | string[]> {
     const stats = await lstat(path);
 
     if (stats.isDirectory()) {
       return this.resolveDir(path);
-    };
+    }
 
     return path;
   }
-};
+}

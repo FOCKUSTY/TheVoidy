@@ -14,7 +14,7 @@ client.on("message", (interaction: TelegramInteraction) => {
 
 const login = async (services: Services) => {
   await client.launch();
-}
+};
 
 export { login as loginTelegram };
 

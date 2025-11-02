@@ -29,17 +29,19 @@ export class Guild extends Subcommand<Response> {
       return { successed: false, data: "Гильдия не была найдена." };
     }
 
-    const finded = cache.get(guild.id) ?? await GuildModel.findOne({ id: guild.id });
+    const finded = cache.get(guild.id) ?? (await GuildModel.findOne({ id: guild.id }));
 
     if (finded) {
       cache.set(guild.id, true);
-      Debug.Log(interaction.guild + ": гильдия не была зарегистрирована: гильдия уже зарегистрирована")
+      Debug.Log(
+        interaction.guild + ": гильдия не была зарегистрирована: гильдия уже зарегистрирована"
+      );
       return { successed: false, data: "Гильдия уже зарегистрированна." };
     }
 
     cache.set(guild.id, true);
     Debug.Log(interaction.guild.id + ": регистрация гильдии...");
-    
+
     await GuildModel.create(<IGuild>{
       id: guild.id,
       name: guild.name,
@@ -54,9 +56,15 @@ export class Guild extends Subcommand<Response> {
         guild: {
           when_user_join_into_guild_grant_roles: [] as string[],
           when_user_join_into_guild_send_message_to_user: { channel_id: null, message: "" },
-          when_user_join_into_guild_send_hello_message_to_channel: { channel_id: null, message: "" },
+          when_user_join_into_guild_send_hello_message_to_channel: {
+            channel_id: null,
+            message: ""
+          },
           when_user_join_into_voice_create_voice_and_move_him: { channel_id: null, message: "" },
-          when_user_leave_from_guild_send_goodbye_message_to_channel: { channel_id: null, message: "" },
+          when_user_leave_from_guild_send_goodbye_message_to_channel: {
+            channel_id: null,
+            message: ""
+          },
           when_user_leave_from_guild_send_message_to_user: { channel_id: null, message: "" }
         },
         logging: {
@@ -77,7 +85,7 @@ export class Guild extends Subcommand<Response> {
       }
     });
 
-    Debug.Log(interaction.guild.id + ": гильдия была зарегистрирована")
+    Debug.Log(interaction.guild.id + ": гильдия была зарегистрирована");
     return { successed: true, data: "Гильдия была зарегистрированна." };
   };
 }
