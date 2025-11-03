@@ -10,6 +10,7 @@
     "build": "tsc && tsc-alias",
     "set:prod": "set NODE_ENV=prod&& set BOT=all",
     "start:bot": "set NODE_ENV=prod&& set BOT=all&& node dist/bot/start.bot",
+    "dev:bot": "set NODE_ENV=prod&& set BOT=all&& ts-node src/bot/start.bot",
     "start": "set NODE_ENV=prod&& set BOT=all&& pnpm run build && pnpm run linter && pnpm run start:bot",
     "linter": "pnpm run lint && pnpm run lint:fix",
     "lint": "eslint .",
@@ -21,7 +22,7 @@
     "date-fns": "^4.1.0",
     "discord.js": "14.19.0",
     "f-formatter": "0.3.1",
-    "fock-logger": "6.2.3",
+    "fock-logger": "6.3.1",
     "openai": "4.83.0",
     "random-js": "^2.1.0",
     "telegraf": "^4.16.3"

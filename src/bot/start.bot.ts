@@ -2,8 +2,6 @@ import { Env, Debug } from "@develop";
 
 import "./index.constants";
 
-import Formatter, { Colors } from "f-formatter";
-
 import Loggers from "./loggers.names";
 
 import { LoginDiscord } from "@discord/discord.bot";
@@ -18,7 +16,7 @@ import connect from "@thevoidcommunity/the-void-database/database/connection";
 
 connect(Env.env.MONGOOSE_URL);
 
-Debug.Log([new Formatter().Color("Начало программы", Colors.magenta)]);
+Debug.log.execute("Начало программы");
 
 const bot = Env.env.BOT || "all";
 

@@ -1,28 +1,31 @@
 /* eslint-disable */
 
 import Env from "./env.service";
-import Logger from "./logger.service";
+import Logger, { Colors } from "./logger.service";
 
 const warn = "\n------------- !Внимание! --------------\n";
 const toString = <T = unknown>(data: T) => JSON.stringify(data, undefined, 2);
 
 class Debug {
-  private static readonly _log = new Logger("Debugger", {
+  public static readonly log = new Logger("Debugger", {
     write: true,
     prefix: "debug",
-    level: "info"
+    level: "info",
+    colors: [Colors.cyan, Colors.magenta]
   });
 
-  private static readonly _error = new Logger("Errorer", {
+  public static readonly error = new Logger("Errorer", {
     write: true,
     prefix: "error",
-    level: "err"
+    level: "error",
+    colors: [Colors.red, Colors.red]
   });
 
-  private static readonly _warn = new Logger("Warner", {
+  public static readonly warn = new Logger("Warner", {
     write: true,
     prefix: "warn",
-    level: "warn"
+    level: "warn",
+    colors: [Colors.yellow, Colors.magenta]
   });
 
   public static readonly Console = console;
@@ -31,7 +34,7 @@ class Debug {
     msg: T | T[],
     type: "error" | "warn"
   ) => {
-    const logger = `_${type}` as `_${typeof type}`;
+    const logger = `${type}` as `${typeof type}`;
     const error: T[] = Array.isArray(msg) ? msg : [msg];
 
     const text = error
@@ -50,7 +53,7 @@ class Debug {
   ): void => {
     message = Array.isArray(message) ? message : [message];
 
-    if ((enabled || Env.env.DEVELOP_MODE === "true") && !trace) this._log.execute(message);
+    if ((enabled || Env.env.DEVELOP_MODE === "true") && !trace) this.log.execute(message);
 
     if (trace) {
       const text = message
@@ -63,8 +66,8 @@ class Debug {
         )
         .join("\n");
 
-      this._log.execute(text);
-      this._log.write(text);
+      this.log.execute(text);
+      this.log.write(text);
     }
   };
 
