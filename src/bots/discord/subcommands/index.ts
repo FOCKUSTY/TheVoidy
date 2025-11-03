@@ -1,4 +1,4 @@
-import { Logger } from "@develop";
+import { env, Logger } from "@develop";
 import { Subcommand, SubcommandsInitializer } from "@discord/types/command.type";
 
 import { readdirSync } from "node:fs";
@@ -6,8 +6,7 @@ import { join } from "node:path";
 import { Response } from "./constants";
 import { CommandInteraction } from "discord.js";
 
-const EXTENTION = process.env.NODE_ENV === "prod" ? "js" : "ts";
-const REG_EXP = new RegExp(`[\\w\\W]+\\.subcommand\\.${EXTENTION}`);
+const REG_EXP = new RegExp(`[\\w\\W]+\\.subcommand\\.${env.FILE_TYPE}`);
 
 export class SubcommandsDeployer {
   private readonly logger = new Logger("Commands");

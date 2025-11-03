@@ -27,8 +27,7 @@ export default new Command({
     ),
   async execute(interaction: CommandInteraction, modules) {
     const command = interaction.options.get("command")?.value as string;
-
-    const enabled = CommandsModule.switchCommand(command)[command];
+    const enabled = (await CommandsModule.switchCommand(command))[command];
 
     return interaction
       .reply({

@@ -1,24 +1,59 @@
-import { Env, Logger, Debug, Colors } from "@develop";
+import { env, Logger, Debug, Colors } from "@develop";
 import Command, { DeployCommands } from "@discord/types/command.type";
+import { REST, Routes, Collection } from "discord.js";
+import { join } from "node:path";
+import { readFileSync } from "node:fs";
+import { FilesLoader } from "@utility/services/loaders/files.loader";
 
-import { REST, Routes } from "discord.js";
+const COMMAND_TYPES = ["global", "guild"] as const;
+const FILE_EXTENSIONS = {
+  TYPESCRIPT_DEFINITION: ".d.ts",
+  COMMANDS_FILE: ".commands"
+} as const;
+const LOGGER_TYPES = {
+  COMMANDS: "Commands",
+  UPDATER: "Updater"
+} as const;
+const UPDATE_MESSAGES = {
+  GLOBAL: {
+    START: "Начало обновления глобальных (/) команд",
+    SUCCESS: "Успешно обновлены глобальные (/) команды"
+  },
+  GUILD: {
+    START: "Начало обновления (/) команд гильдии",
+    SUCCESS: "Успешно обновлены (/) команды гильдии"
+  }
+} as const;
 
-import { Collection } from "discord.js";
+interface CommandsData {
+  collection: Collection<string, Command>;
+  global: Command[];
+  guild: Command[];
+  all: Command[];
+  commands: {
+    guild: DeployCommands;
+    global: DeployCommands;
+    all: DeployCommands;
+  };
+}
 
-import path, { join } from "node:path";
-import fs, { readFileSync } from "node:fs";
+interface CommandsFileData {
+  all: { [key: string]: boolean };
+  guild: { [key: string]: boolean };
+  global: { [key: string]: boolean };
+}
 
-const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
+type Callback<T> = (path: string, file: { default: Command }) => Command<T>;
 
 class Deployer {
-  private readonly _logger = new Logger("Commands");
-  private readonly _updater = new Logger("Updater");
-  private readonly _rest: REST = new REST().setToken(Env.env.CLIENT_TOKEN);
+  private readonly _logger = new Logger(LOGGER_TYPES.COMMANDS);
+  private readonly _updater = new Logger(LOGGER_TYPES.UPDATER);
+  private readonly _rest: REST = new REST().setToken(env.CLIENT_TOKEN);
 
   public constructor(public readonly collection: Collection<string, Command>) {}
 
-  public execute() {
-    const data = {
+  public async execute() {
+    const data: CommandsData = {
       collection: this.collection,
       global: [],
       guild: [],
@@ -28,26 +63,16 @@ class Deployer {
         global: new Map(),
         guild: new Map()
       }
-    } as {
-      collection: Collection<string, Command>;
-      global: Command[];
-      guild: Command[];
-      all: Command[];
-      commands: {
-        guild: DeployCommands;
-        global: DeployCommands;
-        all: DeployCommands;
-      };
     };
 
-    (<const>["global", "guild"]).forEach((type) => {
-      const commands = this.ForEachCommands<Command>(type, ({ commandPath }) => {
-        return require(commandPath).default;
+    for (const type of COMMAND_TYPES) {
+      const commandsList = await this.ForEachCommands<void>(type, (path) => {
+        return require(path).default;
       });
 
-      data[type] = commands;
-      data.commands[type] = new Map(commands.map((command) => [command.name, command]));
-    });
+      data[type] = commandsList;
+      data.commands[type] = new Map(commandsList.map((command) => [command.name, command]));
+    };
 
     data.all = [...data.global, ...data.guild];
     data.all.forEach((command) => {
@@ -67,13 +92,11 @@ class Deployer {
       this._logger.execute(`Команда ${command.data.name}${space}${options}`);
     });
 
-    this.update(data.commands);
-
     return data;
   }
 
-  public find() {
-    const data = {
+  public async find() {
+    const data: CommandsData = {
       collection: this.collection,
       global: [],
       guild: [],
@@ -83,26 +106,16 @@ class Deployer {
         global: new Map(),
         guild: new Map()
       }
-    } as {
-      collection: Collection<string, Command>;
-      global: Command[];
-      guild: Command[];
-      all: Command[];
-      commands: {
-        guild: DeployCommands;
-        global: DeployCommands;
-        all: DeployCommands;
-      };
     };
 
-    (<const>["global", "guild"]).forEach((type) => {
-      const commands = this.ForEachCommands<Command>(type, ({ commandPath }) => {
-        return require(commandPath).default;
+    for (const type of COMMAND_TYPES) {
+      const commandsList = await this.ForEachCommands<void>(type, (path) => {
+        return require(path).default;
       });
 
-      data[type] = commands;
-      data.commands[type] = new Map(commands.map((command) => [command.name, command]));
-    });
+      data[type] = commandsList;
+      data.commands[type] = new Map(commandsList.map((command) => [command.name, command]));
+    };
 
     data.all = [...data.global, ...data.guild];
 
@@ -117,11 +130,11 @@ class Deployer {
         .filter((key) => global[key])
         .map((key) => commands.global.get(key)?.data.toJSON());
 
-      this._updater.execute("Начало обновления глобальных (/) команд");
-      await this._rest.put(Routes.applicationCommands(Env.env.CLIENT_ID), {
+      this._updater.execute(UPDATE_MESSAGES.GLOBAL.START);
+      await this._rest.put(Routes.applicationCommands(env.CLIENT_ID), {
         body: globalJson
       });
-      this._updater.execute("Успешно обновлены глобальные (/) команды", {
+      this._updater.execute(UPDATE_MESSAGES.GLOBAL.SUCCESS, {
         color: Colors.green
       });
 
@@ -129,11 +142,11 @@ class Deployer {
         .filter((key) => guild[key])
         .map((key) => commands.guild.get(key)?.data.toJSON());
 
-      this._updater.execute("Начало обновления (/) команд гильдии");
-      await this._rest.put(Routes.applicationGuildCommands(Env.env.CLIENT_ID, Env.env.GUILD_ID), {
+      this._updater.execute(UPDATE_MESSAGES.GUILD.START);
+      await this._rest.put(Routes.applicationGuildCommands(env.CLIENT_ID, env.GUILD_ID), {
         body: guildJson
       });
-      this._updater.execute("Успешно обновлены (/) команды гильдии", {
+      this._updater.execute(UPDATE_MESSAGES.GUILD.SUCCESS, {
         color: Colors.green
       });
     } catch (err) {
@@ -141,43 +154,22 @@ class Deployer {
     }
   };
 
-  public static readCommandsFile = (): {
-    all: { [key: string]: boolean };
-    guild: { [key: string]: boolean };
-    global: { [key: string]: boolean };
-  } => {
-    return JSON.parse(readFileSync(join(__dirname, ".commands"), "utf-8"));
+  public static readCommandsFile = (): CommandsFileData => {
+    return JSON.parse(readFileSync(join(__dirname, FILE_EXTENSIONS.COMMANDS_FILE), "utf-8"));
   };
 
-  private ForEachCommands<T>(
+  private async ForEachCommands<T>(
     type: "guild" | "global",
-    func: ({
-      commandPath,
-      commands,
-      modifierPath
-    }: {
-      commandPath: string;
-      modifierPath: string;
-      commands: string[];
-    }) => T
-  ) {
-    return fs
-      .readdirSync(path.join(__dirname, type))
-      .map((folder) => {
-        const modifierPath = path.join(__dirname, type, folder);
+    callback: Callback<T>
+  ): Promise<Command<T>[]> {
+    const typeDir = join(__dirname, type);
+    const loader = new FilesLoader<{ default: Command }>(typeDir);
+    const commands = await loader.execute(callback, (path) => {
+      const commandFileValided = path.endsWith(`.${env.FILE_TYPE}`) && !path.endsWith(FILE_EXTENSIONS.TYPESCRIPT_DEFINITION);
+      return !commandFileValided;
+    });
 
-        return fs
-          .readdirSync(modifierPath)
-          .filter((command: string) => command.endsWith(fileType) && !command.endsWith(".d.ts"))
-          .map((commandPath, _index, commands) => {
-            return func({
-              commandPath: path.join(modifierPath, commandPath),
-              modifierPath,
-              commands
-            });
-          });
-      })
-      .flatMap((v) => v);
+    return commands;
   }
 }
 

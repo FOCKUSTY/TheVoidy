@@ -37,15 +37,13 @@ const Client = new DiscordClient({
 export const Commands = new Collection<string, Command>();
 export const Cooldowns = new Collection();
 
-type ModulesResolverReturn = ReturnType<typeof ModulesResolver>;
+type ModulesResolverReturn = Awaited<ReturnType<typeof ModulesResolver>>;
 export type ModulesType = {
-  [P in keyof ModulesResolverReturn]: ReturnType<ModulesResolverReturn[P]["execute"]>;
+  [P in keyof ModulesResolverReturn]: Awaited<ReturnType<ModulesResolverReturn[P]["execute"]>>;
 };
 export const Modules: ModulesType = {} as ModulesType;
 
-const fileType: ".ts" | ".js" = Env.env.NODE_ENV === "prod" ? ".js" : ".ts";
-
-const ModulesResolver = () => {
+const ModulesResolver = async() => {
   return {
     commands: new CommandsModule(true, Commands),
     kristy: new KristyChatModule()
@@ -55,14 +53,15 @@ const ModulesResolver = () => {
 const loader = new Logger("Loader");
 
 const Login = async (clientToken: string, services: Services) => {
-  const modules = Object.fromEntries(
-    Object.values(ModulesResolver()).map((data) => {
-      loader.execute("Загрузка модуля: " + data.name);
-      return [data.name, data.execute(Client)];
-    })
-  );
+  const modules = await ModulesResolver();
+  for (const key in modules) {
+    const module = modules[key as keyof ModulesType];
+    loader.execute("Загрузка модуля: " + key);
+    await module.execute(Client);
+  }
+
   Object.keys(modules).forEach(
-    (key) => ((Modules as { [key: string]: unknown })[key] = modules[key])
+    (key) => ((Modules as { [key: string]: unknown })[key] = modules[key as keyof ModulesType])
   );
 
   const modalListener = new ML(services);

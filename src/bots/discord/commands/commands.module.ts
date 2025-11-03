@@ -1,6 +1,6 @@
 import { Collection } from "discord.js";
-import path from "path";
-import fs from "fs";
+import { join } from "node:path";
+import { promises as fs, existsSync } from "node:fs";
 
 import Deployer from "./deploy.commands";
 import Command, { DeployCommands } from "@discord/types/command.type";
@@ -37,13 +37,16 @@ export let cache: {
   guild: {}
 };
 
-fs.writeFileSync(
-  path.join(__dirname, ".commands"),
-  fs.existsSync(path.join(__dirname, ".commands"))
-    ? fs.readFileSync(path.join(__dirname, ".commands"))
-    : JSON.stringify(cache, undefined, 2),
-  "utf-8"
-);
+const initCommandsFile = async () => {
+  const commandsPath = join(__dirname, ".commands");
+  const content = existsSync(commandsPath)
+    ? await fs.readFile(commandsPath, "utf-8")
+    : JSON.stringify(cache, undefined, 2);
+    
+  await fs.writeFile(commandsPath, content, "utf-8");
+};
+
+initCommandsFile().catch(console.error);
 
 export class CommandsModule {
   public readonly name = "commands" as const;
@@ -57,21 +60,24 @@ export class CommandsModule {
     this.deployer = new Deployer(commandsCollection);
   }
 
-  public execute() {
+  public async execute() {
     if (!this.actived) {
       return false as const;
     }
 
-    CommandsModule.toJson(this.deployer.find());
-    this.commands = this.deployer.execute();
+    const foundCommands = await this.deployer.find();
+    await CommandsModule.toJson(foundCommands);
+    
+    const executedCommands = await this.deployer.execute();
+    this.commands = executedCommands;
     data = this.commands;
 
-    this.deployer.update(this.commands.commands);
+    await this.deployer.update(this.commands.commands);
 
     return this;
   }
 
-  public static toJson(commands: { global: Command[]; guild: Command[]; all: Command[] }) {
+  public static async toJson(commands: { global: Command[]; guild: Command[]; all: Command[] }) {
     cache = Object.fromEntries(
       ["guild", "global", "all"].map((key) => [
         key,
@@ -88,8 +94,9 @@ export class CommandsModule {
       global: { [key: string]: boolean };
     };
 
-    fs.writeFileSync(
-      path.join(__dirname, ".commands"),
+    const commandsPath = join(__dirname, ".commands");
+    await fs.writeFile(
+      commandsPath,
       JSON.stringify(cache, undefined, 2),
       "utf-8"
     );
@@ -97,14 +104,15 @@ export class CommandsModule {
     return cache;
   }
 
-  public static switchCommand(commandName: string) {
+  public static async switchCommand(commandName: string): Promise<{ [key: string]: boolean }> {
     cache.all[commandName] = !cache.all[commandName];
     if (cache.global[commandName] !== undefined)
       cache.global[commandName] = !cache.global[commandName];
     else cache.guild[commandName] = !cache.guild[commandName];
 
-    fs.writeFileSync(
-      path.join(__dirname, ".commands"),
+    const commandsPath = join(__dirname, ".commands");
+    await fs.writeFile(
+      commandsPath,
       JSON.stringify(cache, undefined, 2),
       "utf-8"
     );
