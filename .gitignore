@@ -28,6 +28,8 @@ node_modules/
 .env.production.local
 .env.local
 
+.commands
+
 # build
 build/
 dist/
