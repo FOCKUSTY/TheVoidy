@@ -22,7 +22,7 @@ const formatter = new Formatter();
 const objects = new ObjectLoader().execute();
 
 class RandomActiviy {
-  private readonly Logger = new Logger("Activity").execute;
+  private readonly _logger = new Logger("Activity");
 
   private readonly _client: DiscordClient;
   private readonly _clientLoader = new ClientLoader(objects, utility.banwords);
@@ -126,7 +126,7 @@ class RandomActiviy {
 
     const Log = (activity: Activity) => {
       if (this._setActivity) {
-        this.Logger(`Устанавливаю активность: "${activity.text}", тип: ${activity.type}`);
+        this._logger.execute(`Устанавливаю активность: "${activity.text}", тип: ${activity.type}`);
       }
 
       return { text: activity.text, type: activity.type };

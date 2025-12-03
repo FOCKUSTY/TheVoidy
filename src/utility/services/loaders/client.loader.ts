@@ -1,25 +1,32 @@
 import { Logger } from "@develop";
 
 import { Client as DiscordClient } from "discord.js";
+import Formatter, { Colors } from "f-formatter";
 
 import Filter from "../service/filter.service";
-
-import Formatter, { Colors } from "f-formatter";
 
 const guilds: string[] = [];
 const users: string[] = [];
 const names: string[] = [];
+const getData = (type: DataType) => type === "users" ? users : guilds;
 
 const formatter = new Formatter();
 
+type DataType = "users" | "guilds";
 export type Objects = {
   idea: { idea: string; ideaDetail: string }[];
   download: string[];
   names: string[];
 };
 
+const ruWords: Record<DataType, [string, string]> = {
+  users: ["пользователя", "пользователей"],
+  guilds: ["гильдии", "гильдий"]
+};
+const formatRuWords = (number: number, type: DataType) => formatter.RuWords(number, ruWords[type]);
+
 export class ClientLoader {
-  private readonly logger = new Logger("Loader");
+  private readonly _logger = new Logger("Loader");
   private readonly _filter: Filter;
 
   private readonly _objects: Objects;
@@ -36,59 +43,50 @@ export class ClientLoader {
     this._names = names;
   }
 
-  private readonly UsersLoader = async (Client: DiscordClient) => {
-    const size = Client.users.cache.filter((u) => !u.bot).size;
-
-    this.logger.execute(`Загрузка ${size} ` + formatter.RuWords(size, ["пользователя", "пользователей"]), {
+  private async load(client: DiscordClient, type: DataType) {
+    const size = type === "users"
+      ? client.users.cache.filter((u) => !u.bot).size
+      : client.guilds.cache.size;
+  
+    this._logger.execute(`Загрузка ${size} ` + formatRuWords(size, type), {
       color: Colors.yellow
     });
-
-    Client.users.cache.forEach((user) => {
-      const name = this._filter.userFilter(user);
-
-      if (name) users.push(name);
+  
+    const data = getData(type);
+    client[type].cache.forEach((user) => {
+      const name = this._filter.filter(user, type);
+      if (!name) {
+        return;
+      }
+  
+      data.push(name);
     });
-
-    if (size - users.length > 0)
-      this.logger.execute(
-        `Отсеивание ${size - users.length} ${formatter.RuWords(size - users.length, ["пользователя", "пользователей"])}`,
+  
+    const eliminated = size - data.length;
+    if (eliminated > 0) {
+      this._logger.execute(
+        `Отсеивание ${eliminated} ${formatRuWords(eliminated, type)}`,
         { color: Colors.yellow }
       );
-
-    this.logger.execute(
-      `Загрузка ${users.length} ${formatter.RuWords(users.length, ["пользователя", "пользователей"])} успешна`,
+    }
+  
+    this._logger.execute(
+      `Загрузка ${data.length} ${formatRuWords(data.length, type)} успешна`,
       { color: Colors.green }
     );
+  }
+
+  private async loadUsers(client: DiscordClient) {
+    this.load(client, "users");
   };
 
-  private readonly GuildsLoader = async (Client: DiscordClient) => {
-    const size = Client.guilds.cache.size;
-
-    this.logger.execute(`Загрузка ${size} ` + formatter.RuWords(size, ["гильдии", "гильдий"]), {
-      color: Colors.yellow
-    });
-
-    Client.guilds.cache.forEach((guild) => {
-      const name = this._filter.guildFilter(guild);
-
-      if (name) guilds.push(name);
-    });
-
-    if (size - guilds.length > 0)
-      this.logger.execute(
-        `Отсеивание ${size - guilds.length} ${formatter.RuWords(size - guilds.length, ["гильдии", "гильдий"])}`,
-        { color: Colors.yellow }
-      );
-
-    this.logger.execute(
-      `Загрузка ${guilds.length} ${formatter.RuWords(guilds.length, ["гильдии", "гильдий"])} успешна`,
-      { color: Colors.green }
-    );
+  private async loadGuilds(client: DiscordClient) {
+    this.load(client, "guilds");
   };
 
-  public readonly execute = async (Client: DiscordClient) => {
-    this.UsersLoader(Client);
-    this.GuildsLoader(Client);
+  public readonly execute = async (client: DiscordClient) => {
+    this.loadUsers(client);
+    this.loadGuilds(client);
 
     names.push(...this._objects.names);
   };

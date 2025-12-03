@@ -33,6 +33,26 @@ export class Filter {
     return this._last_value;
   };
 
+  public filter<T extends "users"|"guilds">(data: T extends "users" ? User : Guild, type: T) {
+    if (type === "guilds") {
+      const verifiedGuild = this.execute((data as Guild).name, "guild");
+      this._last_value = verifiedGuild;
+
+      return this._last_value || verifiedGuild;
+    }
+
+    const user = data as User;
+    if (user.bot) {
+      this._last_value = null;
+    } else {
+      const verifiedUser = this.execute(user.globalName || user.username);
+
+      this._last_value = verifiedUser;
+    }
+
+    return this._last_value;
+  }
+
   public readonly guildFilter = (guild: Guild): string | null => {
     const verifiedGuild = this.execute(guild.name, "guild");
 
