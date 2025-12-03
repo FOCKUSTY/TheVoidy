@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {
   CommandInteraction,
   InteractionReplyOptions,
@@ -56,6 +54,7 @@ export class Command<T = void> {
     this.execute = data.execute;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private async init(interaction: CommandInteraction, modules: Modules): Promise<T | void> {
     await interaction.reply(this._error);
   }

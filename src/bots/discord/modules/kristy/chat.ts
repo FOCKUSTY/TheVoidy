@@ -113,7 +113,7 @@ export class KristyChatModule {
     if (message.author.id !== env.BOT_LOVE_ID) return false;
     if (!message.mentions.has(message.client.user)) return false;
 
-    const now = new Date().getTime();
+    // const now = new Date().getTime();
 
     return true;
   }

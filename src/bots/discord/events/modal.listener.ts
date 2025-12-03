@@ -1,4 +1,4 @@
-import { Events, Interaction, InteractionType, MessageFlags } from "discord.js";
+import { Interaction, InteractionType, MessageFlags } from "discord.js";
 
 import { Debug } from "@develop";
 

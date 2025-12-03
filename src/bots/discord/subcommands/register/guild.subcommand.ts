@@ -1,6 +1,6 @@
 import { Subcommand } from "@discord/types/command.type";
 import { Response } from "../constants";
-import { CommandInteraction, SlashCommandSubcommandBuilder, Sticker } from "discord.js";
+import { CommandInteraction, SlashCommandSubcommandBuilder } from "discord.js";
 
 import { MODELS } from "@thevoidcommunity/the-void-database/database";
 import { IGuild } from "@thevoidcommunity/the-void-database/types/guild.type";

@@ -1,4 +1,4 @@
-import { Env, Debug, Logger } from "@develop";
+import { Debug, Logger } from "@develop";
 
 import ICL from "./events/interaction-create.listener";
 import ML from "./events/modal.listener";
@@ -7,9 +7,6 @@ import KristyChatModule from "./modules/kristy/chat";
 
 import CommandsModule from "./commands/commands.module";
 import DeployEvents from "./deploy.events";
-
-import path from "path";
-import fs from "fs";
 
 import {
   Client as DiscordClient,

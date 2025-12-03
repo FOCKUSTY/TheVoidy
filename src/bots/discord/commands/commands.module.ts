@@ -5,17 +5,7 @@ import { promises as fs, existsSync } from "node:fs";
 import Deployer from "./deploy.commands";
 import Command, { DeployCommands } from "@discord/types/command.type";
 
-export let data = {
-  collection: new Collection(),
-  global: [],
-  guild: [],
-  all: [],
-  commands: {
-    all: new Map(),
-    global: new Map(),
-    guild: new Map()
-  }
-} as {
+export let data: {
   collection: Collection<string, Command>;
   global: Command[];
   guild: Command[];
@@ -25,6 +15,16 @@ export let data = {
     global: DeployCommands;
     all: DeployCommands;
   };
+} = {
+  collection: new Collection(),
+  global: [],
+  guild: [],
+  all: [],
+  commands: {
+    all: new Map(),
+    global: new Map(),
+    guild: new Map()
+  }
 };
 
 export let cache: {
