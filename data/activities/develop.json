@@ -1,0 +1,16 @@
+[
+  {
+    "text": "${THEVOIDSBOT_NREVERSE} готов${typend_A} к работе",
+    "type": "custom"
+  },
+  {
+    "text": "${THEVOIDSBOT_NREVERSE} Community X Bottomless Hat",
+    "type": "custom"
+  },
+  { "text": "${THEVOIDSBOT_NREVERSE} Community~", "type": "custom" },
+  { "text": "${THEVOIDSBOT_NREVERSE}", "type": "custom" },
+  { "text": "${THEVOIDSBOT_NREVERSE}~", "type": "custom" },
+  { "text": "Бот вернулся в онлайн !", "type": "custom" },
+  { "text": "Версия ${version}", "type": "custom" },
+  { "text": "Я снова онлайн !", "type": "custom" }
+]

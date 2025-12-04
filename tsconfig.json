@@ -26,7 +26,8 @@
       "@types/*": ["./src/types/*"],
       "@utility/*": ["./src/utility/*"],
       "@develop/*": ["./src/utility/develop/*"],
-      "@services/*": ["./src/utility/services/*"]
+      "@services/*": ["./src/utility/services/*"],
+      "@database/*": ["./generated/*"]
     }
   },
   "include": ["./**/*.ts"],

@@ -6,6 +6,8 @@
 
 !start.bat
 
+generated/
+
 # .lock
 pnpm-lock.yaml
 package-lock.json
@@ -38,3 +40,4 @@ out/
 # vscode
 .vs
 .vscode
+/src/generated/prisma

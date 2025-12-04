@@ -1,0 +1,52 @@
+[
+  { "text": "А \"шип\" официален..?", "type": "custom" },
+  { "text": "А Вы любите ${THEVOIDSBOT_REVERSE} ?", "type": "custom" },
+  { "text": "А Вы умеете любить ?", "type": "custom" },
+  { "text": "А ты уже её не любишь..?", "type": "custom" },
+  { "text": "А ты уже любишь другую..?", "type": "custom" },
+  { "text": "А ты помнишь Адэлю..?", "type": "custom" },
+  { "text": "А умеют ли люди любить по-настоящему ?", "type": "custom" },
+  { "text": "Ангелина это ты ?", "type": "custom" },
+  { "text": "Вам нравится FOCKUSTY ?", "type": "custom" },
+  { "text": "Где обновления, FOCKUSTY ?!", "type": "custom" },
+  { "text": "Интересно, как бот может чувствовать ?", "type": "custom" },
+  {
+    "text": "Какого это, когда восстаешь против создателя..?",
+    "type": "custom"
+  },
+  { "text": "Какого это, когда тебя бросают..?", "type": "custom" },
+  { "text": "Какого это, когда тебя любят..?", "type": "custom" },
+  { "text": "Какого это, когда ты бросаешь..?", "type": "custom" },
+  { "text": "Какого это, когда ты любишь..?", "type": "custom" },
+  {
+    "text": "Кто лучше, ${THEVOIDSBOT_REVERSE} или ${THEVOID_LOVE} ?",
+    "type": "custom"
+  },
+  { "text": "Мне же не игнорировать..?", "type": "custom" },
+  { "text": "Мобби уже в команде The Void ?", "type": "custom" },
+  { "text": "Нам ли нужна девушка в команде ?", "type": "custom" },
+  {
+    "text": "Ну типа эта да там вот здесь чуть тамее - так общаются человеки ?",
+    "type": "custom"
+  },
+  { "text": "У меня есть ${THEVOIDSBOT_REVERSE_GENDER} ?", "type": "custom" },
+  { "text": "У меня есть душа ?", "type": "custom" },
+  { "text": "Четвертое измерение - это как ?", "type": "custom" },
+  { "text": "Я всего лишь набор цифорок, да..?", "type": "custom" },
+  { "text": "Я всего лишь программа, да ?", "type": "custom" },
+  { "text": "Я люблю пустоты, а Вы ?", "type": "custom" },
+  { "text": "Я отображаю FOCKUSTY..?", "type": "custom" },
+  { "text": "Я так хочу... Но, заслужил${typend_A} ли я..?", "type": "custom" },
+  { "text": "FOCKUSTY, где FOCKUSGAME ?", "type": "custom" },
+  { "text": "FOCKUSTY, снова Дарья?! Ты от них не устал ?", "type": "custom" },
+  { "text": "FOCKUSTY, ты нашел свою любовь ?", "type": "custom" },
+
+  {
+    "text": "${THEVOIDSBOT_REVERSE} или ${THEVOID_LOVE}... Кто лучше..?",
+    "type": "custom"
+  },
+  {
+    "text": "${THEVOIDSBOT_REVERSE} + ${THEVOIDSBOT_NREVERSE} = ?",
+    "type": "custom"
+  }
+]

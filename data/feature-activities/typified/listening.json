@@ -1,0 +1,12 @@
+{
+  "type": "listening",
+  "activities": [
+    "Видео на фоне",
+    "Классику",
+    "Музыку",
+    "Плейлисты ${THEVOIDSBOT_LOVE}",
+    "Плейлисты ${THEVOIDSBOT_REVERSE}",
+    "Рок",
+    "Фонк"
+  ]
+}

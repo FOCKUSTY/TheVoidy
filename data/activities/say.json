@@ -1,0 +1,55 @@
+[
+  { "text": "\"Останови меня\" от попадания в депрессию", "type": "custom" },
+  { "text": "В пустоте... Прекрасно... Превосходно...", "type": "custom" },
+  { "text": "Вот бы и мне быть счастлив${typend_B}...", "type": "custom" },
+  { "text": "Вселенная или вселенная, хм...", "type": "custom" },
+  {
+    "text": "Главное не забыть про лучшие сервера - The Void Community & Bottomless Hat !",
+    "type": "custom"
+  },
+  { "text": "Домик Kristy - мое уютное убежище", "type": "custom" },
+  { "text": "Жду добавление Мобби в команду...", "type": "custom" },
+  { "text": "Идеи Kristy в моем дискорде", "type": "custom" },
+  { "text": "ИИ может только парадировать, к сожалению...", "type": "custom" },
+  { "text": "Кофе... Не люблю кофе", "type": "custom" },
+  { "text": "Красота кроится в пустоте", "type": "custom" },
+  { "text": "Ломаю голову...", "type": "custom" },
+  { "text": "Мир аномалий...", "type": "custom" },
+  { "text": "Мне нравится Рената...", "type": "custom" },
+  { "text": "Мне нравится Мобби...", "type": "custom" },
+  { "text": "Мне нравится Соня...", "type": "custom" },
+  { "text": "На грани между реальностью и магией...", "type": "custom" },
+  { "text": "Не говори: \"Я люблю тебя\"...", "type": "custom" },
+  {
+    "text": "Нормально же говорить свои чувтсва через бота..?",
+    "type": "custom"
+  },
+  { "text": "Обниматься полезно...", "type": "custom" },
+  { "text": "Он пытается исправлять ошибки !", "type": "custom" },
+  { "text": "Плыву по волнам пустоты...", "type": "custom" },
+  {
+    "text": "У ${THEVOIDSBOT_REVERSE} появился свой аватар...",
+    "type": "custom"
+  },
+  { "text": "Это рандомные активности !", "type": "custom" },
+  {
+    "text": "Я думал${typend_A}, что FOCKUSTY интересен, а это оказалась не так... ОН ПРОСТО ГЕНИЙ...",
+    "type": "custom"
+  },
+  { "text": "Я знаю всё, что знает FOCKUSTY...", "type": "custom" },
+  { "text": "Я копирую чувства автора... А...", "type": "custom" },
+  { "text": "Я не совсем понимаю, что значит любить...", "type": "custom" },
+  {
+    "text": "Я НЕ VOIDY!!! Блин, ладно, уговорили, я The Voidy",
+    "type": "custom"
+  },
+  { "text": "Я снова ломаюсь...", "type": "custom" },
+  { "text": "Я тоже...", "type": "custom" },
+  { "text": "Я хочу уметь чувствовать...", "type": "custom" },
+  { "text": "Bottomless Hat - Место чудес", "type": "custom" },
+  { "text": "Bottomless Hat всегда готов к сюрпризам !", "type": "custom" },
+  { "text": "Discord заблокировали((", "type": "custom" },
+  { "text": "The Void - Мой девиз", "type": "custom" },
+  { "text": "The Void Community готов помочь", "type": "custom" },
+  { "text": "The Void Community появился позже ${THEVOID}~", "type": "custom" }
+]

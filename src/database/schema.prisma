@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AuthUser {
+  id String @id @unique @default(uuid())
+
+  serviceId String @unique
+  profileId String @unique
+
+  createdAt DateTime @default(now())
+
+  accessToken  String
+  refreshToken String?
+
+  type String
+}
+
+model GuildConfig {
+  id      String @id @default(cuid())
+  guildId String @unique
+
+  grantRolesOnJoin String[] @default([])
+
+  leaveUserDm         Json?
+  joinChannelMessage  Json?
+  leaveChannelMessage Json?
+  joinUserDm          Json?
+
+  botJoinLog            Json?
+  botLeaveLog           Json?
+  userJoinLog           Json?
+  userLeaveLog          Json?
+  messageSentLog        Json?
+  messageUpdatedLog     Json?
+  messageDeletedLog     Json?
+  profileChangeLog      Json?
+  activityChangeLog     Json?
+  userMuteLog           Json?
+  userBanLog            Json?
+  rolesChangeLog        Json?
+  guildProfileChangeLog Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,18 @@
+[
+  { "text": "cmd: rmdir system32", "type": "custom" },
+  { "text": "cmd: ERROR!undefined", "type": "custom" },
+  {
+    "text": "cmd: thevoid --start-users=\"Kristy,FOCKSUTY,acula_1\"",
+    "type": "custom"
+  },
+  { "text": "cmd: npm delete FOCKUSTY", "type": "custom" },
+  { "text": "cmd: npm install ai", "type": "custom" },
+  { "text": "cmd: npm install kristy", "type": "custom" },
+  { "text": "cmd: npm install math", "type": "custom" },
+  {
+    "text": "cmd: npm install @thevoidcommunity/the-void-database",
+    "type": "custom"
+  },
+  { "text": "cmd: thevoid --update", "type": "custom" },
+  { "text": "cmd: tsc", "type": "custom" }
+]
