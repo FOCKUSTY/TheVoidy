@@ -55,6 +55,5 @@
     "onlyBuiltDependencies": [
       "node"
     ]
-  },
-  "packageManager": "pnpm@10.24.0"
+  }
 }
