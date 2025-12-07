@@ -18,13 +18,11 @@ const REQUIRED = [
   "TELEGRAM_TEAM_IDS",
   "BOT_LOVE_ID",
   "BOT_LOVE_CHANNEL_ID",
-  "MONGOOSE_URL",
+  "MONGOOSE_URL"
 ] as const;
 type Required = (typeof REQUIRED)[number];
 
-const SELF = [
-  "FILE_TYPE"
-] as const;
+const SELF = ["FILE_TYPE"] as const;
 type Self = (typeof SELF)[number];
 
 const ALL = [...REQUIRED, "OPEN_AI_KEY", "FRIEND_ID"] as const;

@@ -42,7 +42,7 @@ const initCommandsFile = async () => {
   const content = existsSync(commandsPath)
     ? await fs.readFile(commandsPath, "utf-8")
     : JSON.stringify(cache, undefined, 2);
-    
+
   await fs.writeFile(commandsPath, content, "utf-8");
 };
 
@@ -67,7 +67,7 @@ export class CommandsModule {
 
     const foundCommands = await this.deployer.find();
     await CommandsModule.toJson(foundCommands);
-    
+
     const executedCommands = await this.deployer.execute();
     this.commands = executedCommands;
     data = this.commands;
@@ -95,11 +95,7 @@ export class CommandsModule {
     };
 
     const commandsPath = join(__dirname, ".commands");
-    await fs.writeFile(
-      commandsPath,
-      JSON.stringify(cache, undefined, 2),
-      "utf-8"
-    );
+    await fs.writeFile(commandsPath, JSON.stringify(cache, undefined, 2), "utf-8");
 
     return cache;
   }
@@ -111,11 +107,7 @@ export class CommandsModule {
     else cache.guild[commandName] = !cache.guild[commandName];
 
     const commandsPath = join(__dirname, ".commands");
-    await fs.writeFile(
-      commandsPath,
-      JSON.stringify(cache, undefined, 2),
-      "utf-8"
-    );
+    await fs.writeFile(commandsPath, JSON.stringify(cache, undefined, 2), "utf-8");
 
     return cache.all;
   }

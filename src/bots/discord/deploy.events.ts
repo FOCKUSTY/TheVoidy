@@ -15,10 +15,10 @@ export class EventsLoader {
   private readonly logger = new Logger("Events");
   private readonly _client: DiscordClient = new Discord().client;
 
-  public constructor(private readonly _services: Services) {};
+  public constructor(private readonly _services: Services) {}
 
   public execute() {
-    return filesLoader.execute(({path}) => {
+    return filesLoader.execute(({ path }) => {
       this.logger.execute(`Загрузка прослушивателя ${path}`);
 
       const EventClass = require(path).default;
@@ -35,8 +35,8 @@ export class EventsLoader {
         Debug.Log(["Инициализация", event.tag + "..."]);
         this._client.on(event.tag, (...args) => event.execute(...args));
       }
-    })
+    });
   }
-};
+}
 
 export default EventsLoader;

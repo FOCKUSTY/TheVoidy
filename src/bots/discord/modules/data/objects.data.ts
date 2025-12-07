@@ -13,50 +13,52 @@ const DATA_FILES = {
 
 const FILES = {
   byFileName: DATA_FILES,
-  byFilePath: Object.fromEntries(Object.keys(DATA_FILES).map(k => [(DATA_FILES as Record<string, string>)[k], k]))
-}
+  byFilePath: Object.fromEntries(
+    Object.keys(DATA_FILES).map((k) => [(DATA_FILES as Record<string, string>)[k], k])
+  )
+};
 
 const ALL_FILES = Object.values(DATA_FILES as Record<string, string>);
 
 export type IdeaType = {
-  idea: string,
-  ideaDetail: string
-}
+  idea: string;
+  ideaDetail: string;
+};
 
 export type DownloadType = string;
 export type NameType = string;
 export type ConstantsType = Record<string, string>;
 
 export type ObjectsType = {
-  idea: IdeaType[],
-  download: DownloadType[],
-  names: NameType[],
-  constants: Record<string, string>
+  idea: IdeaType[];
+  download: DownloadType[];
+  names: NameType[];
+  constants: Record<string, string>;
 };
 
 const filesLoader = new RawFilesLoader(Data.path);
 
 export class ObjectsData {
-  private static _loaded: boolean|null = null
+  private static _loaded: boolean | null = null;
   private static _value: ObjectsType = {
     idea: [],
     download: [],
     names: [],
     constants: {}
-  }
+  };
 
-  private static formatFile({ data, path }: { data: string, path: string }) {
+  private static formatFile({ data, path }: { data: string; path: string }) {
     return {
       [FILES.byFilePath[path]]: JSON.parse(data)
-    }
-  };
+    };
+  }
 
   private static filterFile({ path }: { path: string }) {
     return !ALL_FILES.includes(path);
   }
 
   private static reduceAndConcatFiles<T extends Record<string, unknown>>(previous: T, current: T) {
-    return { 
+    return {
       ...previous,
       ...current
     };
@@ -66,7 +68,7 @@ export class ObjectsData {
     if (this._loaded === null) {
       throw new Error("Can not use object data, it is not loaded");
     }
-    
+
     return this._value;
   }
 
@@ -74,7 +76,7 @@ export class ObjectsData {
     if (ObjectsData._loaded === null) {
       return this.load();
     }
-    
+
     return ObjectsData._value;
   }
 
@@ -90,18 +92,18 @@ export class ObjectsData {
 
   public static [Symbol.iterator]() {
     const context = ObjectsData._value;
-    
-    return function*() {
+
+    return function* () {
       for (const k in context) {
         const key = k as keyof ObjectsType;
 
         yield {
           key,
           value: context[key],
-          object: context,
-        }
+          object: context
+        };
       }
-    }
+    };
   }
 
   public [Symbol.iterator]() {

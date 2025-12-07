@@ -1,4 +1,4 @@
-import { lstatSync, readdirSync } from "fs"
+import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
 
 export const DATA_PATH = join("./data");
@@ -19,7 +19,7 @@ export const getData = (): string[] => {
   } catch {
     return [];
   }
-}
+};
 
 export const DATA_CONTENT = getData();
 

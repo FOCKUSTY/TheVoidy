@@ -8,7 +8,7 @@ import Filter from "../service/filter.service";
 const guilds: string[] = [];
 const users: string[] = [];
 const names: string[] = [];
-const getData = (type: DataType) => type === "users" ? users : guilds;
+const getData = (type: DataType) => (type === "users" ? users : guilds);
 
 const formatter = new Formatter();
 
@@ -44,45 +44,42 @@ export class ClientLoader {
   }
 
   private async load(client: DiscordClient, type: DataType) {
-    const size = type === "users"
-      ? client.users.cache.filter((u) => !u.bot).size
-      : client.guilds.cache.size;
-  
+    const size =
+      type === "users" ? client.users.cache.filter((u) => !u.bot).size : client.guilds.cache.size;
+
     this._logger.execute(`Загрузка ${size} ` + formatRuWords(size, type), {
       color: Colors.yellow
     });
-  
+
     const data = getData(type);
     client[type].cache.forEach((user) => {
       const name = this._filter.filter(user, type);
       if (!name) {
         return;
       }
-  
+
       data.push(name);
     });
-  
+
     const eliminated = size - data.length;
     if (eliminated > 0) {
-      this._logger.execute(
-        `Отсеивание ${eliminated} ${formatRuWords(eliminated, type)}`,
-        { color: Colors.yellow }
-      );
+      this._logger.execute(`Отсеивание ${eliminated} ${formatRuWords(eliminated, type)}`, {
+        color: Colors.yellow
+      });
     }
-  
-    this._logger.execute(
-      `Загрузка ${data.length} ${formatRuWords(data.length, type)} успешна`,
-      { color: Colors.green }
-    );
+
+    this._logger.execute(`Загрузка ${data.length} ${formatRuWords(data.length, type)} успешна`, {
+      color: Colors.green
+    });
   }
 
   private async loadUsers(client: DiscordClient) {
     this.load(client, "users");
-  };
+  }
 
   private async loadGuilds(client: DiscordClient) {
     this.load(client, "guilds");
-  };
+  }
 
   public readonly execute = async (client: DiscordClient) => {
     this.loadUsers(client);

@@ -40,7 +40,7 @@ export type ModulesType = {
 };
 export const Modules: ModulesType = {} as ModulesType;
 
-const ModulesResolver = async() => {
+const ModulesResolver = async () => {
   return {
     commands: new CommandsModule(true, Commands),
     kristy: new KristyChatModule()

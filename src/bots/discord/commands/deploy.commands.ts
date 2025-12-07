@@ -72,7 +72,7 @@ class Deployer {
 
       data[type] = commandsList;
       data.commands[type] = new Map(commandsList.map((command) => [command.name, command]));
-    };
+    }
 
     data.all = [...data.global, ...data.guild];
     data.all.forEach((command) => {
@@ -115,7 +115,7 @@ class Deployer {
 
       data[type] = commandsList;
       data.commands[type] = new Map(commandsList.map((command) => [command.name, command]));
-    };
+    }
 
     data.all = [...data.global, ...data.guild];
 
@@ -165,7 +165,8 @@ class Deployer {
     const typeDir = join(__dirname, type);
     const loader = new JsFilesLoader<{ default: Command }>(typeDir);
     const commands = await loader.execute(callback, (path) => {
-      const commandFileValided = path.endsWith(`.${env.FILE_TYPE}`) && !path.endsWith(FILE_EXTENSIONS.TYPESCRIPT_DEFINITION);
+      const commandFileValided =
+        path.endsWith(`.${env.FILE_TYPE}`) && !path.endsWith(FILE_EXTENSIONS.TYPESCRIPT_DEFINITION);
       return !commandFileValided;
     });
 

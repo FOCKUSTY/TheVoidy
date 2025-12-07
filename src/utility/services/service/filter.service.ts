@@ -33,7 +33,7 @@ export class Filter {
     return this._last_value;
   };
 
-  public filter<T extends "users"|"guilds">(data: T extends "users" ? User : Guild, type: T) {
+  public filter<T extends "users" | "guilds">(data: T extends "users" ? User : Guild, type: T) {
     if (type === "guilds") {
       const verifiedGuild = this.execute((data as Guild).name, "guild");
       this._last_value = verifiedGuild;

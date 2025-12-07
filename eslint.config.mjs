@@ -46,7 +46,7 @@ export default [
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-invalid-void-type": "off",
-      "@typescript-eslint/unified-signatures": "off",
+      "@typescript-eslint/unified-signatures": "off"
     }
   }
 ];

@@ -1,16 +1,16 @@
 import { join } from "path";
 import { readdir, lstat } from "fs/promises";
 
-type Callback<T, K=void> = (data: {file: string, path: string, data: T}) => K;
+type Callback<T, K = void> = (data: { file: string; path: string; data: T }) => K;
 
 export abstract class FilesLoader<T> {
   public constructor(public readonly dir: string) {}
 
-  abstract execute<K=T>(format: Callback<T, K>, filter?: Callback<T>): Promise<K[]>;
+  abstract execute<K = T>(format: Callback<T, K>, filter?: Callback<T>): Promise<K[]>;
 
-  protected async resolveDir(dir: string): Promise<{paths: string[], files: string[]}> {
+  protected async resolveDir(dir: string): Promise<{ paths: string[]; files: string[] }> {
     const directory = await readdir(dir, { recursive: true });
-    
+
     const files: string[] = [];
     const paths: string[] = [];
 
