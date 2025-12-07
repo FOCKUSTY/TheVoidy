@@ -3,7 +3,7 @@ import Command, { DeployCommands } from "@discord/types/command.type";
 import { REST, Routes, Collection } from "discord.js";
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
-import { FilesLoader } from "@utility/services/loaders/files.loader";
+import { JsFilesLoader } from "@utility/services/loaders/js-files.loader";
 
 const COMMAND_TYPES = ["global", "guild"] as const;
 const FILE_EXTENSIONS = {
@@ -163,7 +163,7 @@ class Deployer {
     callback: Callback<T>
   ): Promise<Command<T>[]> {
     const typeDir = join(__dirname, type);
-    const loader = new FilesLoader<{ default: Command }>(typeDir);
+    const loader = new JsFilesLoader<{ default: Command }>(typeDir);
     const commands = await loader.execute(callback, (path) => {
       const commandFileValided = path.endsWith(`.${env.FILE_TYPE}`) && !path.endsWith(FILE_EXTENSIONS.TYPESCRIPT_DEFINITION);
       return !commandFileValided;

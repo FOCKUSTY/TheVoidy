@@ -3,13 +3,13 @@ import { Debug, Logger } from "@develop";
 import type { Client as DiscordClient } from "discord.js";
 
 import Discord from "./utility/service/discord.service";
-import { FilesLoader } from "@utility/services/loaders/files.loader";
+import { JsFilesLoader } from "@utility/services/loaders/js-files.loader";
 
 import { join } from "node:path";
 import { Services } from "@types";
 
 const dir = join(__dirname, "events");
-const filesLoader = new FilesLoader(dir);
+const filesLoader = new JsFilesLoader(dir);
 
 export class EventsLoader {
   private readonly logger = new Logger("Events");
@@ -18,7 +18,7 @@ export class EventsLoader {
   public constructor(private readonly _services: Services) {};
 
   public execute() {
-    return filesLoader.execute((path) => {
+    return filesLoader.execute(({path}) => {
       this.logger.execute(`Загрузка прослушивателя ${path}`);
 
       const EventClass = require(path).default;

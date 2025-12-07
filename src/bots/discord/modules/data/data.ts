@@ -16,13 +16,14 @@ export const getData = (): string[] => {
     }
 
     return readdirSync(DATA_PATH);
-  } catch (error) {
+  } catch {
     return [];
   }
 }
 
 export const DATA_CONTENT = getData();
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class Data {
   public static readonly path = DATA_PATH;
   public static readonly content = DATA_CONTENT;
