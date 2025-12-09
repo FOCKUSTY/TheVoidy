@@ -1,8 +1,6 @@
 import { readFile } from "fs/promises";
 
-import FilesLoader from "./abstract-files.loader";
-
-type Callback<T, K = void> = (data: { file: string; path: string; data: T }) => K;
+import { FilesLoader, Callback } from "./abstract-files.loader";
 
 export class RawFilesLoader<T extends string = string> extends FilesLoader<T> {
   public async execute<K = T>(format: Callback<T, K>, filter?: Callback<T>): Promise<K[]> {
@@ -14,7 +12,7 @@ export class RawFilesLoader<T extends string = string> extends FilesLoader<T> {
       const path = paths[index];
       const data = (await readFile(path, "utf-8")) as T;
 
-      if (filter?.({ file, path, data })) {
+      if (!filter?.({ file, path, data })) {
         continue;
       }
 
@@ -24,5 +22,7 @@ export class RawFilesLoader<T extends string = string> extends FilesLoader<T> {
     return output;
   }
 }
+
+export { Callback }
 
 export default RawFilesLoader;

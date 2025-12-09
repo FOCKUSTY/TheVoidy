@@ -1,6 +1,4 @@
-import { FilesLoader } from "./abstract-files.loader";
-
-type Callback<T, K = void> = (data: { file: string; path: string; data: T }) => K;
+import { Callback, FilesLoader } from "./abstract-files.loader";
 
 export class JsFilesLoader<T> extends FilesLoader<T> {
   public override async execute<K = T>(format: Callback<T, K>, filter?: Callback<T>): Promise<K[]> {
@@ -22,3 +20,7 @@ export class JsFilesLoader<T> extends FilesLoader<T> {
     return output;
   }
 }
+
+export { Callback }
+
+export default JsFilesLoader;

@@ -39,13 +39,7 @@ export type ObjectsType = {
 const filesLoader = new RawFilesLoader(Data.path);
 
 export class ObjectsData {
-  private static _loaded: boolean | null = null;
-  private static _value: ObjectsType = {
-    idea: [],
-    download: [],
-    names: [],
-    constants: {}
-  };
+  private static _value: ObjectsType|null = null;
 
   private static formatFile({ data, path }: { data: string; path: string }) {
     return {
@@ -54,7 +48,7 @@ export class ObjectsData {
   }
 
   private static filterFile({ path }: { path: string }) {
-    return !ALL_FILES.includes(path);
+    return ALL_FILES.includes(path);
   }
 
   private static reduceAndConcatFiles<T extends Record<string, unknown>>(previous: T, current: T) {
@@ -65,7 +59,7 @@ export class ObjectsData {
   }
 
   public static get value() {
-    if (this._loaded === null) {
+    if (this._value === null) {
       throw new Error("Can not use object data, it is not loaded");
     }
 
@@ -73,7 +67,7 @@ export class ObjectsData {
   }
 
   public async execute() {
-    if (ObjectsData._loaded === null) {
+    if (ObjectsData._value === null) {
       return this.load();
     }
 
@@ -84,7 +78,6 @@ export class ObjectsData {
     const files = await filesLoader.execute(ObjectsData.formatFile, ObjectsData.filterFile);
     const concatedFiles = <ObjectsType>files.reduce(ObjectsData.reduceAndConcatFiles);
 
-    ObjectsData._loaded = true;
     ObjectsData._value = concatedFiles;
 
     return concatedFiles;
