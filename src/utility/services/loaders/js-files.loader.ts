@@ -1,5 +1,7 @@
 import { Callback, FilesLoader } from "./abstract-files.loader";
 
+export { Callback, CallbackParameters } from "./abstract-files.loader";
+
 export class JsFilesLoader<T> extends FilesLoader<T> {
   public override async execute<K = T>(format: Callback<T, K>, filter?: Callback<T>): Promise<K[]> {
     const { paths, files } = await this.resolveDir(this.dir);
@@ -20,7 +22,5 @@ export class JsFilesLoader<T> extends FilesLoader<T> {
     return output;
   }
 }
-
-export { Callback }
 
 export default JsFilesLoader;

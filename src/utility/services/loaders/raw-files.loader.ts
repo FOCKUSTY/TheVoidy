@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 
 import { FilesLoader, Callback } from "./abstract-files.loader";
+export { Callback, CallbackParameters } from "./abstract-files.loader";
 
 export class RawFilesLoader<T extends string = string> extends FilesLoader<T> {
   public async execute<K = T>(format: Callback<T, K>, filter?: Callback<T>): Promise<K[]> {
@@ -22,7 +23,5 @@ export class RawFilesLoader<T extends string = string> extends FilesLoader<T> {
     return output;
   }
 }
-
-export { Callback }
 
 export default RawFilesLoader;
