@@ -1,7 +1,7 @@
 import type { Activity } from "@bots/discord/types/activity.type";
 
 import { StandartActivities } from "./standart.activities";
-import { TypifiendActivities } from "./typified.activities";
+import { FeatureActivities } from "./featrue";
 
 import { ObjectsData } from "../objects.data";
 
@@ -11,7 +11,7 @@ export class Activities {
 
     const activities = [
       ...await new StandartActivities().execute(),
-      ...await new TypifiendActivities().execute()
+      ...await new FeatureActivities().execute()
     ];
 
     return this.resolveVariables(activities);

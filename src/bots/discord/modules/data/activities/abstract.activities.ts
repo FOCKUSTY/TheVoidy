@@ -5,7 +5,7 @@ import { Activity } from "@bots/discord/types/activity.type";
 
 const objectsData = new ObjectsData();
 
-export abstract class AbsctractActivities {
+export abstract class AbstractActivities {
   public readonly loader: RawFilesLoader<string>;
 
   public constructor(
@@ -29,7 +29,10 @@ export abstract class AbsctractActivities {
     return Boolean(data);
   }
 
-  protected abstract formatFiles(data: CallbackParameters): Activity[];
+  protected formatFiles({ data }: CallbackParameters): Activity[] {
+    const activities = JSON.parse(data) as Activity[];
+    return activities;
+  }
 }
 
-export default AbsctractActivities;
+export default AbstractActivities;
