@@ -1,5 +1,5 @@
 export * from "./activities";
-export * from "./abstract.activities";
+export * from "./activities.template";
 
 export * from "./standart.activities";
 

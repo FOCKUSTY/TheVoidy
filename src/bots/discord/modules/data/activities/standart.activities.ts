@@ -1,9 +1,9 @@
 import { Data } from "../data";
-import { AbstractActivities } from "./abstract.activities";
+import { ActivitiesTemplate } from "./activities.template";
 
 import { join } from "path";
 
-export class StandartActivities extends AbstractActivities {
+export class StandartActivities extends ActivitiesTemplate {
   public static readonly path = join(Data.path, "activities");
   
   public constructor() {

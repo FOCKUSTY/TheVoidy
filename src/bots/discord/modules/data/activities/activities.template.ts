@@ -5,7 +5,7 @@ import { Activity } from "@bots/discord/types/activity.type";
 
 const objectsData = new ObjectsData();
 
-export abstract class AbstractActivities {
+export class ActivitiesTemplate {
   public readonly loader: RawFilesLoader<string>;
 
   public constructor(
@@ -35,4 +35,4 @@ export abstract class AbstractActivities {
   }
 }
 
-export default AbstractActivities;
+export default ActivitiesTemplate;
