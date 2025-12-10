@@ -5,7 +5,7 @@ import { join } from "path";
 
 export class StandartActivities extends ActivitiesTemplate {
   public static readonly path = join(Data.path, "activities");
-  
+
   public constructor() {
     super(StandartActivities.path);
   }

@@ -10,8 +10,8 @@ export class Activities {
     await new ObjectsData().execute();
 
     const activities = [
-      ...await new StandartActivities().execute(),
-      ...await new FeatureActivities().execute()
+      ...(await new StandartActivities().execute()),
+      ...(await new FeatureActivities().execute())
     ];
 
     return this.resolveVariables(activities);
@@ -35,22 +35,23 @@ export class Activities {
     return {
       ...activity,
       text
-    }
+    };
   }
 
   private getConstantProperties(constant: string) {
     const { constants } = ObjectsData.value;
-    
+
     const value = constants[constant];
 
     return {
-      name: constant, value,
+      name: constant,
+      value,
       template: `$\{${constant}}`
-    }
+    };
   }
 
   private resolveVariables(activities: Activity[]) {
-    return activities.map(activity => this.resolveVariable(activity));
+    return activities.map((activity) => this.resolveVariable(activity));
   }
 }
 

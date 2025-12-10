@@ -10,8 +10,8 @@ export class FeatureActivities {
     await new ObjectsData().execute();
 
     const activities = [
-      ...await new TypifiendActivities().execute(),
-      ...await new KristyActivities().execute()
+      ...(await new TypifiendActivities().execute()),
+      ...(await new KristyActivities().execute())
     ];
 
     return activities;

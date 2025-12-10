@@ -8,12 +8,10 @@ const objectsData = new ObjectsData();
 export class ActivitiesTemplate {
   public readonly loader: RawFilesLoader<string>;
 
-  public constructor(
-    public readonly path: string
-  ) {
+  public constructor(public readonly path: string) {
     this.loader = new RawFilesLoader(this.path);
   }
-  
+
   public async execute() {
     await objectsData.execute();
 
@@ -22,7 +20,7 @@ export class ActivitiesTemplate {
   }
 
   protected flatMap(data: Activity[][]) {
-    return data.flatMap(e => e);
+    return data.flatMap((e) => e);
   }
 
   protected filterFiles(data: CallbackParameters): boolean {

@@ -39,7 +39,7 @@ export type ObjectsType = {
 const filesLoader = new RawFilesLoader(Data.path);
 
 export class ObjectsData {
-  private static _value: ObjectsType|null = null;
+  private static _value: ObjectsType | null = null;
 
   private static formatFile({ data, path }: { data: string; path: string }) {
     return {
