@@ -7,7 +7,7 @@ import { ObjectsData } from "../objects.data";
 
 export class Activities {
   public async execute() {
-    new ObjectsData().execute();
+    await new ObjectsData().execute();
 
     const activities = [
       ...await new StandartActivities().execute(),
