@@ -3,7 +3,7 @@ import { readdir, lstat } from "fs/promises";
 
 export type Callback<T, K = void> = (data: { file: string; path: string; data: T }) => K;
 
-export type CallbackParameters = Parameters<Callback<string, void>>[0];
+export type CallbackParameters<T, K = void> = Parameters<Callback<T, K>>[0];
 
 export abstract class FilesLoader<T> {
   public constructor(public readonly dir: string) {}

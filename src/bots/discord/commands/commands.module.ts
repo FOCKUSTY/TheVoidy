@@ -2,7 +2,7 @@ import { Collection } from "discord.js";
 import { join } from "node:path";
 import { promises as fs, existsSync } from "node:fs";
 
-import Deployer from "./deploy.commands";
+import CommandsDeployer from "./commands.deplyer";
 import Command, { DeployCommands } from "@discord/types/command.type";
 
 export let data: {
@@ -50,14 +50,14 @@ initCommandsFile().catch(console.error);
 
 export class CommandsModule {
   public readonly name = "commands" as const;
-  public readonly deployer: Deployer;
+  public readonly deployer: CommandsDeployer;
   public commands: typeof data = data;
 
   public constructor(
     public readonly actived: boolean = true,
     public readonly commandsCollection: Collection<string, Command>
   ) {
-    this.deployer = new Deployer(commandsCollection);
+    this.deployer = new CommandsDeployer(commandsCollection);
   }
 
   public async execute() {
