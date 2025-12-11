@@ -27,7 +27,9 @@
       "@utility/*": ["./src/utility/*"],
       "@develop/*": ["./src/utility/develop/*"],
       "@services/*": ["./src/utility/services/*"],
-      "@database/*": ["./generated/*"]
+      "@database/*": ["./generated/*"],
+      "@activities/*": ["./src/discord/modules/data/activities/*"],
+      "@activities": ["./src/discord/modules/data/activities"]
     }
   },
   "include": ["./**/*.ts"],
